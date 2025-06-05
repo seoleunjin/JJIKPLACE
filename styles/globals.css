@@ -1,42 +1,73 @@
 :root {
   --background: #ffffff;
-  --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+*{word-break: keep-all !important;}
+html {overflow-y:scroll; font-size: 62.5%;background: #fff; font-family: 'SUITE';}
+body {margin:0;padding:0;font-size:1.6em;background:#fff}
+html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
+h1, h2, h3, h4, h5, h6 {font-size:1.6rem;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
+
+ul, dl,dt,dd, li {margin:0;padding:0;list-style:none}
+legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+label, input, button, select, img {vertical-align:middle;font-size:1.6rem}
+input, button {margin:0;padding:0;font-size:1.6rem}
+input[type="submit"] {cursor:pointer}
+button {cursor:pointer}
+table{border-collapse: collapse; border-spacing: 0 5px;}
+textarea, select {font-size:1.6rem}
+select {margin:0}
+p {margin:0;padding:0;word-break:break-all}
+hr {display:none}
+pre {overflow-x:scroll;font-size:1.6rem}
+a {color:#000;text-decoration:none}
+
+*, :after, :before {
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+
+input[type=text],input[type=password], textarea {
+outline:none;
+border: none;
+}
+
+mark { line-height: initial; }
+
+.placeholdersjs {color:#aaa !important}
+::-webkit-scrollbar {
+    width:8px;height:8px;
   }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius:4px;
+    background-clip: padding-box;
   }
+
+/* 폰트 설정 */
+@font-face {
+  font-family: 'SUITE';
+  font-weight: 400;
+  src: url('../public/fonts/SUITE-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'SUITE';
+  font-weight: 700;
+  src: url('../public/fonts/SUITE-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'SUITE';
+  font-weight: 800;
+  src: url('../public/fonts/SUITE-ExtraBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'PartialSansKR-Regular';
+  src: url('../public/fonts/PartialSansKR-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
