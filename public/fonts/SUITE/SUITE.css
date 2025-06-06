@@ -1,0 +1,24 @@
+
+@font-face {
+  font-family: 'SUITE-Regular';
+  font-weight: 400;
+  src: url('/fonts/SUITE/SUITE-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'SUITE-Bold';
+  font-weight: 700;
+  src: url('/fonts/SUITE/SUITE-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'SUITE-ExtraBold';
+  font-weight: 800;
+  src: url('/fonts/SUITE/SUITE-ExtraBold.woff2') format('woff2');
+}
+
+:root {
+	--font-family-SUITE-Regular: "SUITE-Regular";
+	--font-family-SUITE-Bold: "SUITE-Bold";
+	--font-family-SUITE-ExtraBold: "SUITE-ExtraBold";
+}
