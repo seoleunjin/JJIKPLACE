@@ -1,5 +1,5 @@
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
+import homeStyles from "@/styles/Home.module.css";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <main className={styles.main}>
+        <main className={homeStyles.main}>
           <div>
             <p>
               안녕하세요 suite 폰트입니다안녕하세요 suite 폰트입니다안녕하세요

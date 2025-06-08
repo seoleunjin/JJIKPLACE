@@ -1,5 +1,5 @@
 :root {
-  --background: #ffffff;
+  /* 색상 설정 */
   --color-surface: #FFFFFF;
 
   --color-text-primary: #292B3C;
@@ -23,14 +23,14 @@
 
 
   /* 폰트 설정 */
-  /* --font-family-SUITE-Regular: "SUITE-Regular";
+  --font-family-SUITE-Regular: "SUITE-Regular";
 	--font-family-SUITE-Bold: "SUITE-Bold";
-	--font-family-SUITE-ExtraBold: "SUITE-ExtraBold"; */
+	--font-family-SUITE-ExtraBold: "SUITE-ExtraBold";
 }
 
 *{word-break: keep-all !important;}
-html {overflow-y:scroll; font-size: 62.5%;background: #fff; font-family: 'SUITE';}
-body {margin:0;padding:0;font-size:1.6em;background:#fff}
+html {overflow-y:scroll; font-size: 62.5%;background: var(--color-surface); font-family: var(--font-family-SUITE-Regular);}
+body {margin:0;padding:0;font-size:1.6em;background:var(--color-surface)}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1.6rem;}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -74,22 +74,6 @@ mark { line-height: initial; }
  
 /* 폰트 설정 */
 @font-face {
-  font-family: 'SUITE';
-  font-weight: 400;
-  src: url('/fonts/SUITE-Regular.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'SUITE';
-  font-weight: 700;
-  src: url('/fonts/SUITE-Bold.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'SUITE';
-  font-weight: 800;
-  src: url('/fonts/SUITE-ExtraBold.woff2') format('woff2');
-}
-
-/* @font-face {
   font-family: 'SUITE-Regular';
   font-weight: 400;
   src: url('/fonts/SUITE/SUITE-Regular.woff2') format('woff2');
@@ -103,9 +87,7 @@ mark { line-height: initial; }
   font-family: 'SUITE-ExtraBold';
   font-weight: 800;
   src: url('/fonts/SUITE/SUITE-ExtraBold.woff2') format('woff2');
-} */
-
-
+}
 @font-face {
   font-family: 'PartialSansKR-Regular';
   src: url('/fonts/PartialSansKR-Regular.woff2') format('woff2');
