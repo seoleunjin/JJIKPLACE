@@ -1,9 +1,12 @@
 .layout_wrapper{
-    background-color: var(--color-brand);
-    /* border-inline: 1px solid #000; */
-    max-width: 768px;    
-    width: 100%;
-    min-height: 100vh;
+    max-width: 768px;
+    padding: 0 30px;
+    width: 92%;
     margin: 0 auto;
-    font-family: var(--font-family-SUITE-Regular);
+}
+
+@media screen and (max-width: 768px) {
+    .layout_wrapper {
+            padding: 0 0;  
+        }
 }

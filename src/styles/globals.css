@@ -23,6 +23,14 @@
 
 
   /* 폰트 설정 */
+  --text-xs: 1.2rem;
+  --text-sm: 1.4rem;
+  --text-base: 1.6rem;
+  --text-lg: 1.8rem;
+  --text-xl: 2.0rem;
+  --text-2xl: 2.4rem;
+  --text-3xl: 3.0rem;
+  
   --font-family-SUITE-Regular: "SUITE-Regular";
 	--font-family-SUITE-Bold: "SUITE-Bold";
 	--font-family-SUITE-ExtraBold: "SUITE-ExtraBold";
