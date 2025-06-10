@@ -1,0 +1,12 @@
+.footer {
+    background: #f7f7f7;
+}
+.footerWrap {
+    text-align: center;
+    padding: 40px 0;
+}
+.footer p {
+    margin-top: 24px;
+    font-size: var(--text-sm);
+    color: var(--color-gray4);
+}

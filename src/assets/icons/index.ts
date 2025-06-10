@@ -1,3 +1,4 @@
-import MenuIcon from "./menuIcon.svg";
+import MenuIcon from "./MenuIcon.svg";
+import MenuClose from "./MenuClose.svg";
 
-export { MenuIcon };
+export { MenuIcon, MenuClose };

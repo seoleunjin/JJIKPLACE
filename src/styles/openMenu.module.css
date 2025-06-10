@@ -1,0 +1,37 @@
+.menu {
+    max-width: 768px;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 9999;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+}
+
+.menuWrap {
+    max-width: 344px;
+    width: 100%;
+    height: 100%;
+    background: var(--color-surface);
+}
+.menuHeader {
+    background: var(--color-brand);
+    display: flex;
+    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+.menuLink{
+    display: block;
+    padding: 18px 20px;
+    font-size: var(--text-lg);
+    border-bottom: 1px solid var(--color-gray2);
+}
+.menuLink.active {
+    font-weight: 700;
+}

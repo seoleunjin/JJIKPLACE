@@ -1,16 +1,18 @@
 .header {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 8888;
+    background: var(--color-surface);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+}
+.headerWrap {
     width: 100%;
     height: 60px;
     display: flex;
     align-items: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
-    position: fixed;
-    z-index: 9999;
-    background: var(--color-surface);
-}
-.headerWrap {
-    height: 60px;
-    display: flex;
-    align-items: center;
     justify-content: space-between;
+
 }

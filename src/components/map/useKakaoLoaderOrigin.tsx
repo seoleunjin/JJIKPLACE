@@ -11,7 +11,20 @@ export default function useKakaoLoader() {
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps) {
-      setLoaded(true);
+      window.kakao.maps.load(() => {
+        setLoaded(true);
+      });
+    } else {
+      const interval = setInterval(() => {
+        if (window.kakao && window.kakao.maps) {
+          window.kakao.maps.load(() => {
+            setLoaded(true);
+          });
+          clearInterval(interval);
+        }
+      }, 100);
+
+      return () => clearInterval(interval);
     }
   }, []);
 

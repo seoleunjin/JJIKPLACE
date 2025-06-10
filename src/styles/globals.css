@@ -37,7 +37,7 @@
 }
 
 *{word-break: keep-all !important;}
-html {overflow-y:scroll; font-size: 62.5%;background: var(--color-surface); font-family: var(--font-family-SUITE-Regular);}
+html {overflow-y:scroll; font-size: 62.5%;background: var(--color-surface); font-family: var(--font-family-SUITE-Regular); letter-spacing: -0.02em; }
 body {margin:0;padding:0;font-size:1.6em;background:var(--color-surface)}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1.6rem;}
@@ -48,7 +48,7 @@ legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-inde
 label, input, button, select, img {vertical-align:middle;font-size:1.6rem}
 input, button {margin:0;padding:0;font-size:1.6rem}
 input[type="submit"] {cursor:pointer}
-button {cursor:pointer}
+button {cursor:pointer; background: transparent; border: none;}
 table{border-collapse: collapse; border-spacing: 0 5px;}
 textarea, select {font-size:1.6rem}
 select {margin:0}
