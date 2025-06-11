@@ -4,6 +4,7 @@ import layoutStyles from "@/styles/layout.module.css";
 import { fetchMarker } from "@/api/map";
 import { useEffect, useState } from "react";
 import { Marker } from "@/types/map";
+import { pageMeta } from "@/constants/pageMeta";
 
 export default function MapPage() {
   const scriptLoad = useKakaoLoader();
@@ -58,4 +59,4 @@ export default function MapPage() {
 }
 
 // 해더 제목 무조건 맨 하단 배치
-MapPage.title = "지도";
+MapPage.title = pageMeta.map.title;

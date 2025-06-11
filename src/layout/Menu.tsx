@@ -23,7 +23,7 @@ const Menu = ({ onClose }: MenuProps) => {
       <div className={`${styles.menuWrap}`}>
         <div className={styles.menuHeader}>
           <div>
-            <Link href="/">
+            <Link href="/" onClick={onClose}>
               <Image src="/MenuLogo.png" width="82" height="31" alt="로고" />
             </Link>
           </div>
