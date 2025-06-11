@@ -1,22 +1,43 @@
+"use client";
 import layoutStyles from "@/styles/layout.module.css";
 import Image from "next/image";
 import React from "react";
 import styles from "@/styles/header.module.css";
-import { MenuIcon } from "@/assets/icons";
+import { BackIcon, MenuIcon } from "@/assets/icons";
+import { usePathname } from "next/navigation";
+import { HeaderProps } from "@/types/layout";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-// props 타입지정
-interface HeaderProps {
-  onMenuClick: () => void;
-}
+function Header({ onMenuClick, title }: HeaderProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
-function Header({ onMenuClick }: HeaderProps) {
   return (
     <div className={`${styles.header} ${layoutStyles.layout_wrapper}`}>
       <div className={styles.headerWrap}>
         <div>
-          <Image src="/Hlogo.png" width="82" height="31" alt="로고" priority />
+          {isHome ? (
+            <Link href="/">
+              <Image
+                src="/Hlogo.png"
+                width="82"
+                height="31"
+                alt="로고"
+                priority
+              />
+            </Link>
+          ) : (
+            <button className={styles.backBtn} onClick={() => router.back()}>
+              <BackIcon />
+            </button>
+          )}
         </div>
-        <button onClick={onMenuClick}>
+        <div className={styles.titleWrap}>
+          <p>{title || "\u00A0"}</p>
+        </div>
+        <button className={styles.menuOpenBtn} onClick={onMenuClick}>
           <MenuIcon />
         </button>
       </div>

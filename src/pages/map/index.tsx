@@ -1,11 +1,11 @@
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import useKakaoLoader from "@/components/map/useKakaoLoaderOrigin";
 import layoutStyles from "@/styles/layout.module.css";
-import { fetchMarker } from "@/api";
+import { fetchMarker } from "@/api/map";
 import { useEffect, useState } from "react";
 import { Marker } from "@/types/map";
 
-export default function KakaoMap() {
+export default function MapPage() {
   const scriptLoad = useKakaoLoader();
   const [markers, setMarkers] = useState<Marker[]>([]);
 
@@ -56,3 +56,6 @@ export default function KakaoMap() {
     </div>
   );
 }
+
+// 해더 제목 무조건 맨 하단 배치
+MapPage.title = "지도";

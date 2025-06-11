@@ -34,6 +34,9 @@
   --font-family-SUITE-Regular: "SUITE-Regular";
 	--font-family-SUITE-Bold: "SUITE-Bold";
 	--font-family-SUITE-ExtraBold: "SUITE-ExtraBold";
+
+  /* 애니메이션 지속시간 */
+  --transition-default: all 0.2s ease;
 }
 
 *{word-break: keep-all !important;}
