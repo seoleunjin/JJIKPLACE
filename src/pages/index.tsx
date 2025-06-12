@@ -1,5 +1,11 @@
 import Head from "next/head";
-import homeStyles from "@/styles/Home.module.css";
+import layoutStyles from "@/styles/layout.module.css";
+import HomeStyles from "@/styles/home.module.css";
+import HomeBanner from "@/components/home/HomeBanner";
+import PhotoStudioFinder from "@/components/home/PhotoStudioFinder";
+import LiveRanking from "@/components/home/LiveRanking";
+import DirectionFinder from "@/components/home/DirectionFinder";
+import PoseGuide from "@/components/home/PoseGuide";
 
 export default function Home() {
   return (
@@ -10,13 +16,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <div>
-        <main className={homeStyles.main}>
-          <div>
-            <p>
-              안녕하세요 suite 폰트입니다안녕하세요 suite 폰트입니다안녕하세요
-              suite 폰트입니다안녕하세요 suite 폰트입니다
-            </p>
+        <main
+          className={`${HomeStyles.home_wrapper} ${layoutStyles.layout_full_wrapper}`}
+        >
+          <HomeBanner />
+          <PhotoStudioFinder />
+          <div className={`${HomeStyles.home_container}`}>
+            <LiveRanking />
+            <DirectionFinder />
+            <PoseGuide />
           </div>
         </main>
       </div>
