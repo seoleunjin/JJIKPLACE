@@ -1,9 +1,9 @@
 import { MapBounds } from "@/types/api";
 import { instance } from "./apiClient";
 
-function fetchMarker(bounds: MapBounds) {
+function fetchClusterData(path: string, bounds: MapBounds) {
   const { swLat, swLng, neLat, neLng } = bounds;
-  return instance.get(`/cluster/marker`, {
+  return instance.get(path, {
     params: {
       sw_lat: swLat,
       sw_lng: swLng,
@@ -14,4 +14,4 @@ function fetchMarker(bounds: MapBounds) {
 }
 
 // 함수 내보내기
-export { fetchMarker };
+export { fetchClusterData };
