@@ -79,13 +79,24 @@
 }
 .photostudio_map_wrapper{
     margin: 72px 0;
+    display: flex;
+    gap: 30px;
 }
 .photostudio_kakao_map{
     width: 340px;
     height: 238px;
     border-radius: 16px;
     box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.16);
-    overflow: hidden;
+    overflow: hidden; 
+}
+.photostudio_photo_list{
+    height: 238px;
+    padding: 13px 0;
+    flex: 1;
+    overflow-y: auto;
+}
+.search_input{
+    margin-top: 24px;
 }
 .photostudio_more_btn{
     background-color: var(--color-brand);
@@ -103,6 +114,57 @@
     margin: 0 auto;
 }
 
-
+/* PhotoStudioList style */
+.top{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+}
+.photo_studio_list_wrapper{
+    display: flex;
+    gap: 16px;
+}
+.psl_number_box{
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--color-secondary4);
+    border-radius: 16px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.psl_number_box>p:nth-child(1){
+    font-family: var(--font-family-SUITE-ExtraBold);
+    color: var(--color-brand);
+}
+.psl_number_box>p:nth-child(2){
+    font-family: var(--font-family-SUITE-Bold);
+    font-size: 1rem;
+    color: var(--color-gray3);
+}
+.psl_text_box01{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+}
+.psl_text_box02{
+    font-family: var(--font-family-SUITE-Bold);
+}
+.psl_text_box02>p:nth-child(1){
+    color: var(--color-text-primary);
+    font-size: 1.6rem;
+    line-height: 140%;
+    letter-spacing: -2%;
+}
+.psl_text_box02>p:nth-child(2){
+    color: var(--color-brand);
+    font-size: 1.4rem;
+    line-height: 100%;
+    letter-spacing: -2%;
+}
 
 
