@@ -1,4 +1,4 @@
-import { BackIcon } from "@/assets/icons";
+// import { BackIcon } from "@/assets/icons";
 import HomeStyles from "@/styles/home.module.css";
 import React from "react";
 
@@ -41,7 +41,7 @@ function PhotoStudioList() {
                 <p>{item.name}</p>
                 <p>{item.tag}</p>
               </div>
-              <img src={BackIcon} alt="" />
+              <p>▶</p>
             </div>
           </div>
         );

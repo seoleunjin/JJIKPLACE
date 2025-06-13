@@ -1,4 +1,5 @@
 import React from "react";
+import layoutStyles from "@/styles/layout.module.css";
 import HomeStyles from "@/styles/home.module.css";
 import KakaoMap from "../map/kakaoMap";
 import PhotoStudioList from "./PhotoStudioList";
@@ -11,7 +12,7 @@ function PhotoStudioFinder() {
   };
 
   return (
-    <article>
+    <article className={layoutStyles.layout_wrapper}>
       <div className={HomeStyles.photostudio_text_box}>
         <p className={HomeStyles.home_title}>
           셀프사진관 찾기, 지금 시작하세요!

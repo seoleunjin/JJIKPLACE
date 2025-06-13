@@ -23,7 +23,9 @@ export default function Home() {
         >
           <HomeBanner />
           <PhotoStudioFinder />
-          <div className={`${HomeStyles.home_container}`}>
+          <div
+            className={`${HomeStyles.home_container} ${layoutStyles.layout_wrapper}`}
+          >
             <LiveRanking />
             <DirectionFinder />
             <PoseGuide />
