@@ -13,5 +13,16 @@ function fetchClusterData(path: string, bounds: MapBounds) {
   });
 }
 
+const getMapSearch = (swLat, swLng, neLat, neLng) => {
+  return instance.get("/cluster/dongmyeon", {
+    params: {
+      sw_lat: swLat,
+      sw_lng: swLng,
+      ne_lat: neLat,
+      ne_lng: neLng,
+    },
+  });
+};
+
 // 함수 내보내기
-export { fetchClusterData };
+export { fetchClusterData, getMapSearch };
