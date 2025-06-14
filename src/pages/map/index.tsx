@@ -1,13 +1,18 @@
 import layoutStyles from "@/styles/layout.module.css";
 import { pageMeta } from "@/constants/pageMeta";
 import KakaoMap from "@/components/map/kakaoMap";
+import MapSearch from "@/components/map/search";
+import MapCategory from "@/components/map/category";
 
 export default function MapPage() {
   return (
     <div>
       <div className={layoutStyles.layout_full_wrapper}>
         <KakaoMap></KakaoMap>
-        <div></div>
+        <div>
+          <MapSearch></MapSearch>
+          <MapCategory></MapCategory>
+        </div>
       </div>
     </div>
   );

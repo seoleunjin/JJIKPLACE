@@ -1,5 +1,5 @@
 import styles from "@/styles/kakaoMap.module.css";
-import { fetchClusterData } from "@/api/map";
+import { fetchClusterData, fetchdongmyeon } from "@/api/map";
 import useKakaoLoader from "@/components/map/useKakaoLoaderOrigin";
 import { ClusterType, MarkerType } from "@/types/api";
 import { useCallback, useRef, useState } from "react";
@@ -66,7 +66,7 @@ function KakaoMap() {
         neLat,
         neLng,
       });
-      console.log("레벨값 확인", level);
+      // console.log("레벨값 확인", level);
       if (path === "/cluster/marker") {
         setClusters([]);
         setMarkers(data.markers ?? []);
@@ -92,13 +92,6 @@ function KakaoMap() {
       anchor: new kakao.maps.LatLng(cluster.lat, cluster.lng),
     });
   };
-
-  // level 상태가 바뀔 때 fetchData 호출은 사실 onZoomChanged 등 이벤트에서 하므로 제거 가능
-  // useEffect(() => {
-  //   if (mapRef.current) {
-  //     fetchData(mapRef.current, level);
-  //   }
-  // }, [level, fetchData]);
 
   return (
     <div>
