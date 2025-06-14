@@ -9,8 +9,8 @@
     grid-template-rows: 1fr 1fr;
     column-gap: 24px;
     row-gap: 48px;  
-    margin-top: 120px !important;
-    margin-bottom: 120px !important;
+    padding-top: 120px !important;
+    padding-bottom: 120px !important;
 }
 .home_container> :nth-child(1) {
     grid-column: 1 / 2;
