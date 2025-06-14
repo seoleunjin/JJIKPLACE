@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import HomeStyles from "@/styles/home.module.css";
 import KakaoMap from "../map/kakaoMap";
@@ -11,6 +11,11 @@ function PhotoStudioFinder() {
     router.push("/map");
   };
 
+  const [search, setSearch] = useState("");
+  const searching = () => {
+    alert(`${search} 검색`);
+  };
+
   return (
     <article className={layoutStyles.layout_wrapper}>
       <div className={HomeStyles.photostudio_text_box}>
@@ -20,11 +25,22 @@ function PhotoStudioFinder() {
         <p className={HomeStyles.home_sub_title}>
           원하는 지역을 검색하고 가까운 셀프사진관을 찾아보세요.
         </p>
-        <input
-          className={HomeStyles.search_input}
-          type="search"
-          placeholder="원하는 지역을 검색해보세요."
-        />
+        <div>
+          <input
+            className={HomeStyles.search_input}
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key == "Enter") {
+                searching();
+              }
+            }}
+            type="search"
+            placeholder="원하는 지역을 검색해보세요."
+          />
+        </div>
       </div>
       <div className={HomeStyles.photostudio_map_wrapper}>
         <div className={HomeStyles.photostudio_kakao_map}>
