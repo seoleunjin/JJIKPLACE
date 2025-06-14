@@ -7,6 +7,7 @@ export default function MapPage() {
     <div>
       <div className={layoutStyles.layout_full_wrapper}>
         <KakaoMap></KakaoMap>
+        <div></div>
       </div>
     </div>
   );

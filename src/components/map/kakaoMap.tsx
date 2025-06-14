@@ -2,15 +2,24 @@ import styles from "@/styles/kakaoMap.module.css";
 import { fetchClusterData } from "@/api/map";
 import useKakaoLoader from "@/components/map/useKakaoLoaderOrigin";
 import { ClusterType, MarkerType } from "@/types/api";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 
 function KakaoMap() {
   const scriptLoad = useKakaoLoader();
   const mapRef = useRef<kakao.maps.Map | null>(null);
-  const [level, setLevel] = useState(3);
+  const [level, setLevel] = useState(2);
   const [markers, setMarkers] = useState<MarkerType[]>([]);
   const [clusters, setClusters] = useState<ClusterType[]>([]);
+
+  // 이전 fetch 조건 기억용 ref
+  const prevParams = useRef<{
+    level: number;
+    swLat: number;
+    swLng: number;
+    neLat: number;
+    neLng: number;
+  } | null>(null);
 
   const getClusterApi = (level: number): string => {
     if (level >= 9) return "/cluster/sido";
@@ -21,7 +30,7 @@ function KakaoMap() {
 
   const fetchData = useCallback(async (map: kakao.maps.Map, level: number) => {
     if (!map) return;
-    const path = getClusterApi(level);
+
     const bounds = map.getBounds();
     if (!bounds) return;
 
@@ -33,6 +42,23 @@ function KakaoMap() {
     const neLat = ne.getLat();
     const neLng = ne.getLng();
 
+    // 이전 fetch 조건과 비교 (오차 허용)
+    const prev = prevParams.current;
+    const tolerance = 0.00001;
+    if (
+      prev &&
+      prev.level === level &&
+      Math.abs(prev.swLat - swLat) < tolerance &&
+      Math.abs(prev.swLng - swLng) < tolerance &&
+      Math.abs(prev.neLat - neLat) < tolerance &&
+      Math.abs(prev.neLng - neLng) < tolerance
+    ) {
+      // 동일 영역/레벨이면 fetch 안함
+      return;
+    }
+
+    const path = getClusterApi(level);
+
     try {
       const { data } = await fetchClusterData(path, {
         swLat,
@@ -40,13 +66,18 @@ function KakaoMap() {
         neLat,
         neLng,
       });
+      console.log("레벨값 확인", level);
       if (path === "/cluster/marker") {
-        setMarkers(data.markers ?? []);
         setClusters([]);
+        setMarkers(data.markers ?? []);
+        console.log("리렌더링", data.markers);
       } else {
         setMarkers([]);
         setClusters(data.clusters ?? []);
       }
+
+      // 현재 상태 저장
+      prevParams.current = { level, swLat, swLng, neLat, neLng };
     } catch (err) {
       console.log("데이터 불러오기 실패", err);
     }
@@ -56,18 +87,18 @@ function KakaoMap() {
     const map = mapRef.current;
     if (!map) return;
 
-    const nextLevel = map.getLevel() - 1;
+    const nextLevel = map.getLevel() - 3;
     map.setLevel(nextLevel, {
       anchor: new kakao.maps.LatLng(cluster.lat, cluster.lng),
     });
   };
 
-  //   레벨이 변경될때때마다 렌더링
-  useEffect(() => {
-    if (mapRef.current) {
-      fetchData(mapRef.current, level);
-    }
-  }, [level, fetchData]);
+  // level 상태가 바뀔 때 fetchData 호출은 사실 onZoomChanged 등 이벤트에서 하므로 제거 가능
+  // useEffect(() => {
+  //   if (mapRef.current) {
+  //     fetchData(mapRef.current, level);
+  //   }
+  // }, [level, fetchData]);
 
   return (
     <div>
@@ -75,16 +106,20 @@ function KakaoMap() {
         <div>
           <Map
             id="map"
-            center={{ lat: 35.869601, lng: 128.593139 }}
+            center={{ lat: 35.8691063, lng: 128.5953752 }}
             style={{ width: "100%", height: "100vh" }}
             level={level}
             onCreate={(map) => {
               mapRef.current = map;
-              fetchData(map, map.getLevel());
+              fetchData(map, map.getLevel()); // 초기 데이터 호출
             }}
             onZoomChanged={(map) => {
               const currentLevel = map.getLevel();
               setLevel(currentLevel);
+              fetchData(map, currentLevel); // 줌 변경 시 fetch
+            }}
+            onDragEnd={(map) => {
+              fetchData(map, map.getLevel()); // 드래그 종료 시 fetch
             }}
           >
             {level < 3
@@ -97,7 +132,7 @@ function KakaoMap() {
                       size: { width: 30, height: 38 },
                       options: { offset: { x: 21, y: 49 } },
                     }}
-                  ></MapMarker>
+                  />
                 ))
               : clusters.map((cluster) => (
                   <CustomOverlayMap
