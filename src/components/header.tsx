@@ -15,8 +15,8 @@ function Header({ onMenuClick, title }: HeaderProps) {
   const isHome = pathname === "/";
 
   return (
-    <div className={`${styles.header} ${layoutStyles.layout_wrapper}`}>
-      <div className={styles.headerWrap}>
+    <div className={styles.header}>
+      <div className={`${styles.headerWrap} ${layoutStyles.width}`}>
         <div>
           {isHome ? (
             <Link href="/">

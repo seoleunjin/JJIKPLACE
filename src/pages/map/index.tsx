@@ -7,7 +7,7 @@ import MapCategory from "@/components/map/category";
 export default function MapPage() {
   return (
     <div>
-      <div className={layoutStyles.layout_full_wrapper}>
+      <div className={layoutStyles.layout_wrapper}>
         <KakaoMap></KakaoMap>
         <div>
           <MapSearch></MapSearch>

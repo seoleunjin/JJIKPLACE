@@ -4,6 +4,7 @@ interface MapBounds {
   neLat: number;
   neLng: number;
 }
+
 interface MarkerType {
   id: number;
   name: string;

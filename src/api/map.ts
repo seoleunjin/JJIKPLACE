@@ -13,7 +13,8 @@ function fetchClusterData(path: string, bounds: MapBounds) {
   });
 }
 
-const getMapSearch = (swLat, swLng, neLat, neLng) => {
+const getMapSearch = (bounds: MapBounds) => {
+  const { swLat, swLng, neLat, neLng } = bounds;
   return instance.get("/cluster/dongmyeon", {
     params: {
       sw_lat: swLat,

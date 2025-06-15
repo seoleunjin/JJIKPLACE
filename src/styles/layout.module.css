@@ -1,17 +1,14 @@
-.layout_full_wrapper {
+.layout_wrapper {
     max-width: 768px;
     min-width: 300px;
     width: 100%;
     margin: 0 auto;
     background: var(--color-surface);
+    position: relative;
 }
-.layout_wrapper{
-    max-width: 768px;
-    min-width: 300px;
-    padding: 0 20px;
-    width: 100%;
-    margin: 0 auto;
-    background: var(--color-surface);
+.width {
+    width: 92%;
+    margin:  0 auto
 }
 
 @media screen and (max-width: 768px) {
