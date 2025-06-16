@@ -1,14 +1,26 @@
+interface MapState {
+  level: number;
+  markers: MarkerType[];
+  clusters: ClusterType[];
+}
+interface MarkerType {
+  id: number;
+  lat: number;
+  lng: number;
+  name: string;
+}
+
+interface ClusterType {
+  count: number;
+  lat: number;
+  lng: number;
+  name: string;
+}
+
 // 마커
 interface MarkerLevel {
   level: string;
-  markers: Marker[];
+  markers: MarkerType[];
 }
 
-interface Marker {
-  id: number;
-  name: string;
-  lat: number;
-  lng: number;
-}
-
-export type { MarkerLevel, Marker };
+export type { MarkerLevel, MapState, MarkerType, ClusterType };

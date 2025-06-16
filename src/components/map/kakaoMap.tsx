@@ -1,16 +1,20 @@
 import styles from "@/styles/kakaoMap.module.css";
 import { fetchClusterData } from "@/api/map";
 import useKakaoLoader from "@/components/map/useKakaoLoaderOrigin";
-import { ClusterType, MarkerType } from "@/types/api";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
-
+import type { RootState } from "@/store/mapIndex";
+import { useDispatch, useSelector } from "react-redux";
+import { setClusters, setLevel, setMarkers } from "@/features/map/mapSlice";
+import { ClusterType } from "@/types/map";
 function KakaoMap() {
   const scriptLoad = useKakaoLoader();
   const mapRef = useRef<kakao.maps.Map | null>(null);
-  const [level, setLevel] = useState(2);
-  const [markers, setMarkers] = useState<MarkerType[]>([]);
-  const [clusters, setClusters] = useState<ClusterType[]>([]);
+
+  const { level, markers, clusters } = useSelector(
+    (state: RootState) => state.map,
+  );
+  const dispatch = useDispatch();
 
   // 이전 fetch 조건 기억용 ref
   const prevParams = useRef<{
@@ -21,15 +25,14 @@ function KakaoMap() {
     neLng: number;
   } | null>(null);
 
-  const getClusterApi = (level: number): string => {
-    if (level >= 9) return "/cluster/sido";
-    if (level >= 6) return "/cluster/gungu";
-    if (level >= 3) return "/cluster/dongmyeon";
-    return "/cluster/marker";
-  };
-
   const fetchData = useCallback(async (map: kakao.maps.Map, level: number) => {
     if (!map) return;
+    const getClusterApi = (level: number): string => {
+      if (level >= 9) return "/cluster/sido";
+      if (level >= 6) return "/cluster/gungu";
+      if (level >= 3) return "/cluster/dongmyeon";
+      return "/cluster/marker";
+    };
 
     const bounds = map.getBounds();
     if (!bounds) return;
@@ -44,7 +47,7 @@ function KakaoMap() {
 
     // 이전 fetch 조건과 비교 (오차 허용)
     const prev = prevParams.current;
-    const tolerance = 0.00001;
+    const tolerance = 0.001;
     if (
       prev &&
       prev.level === level &&
@@ -68,12 +71,11 @@ function KakaoMap() {
       });
       console.log("레벨값 확인", level);
       if (path === "/cluster/marker") {
-        setClusters([]);
-        setMarkers(data.markers ?? []);
-        console.log("리렌더링", data.markers);
+        dispatch(setClusters([]));
+        dispatch(setMarkers(data.markers ?? []));
       } else {
-        setMarkers([]);
-        setClusters(data.clusters ?? []);
+        dispatch(setMarkers([]));
+        dispatch(setClusters(data.clusters ?? []));
       }
 
       // 현재 상태 저장
@@ -93,13 +95,6 @@ function KakaoMap() {
     });
   };
 
-  // level 상태가 바뀔 때 fetchData 호출은 사실 onZoomChanged 등 이벤트에서 하므로 제거 가능
-  // useEffect(() => {
-  //   if (mapRef.current) {
-  //     fetchData(mapRef.current, level);
-  //   }
-  // }, [level, fetchData]);
-
   return (
     <div>
       {scriptLoad ? (
@@ -115,11 +110,11 @@ function KakaoMap() {
             }}
             onZoomChanged={(map) => {
               const currentLevel = map.getLevel();
-              setLevel(currentLevel);
+              dispatch(setLevel(currentLevel));
               fetchData(map, currentLevel); // 줌 변경 시 fetch
             }}
             onDragEnd={(map) => {
-              fetchData(map, map.getLevel()); // 드래그 종료 시 fetch
+              fetchData(map, map.getLevel());
             }}
           >
             {level < 3
