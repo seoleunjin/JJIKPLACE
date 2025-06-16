@@ -217,8 +217,8 @@
     display: flex;
     gap: 40px;
 }
-.rank0 {order: 0;}
-.rank1 {order: 1; }
+.rank0 {order: 0;;}
+.rank1 {order: 1;  transform: scale(1.15)}
 .rank2 {order: 2;}
 .high_ranking div{
     font-family: var(--font-family-SUITE-Bold);
@@ -230,7 +230,6 @@
 .high_ranking_title{
     font-size: 1.8rem;
     line-height: 140%;
-    letter-spacing: -2%;
     text-align: center;
     white-space: pre-line;
 }
@@ -248,7 +247,6 @@
     color: var(--color-text-primarys);
     font-size: 1.6rem;
     line-height: 140%;
-    letter-spacing: -2%;
     padding: 15px 14px;
     border-bottom: 1px solid var(--color-gray2);
     display: flex;
@@ -265,5 +263,4 @@
     font-family: var(--font-family-SUITE-Regular);
     font-size: 1.4rem;   
     line-height: 100%;
-    letter-spacing: -2%;
 }

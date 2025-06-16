@@ -6,7 +6,7 @@ function LiveRanking() {
     {
       idx: 1,
       title: "인생네컷 동대구",
-      count: 100,
+      count: 110,
     },
     {
       idx: 2,

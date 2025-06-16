@@ -17,15 +17,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
-        <main
-          className={`${HomeStyles.home_wrapper} ${layoutStyles.layout_full_wrapper}`}
-        >
+      <div className={layoutStyles.width}>
+        <main className={HomeStyles.home_wrapper}>
           <HomeBanner />
           <PhotoStudioFinder />
-          <div
-            className={`${HomeStyles.home_container} ${layoutStyles.layout_wrapper}`}
-          >
+          <div className={HomeStyles.home_container}>
             <LiveRanking />
             <DirectionFinder />
             <PoseGuide />
