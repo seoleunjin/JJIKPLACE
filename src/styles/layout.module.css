@@ -8,7 +8,15 @@
 }
 .width {
     width: 92%;
-    margin:  0 auto
+    margin:  0 auto;
+}
+
+.body_wrap {
+    min-height: calc(100vh - 153px);
+}
+.py_space {
+    padding-top: 120px;
+    padding-bottom: 60px;
 }
 
 @media screen and (max-width: 768px) {

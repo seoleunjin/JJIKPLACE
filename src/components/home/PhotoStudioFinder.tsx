@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import HomeStyles from "@/styles/home.module.css";
-import KakaoMap from "../map/kakaoMap";
+import KakaoMap from "../map/KakaoMap";
 import PhotoStudioList from "./PhotoStudioList";
 import { useRouter } from "next/router";
 

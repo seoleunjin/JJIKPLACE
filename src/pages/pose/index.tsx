@@ -1,7 +1,10 @@
+import { pageMeta } from "@/constants/pageMeta";
 import React from "react";
 
-function index() {
+function PosePage() {
   return <div>pose</div>;
 }
 
-export default index;
+export default PosePage;
+
+PosePage.title = pageMeta.pose.title;

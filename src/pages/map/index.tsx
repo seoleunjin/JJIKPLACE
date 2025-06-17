@@ -1,8 +1,8 @@
 import layoutStyles from "@/styles/layout.module.css";
 import { pageMeta } from "@/constants/pageMeta";
-import KakaoMap from "@/components/map/kakaoMap";
-import MapSearch from "@/components/map/search";
-import MapCategory from "@/components/map/category";
+import KakaoMap from "@/components/map/KakaoMap";
+import MapSearch from "@/components/map/Search";
+import MapCategory from "@/components/map/Category";
 
 export default function MapPage() {
   return (

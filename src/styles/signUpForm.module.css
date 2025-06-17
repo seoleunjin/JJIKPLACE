@@ -1,0 +1,60 @@
+.singUpForm {}
+
+.singUpForm .box {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 32px;
+    
+}
+
+.singUpForm .box label {
+    font-size: var(--text-lg);
+    display: flex;
+    align-items: start;
+    width: 120px;
+    line-height: 45px;
+}
+.singUpForm .box label span {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-error);
+    line-height: 1;
+    margin-left: 4;
+}
+
+.singUpForm .in_box {
+    width: calc(100% - 130px);
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    align-items: start;
+}
+.singUpForm .in_box>div {width: 100%;}
+.singUpForm .in_box input {
+    width: 100%;
+    border: 1px solid var(--color-gray2);
+    line-height: 45px;
+    padding-left: 16px;
+    font-size: var(--text-base);
+    border-radius: 5px;
+}
+.singUpForm .in_box input::placeholder {
+    color: var(--color-gray3);
+}
+
+.singUpForm .in_box .errText {
+    font-size: var(--text-base);
+    color: var(--color-error);
+    margin-top: 5px;
+}
+
+.singUpForm .btn_check {
+    padding: 0 12px;
+    background: var(--color-brand);
+    line-height: 45px;
+    display: inline-block;
+    color: var(--color-surface);
+    border-radius: 5px;
+    
+}

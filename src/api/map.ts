@@ -1,7 +1,8 @@
+// api/map.ts
 import { MapBounds } from "@/types/api";
 import { instance } from "./apiClient";
 
-function fetchClusterData(path: string, bounds: MapBounds) {
+function fetchClusterData(path: string, bounds: MapBounds, category?: string) {
   const { swLat, swLng, neLat, neLng } = bounds;
   return instance.get(path, {
     params: {
@@ -9,6 +10,7 @@ function fetchClusterData(path: string, bounds: MapBounds) {
       sw_lng: swLng,
       ne_lat: neLat,
       ne_lng: neLng,
+      ...(category ? { category } : {}),
     },
   });
 }
@@ -25,5 +27,4 @@ const getMapSearch = (bounds: MapBounds) => {
   });
 };
 
-// 함수 내보내기
 export { fetchClusterData, getMapSearch };
