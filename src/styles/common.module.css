@@ -1,0 +1,14 @@
+.formSubmitBtn {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    background: var(--color-gray2);
+}
+.formSubmitBtn button {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-gray4);
+}

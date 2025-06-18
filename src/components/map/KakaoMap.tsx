@@ -50,7 +50,7 @@ function KakaoMap() {
       const neLat = ne.getLat();
       const neLng = ne.getLng();
 
-      const category = "복고"; // 현재 하드코딩, 나중에 상태로 관리 가능
+      const category = "캐릭터"; // 현재 하드코딩, 나중에 상태로 관리 가능
 
       const prev = prevParams.current;
       const tolerance = 0.001;

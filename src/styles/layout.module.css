@@ -14,6 +14,9 @@
 .body_wrap {
     min-height: calc(100vh - 153px);
 }
+.pt_space {
+    padding-top: 120px; 
+}
 .py_space {
     padding-top: 120px;
     padding-bottom: 60px;

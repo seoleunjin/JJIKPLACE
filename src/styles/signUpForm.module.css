@@ -1,6 +1,6 @@
-.singUpForm {}
-
-.singUpForm .box {
+.signUpForm {}
+.signUpFormWrap {padding-bottom: 60px;}
+.signUpForm .box {
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -8,14 +8,14 @@
     
 }
 
-.singUpForm .box label {
+.signUpForm .box label {
     font-size: var(--text-lg);
     display: flex;
     align-items: start;
     width: 120px;
     line-height: 45px;
 }
-.singUpForm .box label span {
+.signUpForm .box label span {
     font-size: var(--text-lg);
     font-weight: 700;
     color: var(--color-error);
@@ -23,15 +23,15 @@
     margin-left: 4;
 }
 
-.singUpForm .in_box {
+.signUpForm .in_box {
     width: calc(100% - 130px);
     display: flex;
     justify-content: space-between;
     gap: 5px;
     align-items: start;
 }
-.singUpForm .in_box>div {width: 100%;}
-.singUpForm .in_box input {
+.signUpForm .in_box>div {width: 100%;}
+.signUpForm .in_box input {
     width: 100%;
     border: 1px solid var(--color-gray2);
     line-height: 45px;
@@ -39,17 +39,17 @@
     font-size: var(--text-base);
     border-radius: 5px;
 }
-.singUpForm .in_box input::placeholder {
+.signUpForm .in_box input::placeholder {
     color: var(--color-gray3);
 }
 
-.singUpForm .in_box .errText {
+.errText {
     font-size: var(--text-base);
     color: var(--color-error);
     margin-top: 5px;
 }
 
-.singUpForm .btn_check {
+.signUpForm .btn_check {
     padding: 0 12px;
     background: var(--color-brand);
     line-height: 45px;
@@ -57,4 +57,54 @@
     color: var(--color-surface);
     border-radius: 5px;
     
+}
+
+.consent_box .title {
+    color: var(--color-gray3);
+}
+
+.consent_box .check_box {
+    margin-top: 12px;
+}
+
+.consent_box .check_box>div:first-child {margin-bottom: 4px;}
+
+.check_box label {display: flex; align-items: start;}
+.check_box label span {
+    font-size: var(--text-lg);
+}
+
+.check_box input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    background-color: var(--color-gray3);
+    transition: var(--transition-default);
+    display: inline-block;
+    border: none;
+    margin-right: 6px;
+}
+
+/* 항상 체크모양 표시 */
+.check_box input[type="checkbox"]::after {
+    content: "\f00c";
+    /* 체크 아이콘 */
+    font-family: "FontAwesome";
+    /* 이게 핵심 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--color-surface);
+    font-size: 14px;
+    pointer-events: none; }
+
+/* 체크되었을 때 배경색 */
+.check_box input[type="checkbox"]:checked {
+    background-color: var(--color-brand);
 }
