@@ -1,5 +1,6 @@
-import { ClusterType, MarkerType, MapState } from "@/types/map";
+// features/map/mapSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ClusterType, MarkerType, MapState } from "@/types/map";
 
 const initialState: MapState = {
   level: 2,
