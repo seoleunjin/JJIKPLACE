@@ -14,10 +14,11 @@ function SignUpForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(SignUpSchema),
+    mode: "onChange",
     defaultValues: {
       nick_name: "",
       email: "",
@@ -151,7 +152,7 @@ function SignUpForm() {
         </div>
       </div>
 
-      <FormSubmitBtn title="회원가입" />
+      <FormSubmitBtn title="회원가입" disabled={!isValid} />
     </form>
   );
 }

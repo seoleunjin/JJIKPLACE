@@ -7,4 +7,12 @@ const instance = axios.create({
   },
 });
 
-export { instance };
+const authInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+export { instance, authInstance };
