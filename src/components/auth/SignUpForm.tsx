@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpSchema } from "@/schemas/auth";
 import { z } from "zod";
 import FormSubmitBtn from "@/components/common/FormSubmitBtn";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 function SignUpForm() {
   const router = useRouter();
@@ -36,7 +36,7 @@ function SignUpForm() {
       console.log("성공", res.data);
       alert("회원가입이 완료되었습니다.");
       reset();
-      router.push("/");
+      router.push("/auth/Login");
     } catch (err) {
       console.error("실패", err);
     }

@@ -128,8 +128,8 @@
 /* 소셜 */
 .SnsBox {
     display: flex;
-        flex-direction: column;
-        gap: 5px;
+    flex-direction: column;
+    gap: 5px;
 }
 .SnsBox button {
     height: 50px;
@@ -143,15 +143,11 @@
 }
 /* 구글 정책에 따른 css */
 .gsi_material_button {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    -webkit-appearance: none;
     background-color: WHITE;
     background-image: none;
     border: 1px solid #747775;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     color: #1f1f1f;
