@@ -44,7 +44,7 @@
 }
 
 .errText {
-    font-size: var(--text-base);
+    font-size: var(--text-sm);
     color: var(--color-error);
     margin-top: 5px;
 }

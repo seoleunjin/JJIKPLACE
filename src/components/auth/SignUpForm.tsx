@@ -7,8 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpSchema } from "@/schemas/auth";
 import { z } from "zod";
 import FormSubmitBtn from "@/components/common/FormSubmitBtn";
+import { Router, useRouter } from "next/router";
 
 function SignUpForm() {
+  const router = useRouter();
+
   type FormData = z.infer<typeof SignUpSchema>;
 
   const {
@@ -31,9 +34,9 @@ function SignUpForm() {
     try {
       const res = await SignUpAPI(data);
       console.log("성공", res.data);
-      console.log("정보", data);
       alert("회원가입이 완료되었습니다.");
       reset();
+      router.push("/");
     } catch (err) {
       console.error("실패", err);
     }
@@ -54,7 +57,7 @@ function SignUpForm() {
                 placeholder="예: example@gmail.com"
               />
               {errors.email && (
-                <p className={styles.errText}>{errors.email.message}</p>
+                <p className={styles.errText}>* {errors.email.message}</p>
               )}
             </div>
             {/* 이후에 인증확인으로 바뀔예정 */}
@@ -74,7 +77,7 @@ function SignUpForm() {
                 placeholder="비밀번호를 입력하세요"
               />
               {errors.password && (
-                <p className={styles.errText}>{errors.password.message}</p>
+                <p className={styles.errText}>* {errors.password.message}</p>
               )}
             </div>
           </div>
@@ -93,7 +96,7 @@ function SignUpForm() {
               />
               {errors.passwordConfirm && (
                 <p className={styles.errText}>
-                  {errors.passwordConfirm.message}
+                  * {errors.passwordConfirm.message}
                 </p>
               )}
             </div>
@@ -112,7 +115,7 @@ function SignUpForm() {
                 placeholder="닉네임을 입력하세요"
               />
               {errors.nick_name && (
-                <p className={styles.errText}>{errors.nick_name.message}</p>
+                <p className={styles.errText}>* {errors.nick_name.message}</p>
               )}
             </div>
           </div>
@@ -128,7 +131,7 @@ function SignUpForm() {
                   <span>[필수]이용약관에 동의합니다.</span>
                   {errors.agreeTerms && (
                     <p className={styles.errText}>
-                      {errors.agreeTerms.message}
+                      * {errors.agreeTerms.message}
                     </p>
                   )}
                 </div>
@@ -142,7 +145,7 @@ function SignUpForm() {
                   <span>[필수]개인정보 수집 및 이용에 동의합니다.</span>
                   {errors.agreePrivacy && (
                     <p className={styles.errText}>
-                      {errors.agreePrivacy.message}
+                      * {errors.agreePrivacy.message}
                     </p>
                   )}
                 </div>

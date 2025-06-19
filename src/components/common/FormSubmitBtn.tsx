@@ -7,7 +7,7 @@ function FormSubmitBtn({ title, disabled = false }: FormSubmitBtnProps) {
   return (
     <div
       className={`${styles.formSubmitBtn} ${
-        disabled ? styles.formSubmitBtnDisabled : styles.formSubmitBtnActive
+        disabled ? styles.formSubmitBtn : styles.formSubmitBtnActive
       }`}
     >
       <button type="submit" disabled={disabled}>

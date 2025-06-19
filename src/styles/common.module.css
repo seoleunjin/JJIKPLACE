@@ -15,14 +15,6 @@
     color: var(--color-gray4);
 }
 
-.formSubmitBtnDisabled {
-    background: var(--color-gray2);
-}
-
-.formSubmitBtnDisabled button {
-    color: var(--color-gray4);
-}
-
 .formSubmitBtnActive {
     background: var(--color-brand);
 }

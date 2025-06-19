@@ -34,3 +34,16 @@ export const SignUpSchema = z
     path: ["passwordConfirm"],
     message: "비밀번호가 일치하지 않습니다.",
   });
+
+export const LoginSchema = z.object({
+  email: z
+    .string()
+    .nonempty({ message: "이메일을 입력해주세요." })
+    .email({ message: "올바른 이메일 형식이어야 합니다." }),
+  password: z
+    .string()
+    .min(6, { message: "비밀번호는 최소 6자 이상이어야 합니다." })
+    .regex(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, {
+      message: "비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다.",
+    }),
+});
