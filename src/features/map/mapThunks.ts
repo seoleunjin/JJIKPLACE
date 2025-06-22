@@ -1,4 +1,3 @@
-// features/map/mapThunks.ts
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchClusterData } from "@/api/map";
 import type { MapBounds } from "@/types/api";

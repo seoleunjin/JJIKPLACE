@@ -10,7 +10,7 @@ export default function MapPage() {
       <div className={layoutStyles.layout_wrapper}>
         <KakaoMap></KakaoMap>
         <div>
-          {/* <MapSearch></MapSearch> */}
+          <MapSearch></MapSearch>
           <MapCategory></MapCategory>
         </div>
       </div>

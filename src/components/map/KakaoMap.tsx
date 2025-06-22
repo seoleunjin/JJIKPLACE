@@ -1,4 +1,3 @@
-// components/map/KakaoMap.tsx
 import styles from "@/styles/kakaoMap.module.css";
 import useKakaoLoader from "@/components/map/UseKakaoLoaderOrigin";
 import { useRef } from "react";

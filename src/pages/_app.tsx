@@ -1,5 +1,5 @@
 import Layout from "@/layout/Layout";
-import mapStore from "@/store/mapIndex";
+import Store from "@/store/index";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const PageComponent = Component as PageWithTitle;
   const title = PageComponent.title || "";
   return (
-    <Provider store={mapStore}>
+    <Provider store={Store}>
       <Layout title={title}>
         <Component {...pageProps} />
       </Layout>

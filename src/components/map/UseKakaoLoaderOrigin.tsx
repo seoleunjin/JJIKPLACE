@@ -29,9 +29,5 @@ export default function useKakaoLoader() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (isReady) setLoaded(true);
-  // }, [isReady]);
-
   return loaded;
 }

@@ -1,4 +1,3 @@
-// features/map/mapSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ClusterType, MarkerType, MapState } from "@/types/map";
 

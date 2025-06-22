@@ -12,7 +12,7 @@ function MapSearch() {
         const neLat = 43.0;
         const neLng = 132.0;
 
-        const response = await getMapSearch(swLat, swLng, neLat, neLng);
+        const response = await getMapSearch({ swLat, swLng, neLat, neLng });
         console.log("📌 API 응답 데이터:", response.data);
         setData(response.data);
       } catch (error) {
