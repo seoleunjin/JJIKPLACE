@@ -1,13 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchClusterData } from "@/api/map";
-import type { MapBounds } from "@/types/api";
-import type { ClusterType, MarkerType } from "@/types/map";
-
-interface FetchClustersParams {
-  level: number;
-  bounds: MapBounds;
-  category?: string;
-}
+import type { ClusterType, FetchClustersParams, MarkerType } from "@/types/map";
 
 const getClusterApi = (level: number) => {
   if (level >= 9) return "/cluster/sido";

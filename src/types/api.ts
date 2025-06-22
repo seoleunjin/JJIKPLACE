@@ -14,7 +14,6 @@ interface SignUpType {
 }
 
 //로그인 타입
-
 interface LoginType {
   email: string;
   password: string;

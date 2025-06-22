@@ -1,0 +1,13 @@
+.contentsWrap {
+    position: relative;
+    padding-top: 60px;
+}
+.mapTop {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    top: 70px;
+    z-index: 888;
+    max-width: 706%;
+    width: 92%;
+}

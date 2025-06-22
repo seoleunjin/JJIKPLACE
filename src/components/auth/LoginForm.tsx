@@ -93,7 +93,7 @@ function LoginForm() {
                 <label>
                   <input type="checkbox" />
                   <span className="custom-checkbox" />
-                  아이디 저장
+                  이메일 저장
                 </label>
               </div>
               <div className={styles.LinkBox}>

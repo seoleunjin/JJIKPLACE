@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "@/styles/kakaoMap.module.css";
 import useKakaoLoader from "@/components/map/UseKakaoLoaderOrigin";
 import { useRef } from "react";
@@ -12,7 +14,9 @@ function KakaoMap() {
   const mapRef = useRef<kakao.maps.Map | null>(null);
 
   const dispatch = useAppDispatch();
-  const { level, markers, clusters } = useAppSelector((state) => state.map);
+  const { level, markers, clusters, category } = useAppSelector(
+    (state) => state.map,
+  );
   const { fetchMapData } = useMapDataFetch();
 
   const onClusterclick = (cluster: ClusterType) => {
@@ -31,19 +35,20 @@ function KakaoMap() {
         <Map
           id="map"
           center={{ lat: 35.8691063, lng: 128.5953752 }}
-          style={{ width: "100%", height: "100vh" }}
+          style={{ width: "100%", height: "calc(100vh - 60px)" }}
           level={level}
           onCreate={(map) => {
             mapRef.current = map;
-            fetchMapData(map, map.getLevel());
+            // setMap(map);
+            fetchMapData(map, map.getLevel(), category);
           }}
           onZoomChanged={(map) => {
             const currentLevel = map.getLevel();
             dispatch(setLevel(currentLevel));
-            fetchMapData(map, currentLevel);
+            fetchMapData(map, currentLevel, category);
           }}
           onDragEnd={(map) => {
-            fetchMapData(map, map.getLevel());
+            fetchMapData(map, map.getLevel(), category);
           }}
         >
           {level < 3

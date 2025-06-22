@@ -4,7 +4,6 @@
     width: 100%;
     margin: 0 auto;
     background: var(--color-surface);
-    position: relative;
 }
 .width {
     width: 92%;

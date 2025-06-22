@@ -1,8 +1,12 @@
+import { MapBounds } from "./api";
+
 interface MapState {
   level: number;
   markers: MarkerType[];
   clusters: ClusterType[];
+  category: string;
 }
+
 interface MarkerType {
   id: number;
   lat: number;
@@ -23,4 +27,17 @@ interface MarkerLevel {
   markers: MarkerType[];
 }
 
-export type { MarkerLevel, MapState, MarkerType, ClusterType };
+//mapThunks.ts
+interface FetchClustersParams {
+  level: number;
+  bounds: MapBounds;
+  category?: string;
+}
+
+export type {
+  MarkerLevel,
+  MapState,
+  MarkerType,
+  ClusterType,
+  FetchClustersParams,
+};
