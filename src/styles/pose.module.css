@@ -1,0 +1,49 @@
+/* pose */
+.pose_list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-top: 58px;
+}
+.pose_list div{
+    position: relative;
+}
+.pose_list img{
+    cursor: pointer;
+    border-radius: 14px;
+    overflow: hidden;
+}
+.selectImg img{
+    opacity: 0.5;
+}
+.selectNumber{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--color-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family-SUITE-ExtraBold);
+    font-size: 1.6rem;
+    color: #FFFFFF;
+}
+
+.frame_btn{
+  position: fixed;
+  bottom: 150px;
+  left: calc(50% + 384px); /* 768px 기준 오른쪽 끝 */
+  transform: translateX(-100%);
+  z-index: 999;
+}
+.frame_btn div{
+    background-color: var(--color-brand);
+    width: 65px;
+    height: 65px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}

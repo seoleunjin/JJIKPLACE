@@ -1,40 +1,33 @@
-import { pageMeta } from "@/constants/pageMeta";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import posecss from "@/styles/pose.module.css";
-import { poseImages } from "@/api/poseData";
+import { pageMeta } from "@/constants/pageMeta";
+import { frameImages } from "@/api/poseData";
 import Image from "next/image";
 
-function PosePage() {
+// import poseCss from "@/styles/pose.module.css";
+
+function FramePage() {
   const router = useRouter();
-  // 포즈선택
+
   const [selectPose, setSelectPose] = useState<number[]>([]);
   const select = (id: number) => {
     if (selectPose.includes(id)) {
       setSelectPose(selectPose.filter((item) => item !== id));
     } else {
-      if (selectPose.length >= 4) {
-        alert("최대 4개 선택 가능합니다.");
-        return;
-      }
-      setSelectPose([...selectPose, id]);
+      setSelectPose([id]);
     }
   };
 
-  // 프레임 선택 이동
-  const frameSelect = () => {
-    if (selectPose.length < 4) {
-      alert("포즈를 4개 선택해 주세요.");
-      return;
-    }
-    router.push("/pose/frame");
+  const photoPreview = () => {
+    router.push("/pose/preview");
   };
 
   return (
     <article style={{ paddingTop: "60px" }} className={`${layoutStyles.width}`}>
       <div className={posecss.pose_list}>
-        {poseImages.map((img) => (
+        {frameImages.map((img) => (
           <div
             key={img.id}
             className={selectPose?.includes(img.id) ? posecss.selectImg : ""}
@@ -52,22 +45,20 @@ function PosePage() {
               }}
             />
             {selectPose?.includes(img.id) ? (
-              <p className={posecss.selectNumber}>
-                {selectPose.indexOf(img.id) + 1}
-              </p>
+              <p className={posecss.selectNumber}>✓</p>
             ) : (
               ""
             )}
           </div>
         ))}
       </div>
-      <div className={posecss.frame_btn} onClick={frameSelect}>
+      <div className={posecss.frame_btn} onClick={photoPreview}>
         <div></div>
-        <p>프레임 넣기</p>
+        <p>미리보기</p>
       </div>
     </article>
   );
 }
 
-export default PosePage;
-PosePage.title = pageMeta.pose.title;
+export default FramePage;
+FramePage.title = pageMeta.pose.title;
