@@ -12,6 +12,7 @@ interface MarkerType {
   lat: number;
   lng: number;
   name: string;
+  road_addr: string;
 }
 
 interface ClusterType {

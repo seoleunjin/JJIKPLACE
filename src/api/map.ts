@@ -17,7 +17,7 @@ function fetchClusterData(path: string, bounds: MapBounds, category?: string) {
 
 const getMapSearch = (bounds: MapBounds) => {
   const { swLat, swLng, neLat, neLng } = bounds;
-  return instance.get("/cluster/dongmyeon", {
+  return instance.get("/cluster/marker", {
     params: {
       sw_lat: swLat,
       sw_lng: swLng,

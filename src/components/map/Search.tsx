@@ -1,32 +1,76 @@
-import React, { useEffect, useState } from "react";
 import { getMapSearch } from "@/api/map";
+import { MarkerType } from "@/types/map";
+import { useState } from "react";
 
-function MapSearch() {
-  const [data, setData] = useState(null);
+interface MapSearchProps {
+  onSelectPosition: (pos: { lat: number; lng: number }) => void;
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const swLat = 33.0;
-        const swLng = 124.0;
-        const neLat = 43.0;
-        const neLng = 132.0;
+function MapSearch({ onSelectPosition }: MapSearchProps) {
+  const [value, setValue] = useState("");
+  const [filteredMarkers, setFilteredMarkers] = useState<MarkerType[]>([]);
 
-        const response = await getMapSearch({ swLat, swLng, neLat, neLng });
-        console.log("📌 API 응답 데이터:", response.data);
-        setData(response.data);
-      } catch (error) {
-        console.error("❌ API 호출 실패:", error);
-      }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const handleSearch = async () => {
+    const keyword = value.trim().toLowerCase();
+    if (!keyword) {
+      alert("검색어를 입력해주세요");
+      return;
+    }
+
+    const bounds = {
+      swLat: 33.0,
+      swLng: 124.0,
+      neLat: 39.5,
+      neLng: 132.0,
     };
 
-    fetchData();
-  }, []);
+    try {
+      const response = await getMapSearch(bounds);
+      const markers = response.data.markers;
+
+      const filtered = markers.filter((marker: MarkerType) => {
+        const name = marker.name?.toLowerCase() || "";
+        const addr = marker.road_addr?.toLowerCase() || "";
+        return name.includes(keyword) || addr.includes(keyword);
+      });
+      setFilteredMarkers(filtered);
+    } catch (error) {
+      console.error("검색 중 오류 발생:", error);
+    }
+  };
 
   return (
     <div>
-      <h2>MapSearch</h2>
-      <pre>{data ? JSON.stringify(data, null, 2) : "Loading..."}</pre>
+      <input
+        type="text"
+        placeholder="매장명을 입력하세요"
+        value={value}
+        onChange={handleChange}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleSearch();
+        }}
+      />
+      <button onClick={handleSearch}>검색</button>
+
+      {filteredMarkers.length > 0 && (
+        <ul>
+          {filteredMarkers.slice(0, 5).map((marker) => (
+            <li
+              key={marker.id}
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                onSelectPosition({ lat: marker.lat, lng: marker.lng })
+              }
+            >
+              <strong>{marker.name}</strong> - {marker.road_addr}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
