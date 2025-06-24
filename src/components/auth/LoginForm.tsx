@@ -57,7 +57,7 @@ function LoginForm() {
           {/* 로고 */}
           <div className={styles.LogoBox}>
             <Image
-              src="/LoginLogo.png"
+              src="/images/login/LoginLogo.png"
               width="80"
               height="29"
               alt="로고"
@@ -115,7 +115,7 @@ function LoginForm() {
         <div className={styles.SnsBox}>
           <button onClick={kakaoLogin}>
             <Image
-              src="/kakaoLogo.png"
+              src="/images/login/kakaoLogo.png"
               width={0}
               height={0}
               sizes="100vw"

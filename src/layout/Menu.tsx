@@ -12,10 +12,10 @@ import { MenuProps } from "@/types/layout";
 const Menu = ({ onClose }: MenuProps) => {
   const router = useRouter();
   const menuData = [
-    { id: "menu02", title: "지도", path: "/map" },
-    { id: "menu03", title: "포즈추천", path: "/pose" },
-    { id: "menu04", title: "리뷰등록", path: "/reviewWrite" },
-    { id: "menu05", title: "마이페이지", path: "/user" },
+    { id: "menu01", title: "지도", path: "/map" },
+    { id: "menu02", title: "포즈추천", path: "/pose" },
+    { id: "menu03", title: "리뷰등록", path: "/reviewWrite" },
+    { id: "menu04", title: "마이페이지", path: "/user" },
   ];
 
   return (
@@ -24,7 +24,12 @@ const Menu = ({ onClose }: MenuProps) => {
         <div className={styles.menuHeader}>
           <div>
             <Link href="/" onClick={onClose}>
-              <Image src="/MenuLogo.png" width="82" height="31" alt="로고" />
+              <Image
+                src="/images/common/MenuLogo.png"
+                width="82"
+                height="31"
+                alt="로고"
+              />
             </Link>
           </div>
           <button onClick={onClose} className={styles.menuClose}>

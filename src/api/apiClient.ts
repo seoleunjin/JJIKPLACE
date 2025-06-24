@@ -15,4 +15,9 @@ const authInstance = axios.create({
   },
 });
 
-export { instance, authInstance };
+const userInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
+  withCredentials: true,
+});
+
+export { instance, authInstance, userInstance };
