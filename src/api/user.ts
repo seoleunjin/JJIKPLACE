@@ -1,7 +1,7 @@
-import { userInstance } from "./apiClient";
+import { authInstance } from "./apiClient";
 
 const fetchProfile = () => {
-  return userInstance.get("/profile/me");
+  return authInstance.get("/profile/me");
 };
 
 export { fetchProfile };
