@@ -8,9 +8,12 @@ import { SignUpSchema } from "@/schemas/auth";
 import { z } from "zod";
 import FormSubmitBtn from "@/components/common/FormSubmitBtn";
 import { useRouter } from "next/router";
-import { email } from "zod/v4-mini";
+import { useState } from "react";
 
 function SignUpForm() {
+  const [isEmailAvailable, setIsEmailAvailable] = useState<boolean | null>(
+    null,
+  );
   const router = useRouter();
 
   type FormData = z.infer<typeof SignUpSchema>;
@@ -19,9 +22,9 @@ function SignUpForm() {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    // setError,
-    // getValues,
-    // clearErrors,
+    setError,
+    getValues,
+    clearErrors,
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(SignUpSchema),
@@ -46,26 +49,35 @@ function SignUpForm() {
     }
   };
 
-  // const handleCheckEmail = async () => {
-  //   const email = getValues("email").trim();
+  const handleCheckEmail = async () => {
+    const email = getValues("email").trim();
 
-  //   try {
-  //     const res = await checkEmailAPI(email);
+    try {
+      const res = await checkEmailAPI(email);
 
-  //     // 예: 서버가 { exists: true } 응답한다고 가정
-  //     if (res.status === 200) {
-  //       if (res.data.exists) {
-  //         setError("email", { message: "이미 사용하고 있는 이메일입니다." });
-  //       } else {
-  //         clearErrors("email");
-  //         console.log("사용 가능한 이메일입니다.");
-  //       }
-  //     }
-  //   } catch (err: any) {
-  //     console.error(err);
-  //     setError("email", { message: "오류가 발생했습니다." });
-  //   }
-  // };
+      console.log("응답", res.data);
+
+      setIsEmailAvailable(null);
+      if (!email) {
+        setError("email", { message: "이메일을 입력해주세요." });
+        setIsEmailAvailable(null);
+        return;
+      }
+
+      if (res.status === 200) {
+        if (res.data.available) {
+          clearErrors("email");
+          setIsEmailAvailable(true);
+        } else {
+          clearErrors("email");
+          setIsEmailAvailable(false);
+        }
+      }
+    } catch (err: any) {
+      console.error(err);
+      setError("email", { message: "오류가 발생했습니다." });
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.signUpForm}>
@@ -84,11 +96,19 @@ function SignUpForm() {
               {errors.email && (
                 <p className={styles.errText}>* {errors.email.message}</p>
               )}
+              {isEmailAvailable === true && (
+                <p className={styles.successText}>
+                  * 사용 가능한 이메일입니다.
+                </p>
+              )}
+              {isEmailAvailable === false && (
+                <p className={styles.errText}>* 이미 사용 중인 이메일입니다.</p>
+              )}
             </div>
             {/* 이후에 인증확인으로 바뀔예정 */}
-            {/* <button onClick={handleCheckEmail} className={styles.btn_check}>
+            <button onClick={handleCheckEmail} className={styles.btn_check}>
               중복확인
-            </button> */}
+            </button>
           </div>
         </div>
 
