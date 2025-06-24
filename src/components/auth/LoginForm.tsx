@@ -8,13 +8,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useEffect, useState } from "react";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 function LoginForm() {
-  // const router = useRouter();
-  // 기본 로그인 테이터
+  const router = useRouter();
+
   type LoginFormData = z.infer<typeof LoginSchema>;
+
   const {
     register,
     handleSubmit,
@@ -33,19 +33,27 @@ function LoginForm() {
     try {
       const res = await LoginApi(data);
       console.log("성공", res.data);
+
+      const token = res.data.access_token;
+      if (token) {
+        localStorage.setItem("accessToken", token);
+        router.replace("/");
+      }
+
       reset();
-      // router.push("/");
     } catch (error) {
       console.error("실패", error);
     }
   };
 
-  // 소셜 로그인 링크 연걸
+  // 소셜 로그인 URL
   const kakaoLoginUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/kakao/login`;
   const googleLoginUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google/login`;
+
   const kakaoLogin = () => {
     window.location.href = kakaoLoginUrl;
   };
+
   const googleLogin = () => {
     window.location.href = googleLoginUrl;
   };
@@ -120,6 +128,7 @@ function LoginForm() {
               height={0}
               sizes="100vw"
               alt="카카오로그인"
+              priority
             />
           </button>
           <button onClick={googleLogin} className={styles.gsi_material_button}>

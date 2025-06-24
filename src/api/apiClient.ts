@@ -9,15 +9,17 @@ const instance = axios.create({
 
 const authInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
-  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-const userInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
-  withCredentials: true,
+authInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accessToken");
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
-export { instance, authInstance, userInstance };
+export { instance, authInstance };
