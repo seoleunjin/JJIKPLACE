@@ -8,10 +8,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 function LoginForm() {
-  const router = useRouter();
+  // const router = useRouter();
   // 기본 로그인 테이터
   type LoginFormData = z.infer<typeof LoginSchema>;
   const {
@@ -33,15 +33,15 @@ function LoginForm() {
       const res = await LoginApi(data);
       console.log("성공", res.data);
       reset();
-      router.push("/");
+      // router.push("/");
     } catch (error) {
       console.error("실패", error);
     }
   };
 
   // 소셜 로그인 링크 연걸
-  const kakaoLoginUrl = process.env.NEXT_PUBLIC_KAKAO_LOGIN_URL;
-  const googleLoginUrl = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_URL;
+  const kakaoLoginUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/kakao/login`;
+  const googleLoginUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google/login`;
   const kakaoLogin = () => {
     window.location.href = kakaoLoginUrl ?? "/";
   };

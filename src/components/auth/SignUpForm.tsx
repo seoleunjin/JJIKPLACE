@@ -1,5 +1,5 @@
 "use client";
-import { SignUpAPI } from "@/api/signUp";
+import { checkEmailAPI, SignUpAPI } from "@/api/signUp";
 import styles from "@/styles/signUpForm.module.css";
 import layoutStyles from "@/styles/layout.module.css";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import { SignUpSchema } from "@/schemas/auth";
 import { z } from "zod";
 import FormSubmitBtn from "@/components/common/FormSubmitBtn";
 import { useRouter } from "next/router";
+import { email } from "zod/v4-mini";
 
 function SignUpForm() {
   const router = useRouter();
@@ -18,6 +19,9 @@ function SignUpForm() {
     register,
     handleSubmit,
     formState: { errors, isValid },
+    // setError,
+    // getValues,
+    // clearErrors,
     reset,
   } = useForm<FormData>({
     resolver: zodResolver(SignUpSchema),
@@ -42,6 +46,29 @@ function SignUpForm() {
     }
   };
 
+  // const handleCheckEmail = async () => {
+  //   const email = getValues("email").trim();
+  //   console.log("이메일 값", email);
+
+  //   try {
+  //     const res = await checkEmailAPI(email);
+
+  //     if (res.status === 200) {
+  //       // 서버 응답값(res.data)이 입력한 이메일과 같다면 중복
+  //       if (res.data === email) {
+  //         setError("email", { message: "이미 사용하고 있는 이메일입니다." });
+  //       } else {
+  //         // 사용 가능한 이메일
+  //         clearErrors("email");
+  //         console.log("사용 가능한 이메일입니다.");
+  //         // 또는 필요 시 message state에 저장
+  //       }
+  //     }
+  //   } catch (err: any) {
+  //     setError("email", { message: "오류가 발생했습니다." });
+  //   }
+  // };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.signUpForm}>
       <div className={`${layoutStyles.width} ${styles.signUpFormWrap}`}>
@@ -61,7 +88,9 @@ function SignUpForm() {
               )}
             </div>
             {/* 이후에 인증확인으로 바뀔예정 */}
-            {/* <button className={styles.btn_check}>중복확인</button> */}
+            <button onClick={handleCheckEmail} className={styles.btn_check}>
+              중복확인
+            </button>
           </div>
         </div>
 
