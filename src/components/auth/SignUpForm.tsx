@@ -48,23 +48,21 @@ function SignUpForm() {
 
   // const handleCheckEmail = async () => {
   //   const email = getValues("email").trim();
-  //   console.log("이메일 값", email);
 
   //   try {
   //     const res = await checkEmailAPI(email);
 
+  //     // 예: 서버가 { exists: true } 응답한다고 가정
   //     if (res.status === 200) {
-  //       // 서버 응답값(res.data)이 입력한 이메일과 같다면 중복
-  //       if (res.data === email) {
+  //       if (res.data.exists) {
   //         setError("email", { message: "이미 사용하고 있는 이메일입니다." });
   //       } else {
-  //         // 사용 가능한 이메일
   //         clearErrors("email");
   //         console.log("사용 가능한 이메일입니다.");
-  //         // 또는 필요 시 message state에 저장
   //       }
   //     }
   //   } catch (err: any) {
+  //     console.error(err);
   //     setError("email", { message: "오류가 발생했습니다." });
   //   }
   // };
@@ -88,9 +86,9 @@ function SignUpForm() {
               )}
             </div>
             {/* 이후에 인증확인으로 바뀔예정 */}
-            <button onClick={handleCheckEmail} className={styles.btn_check}>
+            {/* <button onClick={handleCheckEmail} className={styles.btn_check}>
               중복확인
-            </button>
+            </button> */}
           </div>
         </div>
 

@@ -5,4 +5,10 @@ const SignUpAPI = (body: SignUpType) => {
   return authInstance.post("/auth/signup", body);
 };
 
-export { SignUpAPI };
+// const checkEmailAPI = (email: string) => {
+//   return authInstance.post(
+//     `/auth/signup/check-email?email=${encodeURIComponent(email)}`,
+//   );
+// };
+
+export { SignUpAPI, checkEmailAPI };

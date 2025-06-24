@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useEffect, useState } from "react";
 // import { useRouter } from "next/router";
 
 function LoginForm() {
@@ -40,14 +41,23 @@ function LoginForm() {
   };
 
   // 소셜 로그인 링크 연걸
-  const kakaoLoginUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/kakao/login`;
-  const googleLoginUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google/login`;
+  const [kakaoLoginUrl, setKakaoLoginUrl] = useState("");
+  const [googleLoginUrl, setGoogleLoginUrl] = useState("");
+
+  useEffect(() => {
+    setKakaoLoginUrl(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/kakao/login`);
+    setGoogleLoginUrl(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google/login`,
+    );
+  }, []);
+
   const kakaoLogin = () => {
-    window.location.href = kakaoLoginUrl ?? "/";
+    if (kakaoLoginUrl) window.location.href = kakaoLoginUrl;
   };
   const googleLogin = () => {
-    window.location.href = googleLoginUrl ?? "/";
+    if (googleLoginUrl) window.location.href = googleLoginUrl;
   };
+
   return (
     <div className={styles.LoginForm}>
       <div className={styles.FormWrap}>
