@@ -41,21 +41,13 @@ function LoginForm() {
   };
 
   // 소셜 로그인 링크 연걸
-  const [kakaoLoginUrl, setKakaoLoginUrl] = useState("");
-  const [googleLoginUrl, setGoogleLoginUrl] = useState("");
-
-  useEffect(() => {
-    setKakaoLoginUrl(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/kakao/login`);
-    setGoogleLoginUrl(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google/login`,
-    );
-  }, []);
-
+  const kakaoLoginUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/kakao/login`;
+  const googleLoginUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google/login`;
   const kakaoLogin = () => {
-    if (kakaoLoginUrl) window.location.href = kakaoLoginUrl;
+    window.location.href = kakaoLoginUrl;
   };
   const googleLogin = () => {
-    if (googleLoginUrl) window.location.href = googleLoginUrl;
+    window.location.href = googleLoginUrl;
   };
 
   return (
