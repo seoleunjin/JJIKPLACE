@@ -1,12 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
-const data = {
-  email: "test@example.com",
-  nickname: "발로뛰는 토끼",
-  profileImage: "/images/user/UserProfile.png",
-};
 const reviews = [
   {
     id: 1,
@@ -30,39 +24,65 @@ const reviews = [
     content: "무난한 제품이지만 가격 대비 괜찮아요.",
   },
 ];
-interface profile {
+
+interface ProfileType {
   email: string;
   nickname: string;
-  profileImage: string;
+  profile_image: string | null;
 }
-function MyPage() {
-  const [profile, setProfile] = useState<profile | null>(null);
-  useEffect(() => {
-    setProfile(data);
-  }, []);
 
-  return profile ? (
+interface MyPageProps {
+  profile: ProfileType | null;
+  load: boolean;
+}
+
+function MyPage({ profile, load }: MyPageProps) {
+  // 로딩이 끝나고 프로필이 없으면 로그인 유도
+  if (!load) {
+    return (
+      <div>
+        <Image
+          src="/images/user/UserProfile.png"
+          width={120}
+          height={120}
+          alt="로고"
+          priority
+        />
+        <p>로그인 후 이용해주세요</p>
+        <Link href="/auth/Login">로그인</Link>
+      </div>
+    );
+  }
+
+  // 로딩 중이거나 profile이 null인 상태 처리 (비정상 상태일 수 있음)
+  if (!profile) {
+    return <p>프로필 정보를 불러오는 중입니다...</p>;
+  }
+
+  // profile이 존재할 때 렌더링
+  return (
     <div>
       <div>
         {/* 프로필 */}
         <div>
           <div>
             <Image
-              src={data.profileImage || "/images/user/UserProfile.png"}
-              width="120"
-              height="120"
+              src={profile.profile_image || "/images/user/UserProfile.png"}
+              width={120}
+              height={120}
               alt="로고"
               priority
             />
-            <button></button>
+            <button>프로필 수정</button>
           </div>
           <div>
-            <div>{data.nickname}</div>
+            <div>{profile.nickname}</div>
             <div>
               <input type="text" />
             </div>
           </div>
         </div>
+
         {/* 회원정보 */}
         <div>
           <h2>회원정보</h2>
@@ -75,12 +95,13 @@ function MyPage() {
             </thead>
             <tbody>
               <tr>
-                <td>{data.email}</td>
+                <td>{profile.email}</td>
                 <td>*********</td>
               </tr>
             </tbody>
           </table>
         </div>
+
         {/* 리뷰 */}
         <div>
           <h2>리뷰</h2>
@@ -95,8 +116,8 @@ function MyPage() {
                 <div>
                   <Image
                     src={review.photo || "/images/review/NoImage.png"}
-                    width="200"
-                    height="200"
+                    width={200}
+                    height={200}
                     alt="리뷰 이미지"
                   />
                 </div>
@@ -110,20 +131,9 @@ function MyPage() {
           <li>더보기</li>
         </ul>
       </div>
-      {/* 탈퇴 */}
+
+      {/* 탈퇴 및 로그아웃 */}
       <div>로그아웃 | 회원탈퇴</div>
-    </div>
-  ) : (
-    <div>
-      <Image
-        src="/images/user/UserProfile.png"
-        width="120"
-        height="120"
-        alt="로고"
-        priority
-      />
-      <p>로그인 후 이용해주세요</p>
-      <Link href="/auth/Login">로그인</Link>
     </div>
   );
 }
