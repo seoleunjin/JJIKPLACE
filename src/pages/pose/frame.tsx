@@ -10,6 +10,8 @@ import Image from "next/image";
 
 function FramePage() {
   const router = useRouter();
+  const posesQuery = router.query.pose as string | undefined;
+  const poseIds = posesQuery?.split(",").map((id) => parseInt(id)) || [];
 
   const [selectPose, setSelectPose] = useState<number[]>([]);
   const select = (id: number) => {
@@ -21,7 +23,17 @@ function FramePage() {
   };
 
   const photoPreview = () => {
-    router.push("/pose/preview");
+    if (selectPose.length < 1) {
+      alert("프레임을 선택해 주세요.");
+      return;
+    }
+    router.push({
+      pathname: "/pose/preview",
+      query: {
+        pose: poseIds.join(","),
+        frame: selectPose[0],
+      },
+    });
   };
 
   return (

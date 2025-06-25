@@ -28,7 +28,12 @@ function PosePage() {
       alert("포즈를 4개 선택해 주세요.");
       return;
     }
-    router.push("/pose/frame");
+    router.push({
+      pathname: "/pose/frame",
+      query: {
+        pose: selectPose.join(","),
+      },
+    });
   };
 
   return (
