@@ -9,9 +9,14 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { email } from "zod/v4-mini";
 
 function LoginForm() {
   const router = useRouter();
+  // 인풋 상태변환하나
+  const [saveEmail, setSaveEmail] = useState(false);
+  const [getEmail, setGetEmail] = useState("");
 
   type LoginFormData = z.infer<typeof LoginSchema>;
 
@@ -20,6 +25,8 @@ function LoginForm() {
     handleSubmit,
     formState: { errors, isValid },
     reset,
+    watch,
+    setValue,
   } = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
     mode: "onChange",
@@ -28,6 +35,45 @@ function LoginForm() {
       password: "",
     },
   });
+
+  useEffect(() => {
+    const getSaveEmail = localStorage.getItem("saveEmail");
+    if (getSaveEmail) {
+      setGetEmail(getSaveEmail);
+      setSaveEmail(true);
+      setValue("email", getSaveEmail);
+    }
+  }, [setValue]);
+
+  const handleSaveEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    setSaveEmail(checked);
+
+    if (!checked) {
+      localStorage.removeItem("saveEmail");
+    } else {
+      const currentEmail = watch("email");
+      if (currentEmail) {
+        localStorage.setItem("saveEmail", currentEmail);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const emailInputChange = watch((value, { name }) => {
+      if (name === "email") {
+        const currentEmail = value.email;
+        const savedEmail = localStorage.getItem("saveEmail");
+
+        if (savedEmail && savedEmail !== currentEmail) {
+          setSaveEmail(false);
+          localStorage.removeItem("saveEmail");
+        }
+      }
+    });
+
+    return () => emailInputChange.unsubscribe();
+  }, []);
 
   const onSubmit = async (data: LoginFormData) => {
     try {
@@ -39,8 +85,6 @@ function LoginForm() {
         localStorage.setItem("accessToken", token);
         router.replace("/");
       }
-
-      reset();
     } catch (error) {
       console.error("실패", error);
     }
@@ -101,7 +145,11 @@ function LoginForm() {
             <div className={styles.LoginOptions}>
               <div className={styles.SaveBox}>
                 <label>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    onChange={handleSaveEmail}
+                    checked={saveEmail}
+                  />
                   <span className="custom-checkbox" />
                   이메일 저장
                 </label>
