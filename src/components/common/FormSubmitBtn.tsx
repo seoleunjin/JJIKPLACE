@@ -1,13 +1,14 @@
-import styles from "@/styles/common.module.css";
+import commonStyles from "@/styles/common.module.css";
 interface FormSubmitBtnProps {
   title: string;
   disabled?: boolean;
 }
+
 function FormSubmitBtn({ title, disabled = false }: FormSubmitBtnProps) {
   return (
     <div
-      className={`${styles.formSubmitBtn} ${
-        disabled ? styles.formSubmitBtn : styles.formSubmitBtnActive
+      className={`${commonStyles.formSubmitBtn} ${
+        disabled ? commonStyles.formSubmitBtn : commonStyles.formSubmitBtnActive
       }`}
     >
       <button type="submit" disabled={disabled}>

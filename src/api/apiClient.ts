@@ -1,5 +1,9 @@
 import axios from "axios";
 
+const instanceBase = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
+});
+
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
   headers: {
@@ -22,4 +26,4 @@ authInstance.interceptors.request.use((config) => {
   return config;
 });
 
-export { instance, authInstance };
+export { instance, authInstance, instanceBase };

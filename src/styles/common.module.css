@@ -22,3 +22,19 @@
 .formSubmitBtnActive button {
     color: var(--color-surface);
 }
+
+/* 공통 버튼 스타일 */
+.btnBase {
+    font-size: var(--text-sm);
+    color: var(--color-gray3);
+    line-height: 1;
+    padding: 6px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--color-gray3);
+    transition: var(--transition-default);
+    cursor: pointer;
+}
+.btnBase:hover {
+    color: var(--color-brand);
+    border: 1px solid var(--color-brand);
+}
