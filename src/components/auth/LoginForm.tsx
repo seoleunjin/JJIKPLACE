@@ -9,16 +9,21 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 function LoginForm() {
   const router = useRouter();
-  // 기본 로그인 테이터
+
+  const [saveEmail, setSaveEmail] = useState(false);
+
   type LoginFormData = z.infer<typeof LoginSchema>;
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    reset,
+    watch,
+    setValue,
   } = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
     mode: "onChange",
@@ -28,26 +33,71 @@ function LoginForm() {
     },
   });
 
+  useEffect(() => {
+    const getSaveEmail = localStorage.getItem("saveEmail");
+    if (getSaveEmail) {
+      setSaveEmail(true);
+      setValue("email", getSaveEmail);
+    }
+  }, [setValue]);
+
+  const handleSaveEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    setSaveEmail(checked);
+
+    if (!checked) {
+      localStorage.removeItem("saveEmail");
+    } else {
+      const currentEmail = watch("email");
+      if (currentEmail) {
+        localStorage.setItem("saveEmail", currentEmail);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const emailInputChange = watch((value, { name }) => {
+      if (name === "email") {
+        const currentEmail = value.email;
+        const savedEmail = localStorage.getItem("saveEmail");
+
+        if (savedEmail && savedEmail !== currentEmail) {
+          setSaveEmail(false);
+          localStorage.removeItem("saveEmail");
+        }
+      }
+    });
+
+    return () => emailInputChange.unsubscribe();
+  }, [watch]);
+
   const onSubmit = async (data: LoginFormData) => {
     try {
       const res = await LoginApi(data);
       console.log("성공", res.data);
-      reset();
-      router.push("/");
+
+      const token = res.data.access_token;
+      if (token) {
+        localStorage.setItem("accessToken", token);
+        router.replace("/");
+      }
     } catch (error) {
       console.error("실패", error);
     }
   };
 
-  // 소셜 로그인 링크 연걸
-  const kakaoLoginUrl = process.env.NEXT_PUBLIC_KAKAO_LOGIN_URL;
-  const googleLoginUrl = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_URL;
+  // 소셜 로그인 URL
+  const kakaoLoginUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/kakao/login`;
+  const googleLoginUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google/login`;
+
   const kakaoLogin = () => {
-    window.location.href = kakaoLoginUrl ?? "/";
+    window.location.href = kakaoLoginUrl;
   };
+
   const googleLogin = () => {
-    window.location.href = googleLoginUrl ?? "/";
+    window.location.href = googleLoginUrl;
   };
+
   return (
     <div className={styles.LoginForm}>
       <div className={styles.FormWrap}>
@@ -55,7 +105,7 @@ function LoginForm() {
           {/* 로고 */}
           <div className={styles.LogoBox}>
             <Image
-              src="/LoginLogo.png"
+              src="/images/login/LoginLogo.png"
               width="80"
               height="29"
               alt="로고"
@@ -91,9 +141,13 @@ function LoginForm() {
             <div className={styles.LoginOptions}>
               <div className={styles.SaveBox}>
                 <label>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    onChange={handleSaveEmail}
+                    checked={saveEmail}
+                  />
                   <span className="custom-checkbox" />
-                  아이디 저장
+                  이메일 저장
                 </label>
               </div>
               <div className={styles.LinkBox}>
@@ -113,11 +167,12 @@ function LoginForm() {
         <div className={styles.SnsBox}>
           <button onClick={kakaoLogin}>
             <Image
-              src="/kakaoLogo.png"
+              src="/images/login/kakaoLogo.png"
               width={0}
               height={0}
               sizes="100vw"
               alt="카카오로그인"
+              priority
             />
           </button>
           <button onClick={googleLogin} className={styles.gsi_material_button}>

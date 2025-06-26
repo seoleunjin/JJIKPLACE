@@ -6,7 +6,12 @@ function Footer() {
   return (
     <div className={`${styles.footer} ${layoutStyles.layout_wrapper}`}>
       <div className={`${styles.footerWrap} ${layoutStyles.width}`}>
-        <Image src="/flogo.png" width="82" height="31" alt="로고" />
+        <Image
+          src="/images/common/flogo.png"
+          width="82"
+          height="31"
+          alt="로고"
+        />
         <p>© 2025 JJIKPLACE. ALL RIGHTS RESERVE</p>
       </div>
     </div>

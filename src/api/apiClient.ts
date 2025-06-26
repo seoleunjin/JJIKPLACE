@@ -1,5 +1,9 @@
 import axios from "axios";
 
+const instanceBase = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
+});
+
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
   headers: {
@@ -9,10 +13,17 @@ const instance = axios.create({
 
 const authInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
-  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-export { instance, authInstance };
+authInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accessToken");
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export { instance, authInstance, instanceBase };

@@ -1,0 +1,132 @@
+/* 공통 */
+.title {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+}
+.title h2 {
+    font-size: var(--text-xl);
+    font-weight: 700;
+}
+.py_space {
+    padding: 24px 0;
+}
+/* 비회원 */
+.NonMember {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+.LoginLink {
+    display: inline-block;
+    line-height: 45px;
+    max-width: 180px;
+    color: var(--color-surface);
+    border-radius: 5px;
+    font-size: var(--text-lg);
+    font-weight: 700;
+    width: 100%;
+    background: var(--color-brand);
+}
+/* 프로필 */
+.MyPage {
+    position: relative;
+    min-height: calc(100vh - 405px);
+}
+.profileBox {
+    text-align: center;
+}
+.profileBox .boxWrap {
+    display: flex;
+    justify-content: center;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+}
+.profileBox .imageBox {
+    width: 120px;
+    border-radius: 50%;
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+}
+.profileBox .imageBox img {
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    object-fit: cover;
+}
+.editProfile {
+    width: 35px;
+    height: 35px;
+    z-index: 999;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.editProfile input {
+    display: none;
+}
+.nickNameBox {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nickNameBox .boxWrap {
+    position: relative;
+}
+.nickNameBox h2 {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+}
+.editNick {
+    position: absolute;
+    right: -19px;
+    bottom: 20%;
+}
+
+/* 회원 정보 */
+.infoBox {
+    margin-top: 48px;
+    border-top: 10px solid var(--color-secondary4);
+    border-bottom: 10px solid var(--color-secondary4);
+}
+.infoList {width: 100%;}
+.infoList li {
+    display: flex;
+    margin-bottom: 12px;
+}
+.infoList li:last-child {
+    margin-bottom: 0;
+}
+.infoList li .linkWrap {
+    width: calc(100% - 100px);
+    display: flex;
+    justify-content: space-between;
+}
+.infoList h6 {
+    font-size: var(--text-lg);
+    width: 100px;
+}
+.infoList p {
+    font-size: var(--text-lg);
+}
+.LinkBtn {
+    color: var(--color-gray3);
+}
+
+
+/* 푸터 */
+.MyPageFooter {
+    text-align: center;
+    margin-top: 48px;
+}
+.MyPageFooter button {
+    color: var(--color-gray4);
+}
