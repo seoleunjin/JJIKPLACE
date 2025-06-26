@@ -10,22 +10,70 @@ const Preview = () => {
   const frameId = parseInt(router.query.frame as string, 10);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   // 쿼리에서 포즈/프레임 정보 받아오기
   const poseImages = poseIds.map(
     (id) => `/images/pose/pose/pose${String(id).padStart(2, "0")}.png`,
   );
-
-  const frameImage = "/images/pose/realframe/realframe01.png";
-  // const frameImage = `/images/pose/frame/frame${String(frameId).padStart(2, "0")}.png`;
+  const frameImage = `/images/pose/realframe/realframe${String(frameId).padStart(2, "0")}.png`;
 
   useEffect(() => {
+    if (!router.isReady) return;
+
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    type FrameLayout = {
+      frameImage: string;
+      layout: { x: number; y: number; width: number; height: number }[];
+    };
+    const frameLayouts: Record<number, FrameLayout> = {
+      1: {
+        frameImage: "/images/pose/realframe/realframe01.png",
+        layout: [
+          { x: 0.108, y: 0.02, width: 0.382, height: 0.382 },
+          { x: 0.51, y: 0.02, width: 0.382, height: 0.382 },
+          { x: 0.108, y: 0.412, width: 0.382, height: 0.382 },
+          { x: 0.51, y: 0.412, width: 0.382, height: 0.382 },
+        ],
+      },
+      2: {
+        frameImage: "/images/pose/realframe/realframe02.png",
+        layout: [
+          { x: 0.375, y: 0.0, width: 0.25, height: 0.25 },
+          { x: 0.375, y: 0.25, width: 0.25, height: 0.25 },
+          { x: 0.375, y: 0.5, width: 0.25, height: 0.25 },
+          { x: 0.375, y: 0.75, width: 0.25, height: 0.25 },
+        ],
+      },
+      3: {
+        frameImage: "/images/pose/realframe/realframe03.png",
+        layout: [
+          { x: 0.108, y: 0.156, width: 0.382, height: 0.382 },
+          { x: 0.51, y: 0.06, width: 0.382, height: 0.382 },
+          { x: 0.108, y: 0.558, width: 0.382, height: 0.382 },
+          { x: 0.51, y: 0.462, width: 0.382, height: 0.382 },
+        ],
+      },
+      4: {
+        frameImage: "/images/pose/realframe/realframe04.png",
+        layout: [
+          { x: 0.17, y: 0.0, width: 0.33, height: 0.33 },
+          { x: 0.5, y: 0.0, width: 0.33, height: 0.33 },
+          { x: 0.17, y: 0.335, width: 0.33, height: 0.33 },
+          { x: 0.5, y: 0.335, width: 0.33, height: 0.33 },
+          { x: 0.17, y: 0.67, width: 0.33, height: 0.33 },
+          { x: 0.5, y: 0.67, width: 0.33, height: 0.33 },
+        ],
+      },
+      // 프레임 2~4도 여기에 추가로 정의
+    };
 
-    const canvasWidth = 800;
-    const canvasHeight = 800;
+    const canvasWidth = container.clientWidth;
+    const canvasHeight = container.clientWidth;
     canvas.width = canvasWidth;
     canvas.height = canvasHeight;
 
@@ -35,40 +83,36 @@ const Preview = () => {
       loadImage(frameImage),
     ];
 
-    Promise.all(images).then(([pose1, pose2, pose3, pose4, frame]) => {
-      // 배경색
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    Promise.all(images).then((loadedImages) => {
+      const layoutData = frameLayouts[frameId] || frameLayouts[1];
+      const poses = loadedImages.slice(0, layoutData.layout.length);
+      const frame = loadedImages[layoutData.layout.length];
 
-      // 포즈 4개를 2x2로 배치
-      const halfW = canvasWidth / 2;
-      const halfH = canvasHeight / 2;
-      ctx.drawImage(pose1, 0, 0, halfW, halfH);
-      ctx.drawImage(pose2, halfW, 0, halfW, halfH);
-      ctx.drawImage(pose3, 0, halfH, halfW, halfH);
-      ctx.drawImage(pose4, halfW, halfH, halfW, halfH);
-      // 프레임을 맨 위에 전체 덮어 씌움
-      ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);
+      layoutData.layout.forEach((pos, i) => {
+        const img = poses[i];
+        if (!img) return;
+        ctx.drawImage(
+          img,
+          pos.x * canvasWidth,
+          pos.y * canvasHeight,
+          pos.width * canvasWidth,
+          pos.height * canvasHeight,
+        );
+      });
 
-      // const innerPadding = 40; // 프레임 두께를 고려한 여백
-      // const halfW = (canvasWidth - innerPadding * 2) / 2;
-      // const halfH = (canvasHeight - innerPadding * 2) / 2;
-      // const offsetX = innerPadding;
-      // const offsetY = innerPadding;
-      // // 사진 그리기 (프레임 안에 위치하게)
-      // ctx.drawImage(pose1, offsetX + 0, offsetY + 0, halfW, halfH);
-      // ctx.drawImage(pose2, offsetX + halfW, offsetY + 0, halfW, halfH);
-      // ctx.drawImage(pose3, offsetX + 0, offsetY + halfH, halfW, halfH);
-      // ctx.drawImage(pose4, offsetX + halfW, offsetY + halfH, halfW, halfH);
-      // // 프레임은 그대로 맨 위에 덮기
-      // ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);
+      if (frame) {
+        ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);
+      }
     });
-  }, []);
+  }, [router.isReady, router.query]);
 
   return (
     <article style={{ paddingTop: "60px" }} className={`${layoutStyles.width}`}>
       <h1>미리보기</h1>
-      <canvas ref={canvasRef} style={{ border: "1px solid #ccc" }} />
+      <div ref={containerRef} style={{ width: "100%" }}>
+        <canvas ref={canvasRef} style={{ width: "100%", height: "auto" }} />
+      </div>
+      <p>필터변경</p>
     </article>
   );
 };
