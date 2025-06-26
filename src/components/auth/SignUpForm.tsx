@@ -65,7 +65,7 @@ function SignUpForm() {
       console.log("성공", res.data);
       alert("회원가입이 완료되었습니다.");
       reset();
-      router.replace("/auth/Login");
+      router.replace("/auth/login");
     } catch (err) {
       console.error("실패", err);
     }

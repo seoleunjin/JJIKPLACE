@@ -10,13 +10,11 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { email } from "zod/v4-mini";
 
 function LoginForm() {
   const router = useRouter();
-  // 인풋 상태변환하나
+
   const [saveEmail, setSaveEmail] = useState(false);
-  const [getEmail, setGetEmail] = useState("");
 
   type LoginFormData = z.infer<typeof LoginSchema>;
 
@@ -24,7 +22,6 @@ function LoginForm() {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    reset,
     watch,
     setValue,
   } = useForm<LoginFormData>({
@@ -39,7 +36,6 @@ function LoginForm() {
   useEffect(() => {
     const getSaveEmail = localStorage.getItem("saveEmail");
     if (getSaveEmail) {
-      setGetEmail(getSaveEmail);
       setSaveEmail(true);
       setValue("email", getSaveEmail);
     }
@@ -73,7 +69,7 @@ function LoginForm() {
     });
 
     return () => emailInputChange.unsubscribe();
-  }, []);
+  }, [watch]);
 
   const onSubmit = async (data: LoginFormData) => {
     try {
