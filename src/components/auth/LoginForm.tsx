@@ -79,7 +79,7 @@ function LoginForm() {
       const token = res.data.access_token;
       if (token) {
         localStorage.setItem("accessToken", token);
-        router.replace("/");
+        router.replace("/user");
       }
     } catch (error) {
       console.error("실패", error);
@@ -151,7 +151,7 @@ function LoginForm() {
                 </label>
               </div>
               <div className={styles.LinkBox}>
-                <Link href="/auth/SignUp">회원가입</Link>
+                <Link href="/auth/signUp">회원가입</Link>
               </div>
             </div>
             <button

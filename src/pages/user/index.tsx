@@ -7,28 +7,24 @@ import { profileType } from "@/types/user";
 
 function UserPage() {
   const [profile, setProfile] = useState<profileType | null>(null);
-  const [load, setLoad] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const token = localStorage.getItem("accessToken");
-
-      if (!token) {
-        setLoad(false);
-      }
       try {
         const res = await fetchProfile();
-        console.log("epdljx", res);
         const user = res.data.user;
         setProfile(user);
       } catch {
-        setLoad(false);
+        setIsLoading(false);
+        alert("로그인 후 이용해주세요.");
       }
     };
     fetchUserProfile();
   }, []);
   return (
     <div className={layoutStyles.py_space}>
-      <MyPage profile={profile} load={load}></MyPage>
+      <MyPage profile={profile} isLoading={isLoading}></MyPage>
     </div>
   );
 }

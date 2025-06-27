@@ -1,3 +1,31 @@
+/* 노리뷰 */
+.NoReviewBox {
+    text-align: center;
+    margin-top: 24px;
+}
+.NoReviewBox .TextBox {
+    margin-top: 36px;
+    margin-bottom: 24px;
+}
+.NoReviewBox .TextBox p{
+    font-size: var(--text-xl);
+    color: var(--color-gray4);
+    margin-bottom: 8px;
+}
+.NoReviewBox .TextBox span {
+    color: var(--color-gray4);
+}
+.NoReviewBox .reviewLink{
+    display: inline-block;
+    line-height: 50px;
+    max-width: 180px;
+    color: var(--color-surface);
+    border-radius: 5px;
+    font-size: var(--text-lg);
+    width: 100%;
+    background: var(--color-brand);
+}
+/* 리뷰 */
 .reviewBox {
     width: 100%;
 }
@@ -25,15 +53,23 @@
     font-weight: 700;
     margin-bottom: 4px;
     margin-top: 24px;
+    display: -webkit-box;
+    display: box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .reviewContent p {
     margin-top: 12px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     display: -webkit-box;
     display: box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
     line-height: 1.4;
     -webkit-box-orient: vertical;
     box-orient: vertical;
@@ -41,5 +77,7 @@
     text-overflow: ellipsis;
 }
 .reviewContent span {
+    font-size: var(--text-sm);
+    text-align: right;
     color: var(--color-gray3);
 }

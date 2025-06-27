@@ -29,6 +29,7 @@
     color: var(--color-gray3);
     line-height: 1;
     padding: 6px 12px;
+    padding-top: 8px;
     border-radius: 100px;
     border: 1px solid var(--color-gray3);
     transition: var(--transition-default);
@@ -37,4 +38,27 @@
 .btnBase:hover {
     color: var(--color-brand);
     border: 1px solid var(--color-brand);
+}
+
+/* 리뷰 별 */
+.starWrap {
+    position: relative;
+    width: 78px;
+    height: 20px;
+}
+
+.star {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+}
+
+.StarActive {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    overflow: hidden;
+    white-space: nowrap;
 }
