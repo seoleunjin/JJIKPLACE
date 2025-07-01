@@ -27,8 +27,8 @@ function MyPage({ profile, isLoading }: MyPageProps) {
 
     try {
       const { data } = await patchProfileImage(image_file);
-      console.log("프로필 변경 성공", data);
-      const freshProfile = await fetchProfile();
+      console.log("프로필 변경 성공", data); // 여기 data 콘솔찍으면 값이 들어오는데.
+      const freshProfile = await fetchProfile(); // 여기에서 유저의 데이터를 다시 받아올때, 이미지 정보가 없음
       setUserImage(freshProfile.data);
     } catch (err: any) {
       console.error("오류", err.response?.data || err.message);

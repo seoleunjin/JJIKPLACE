@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import layoutStyles from "@/styles/layout.module.css";
+import posecss from "@/styles/pose.module.css";
 import { pageMeta } from "@/constants/pageMeta";
 import { useRouter } from "next/router";
 // import poseCss from "@/styles/pose.module.css";
@@ -99,7 +100,6 @@ const Preview = () => {
           pos.height * canvasHeight,
         );
       });
-
       if (frame) {
         ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);
       }
@@ -108,9 +108,8 @@ const Preview = () => {
 
   return (
     <article style={{ paddingTop: "60px" }} className={`${layoutStyles.width}`}>
-      <h1>미리보기</h1>
-      <div ref={containerRef} style={{ width: "100%" }}>
-        <canvas ref={canvasRef} style={{ width: "100%", height: "auto" }} />
+      <div className={posecss.frame_wrapper} ref={containerRef}>
+        <canvas className={posecss.frame_canvas} ref={canvasRef} />
       </div>
       <p>필터변경</p>
     </article>

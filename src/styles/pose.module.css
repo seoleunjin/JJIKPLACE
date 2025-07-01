@@ -32,11 +32,15 @@
     color: #FFFFFF;
 }
 
+/* fixed button */
 .frame_btn{
   position: fixed;
-  bottom: 150px;
-  left: calc(50% + 384px); /* 768px 기준 오른쪽 끝 */
-  transform: translateX(-100%);
+  bottom: 120px;
+  right: max(calc((100vw - 768px) / 2 + 20px), 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   z-index: 999;
 }
 .frame_btn div{
@@ -46,4 +50,15 @@
     margin-bottom: 10px;
     border-radius: 50%;
     cursor: pointer;
+}
+
+
+/* preview */
+.frame_wrapper{
+    width: 100%;
+    margin: 50px 0;
+}
+.frame_canvas{
+    width: 100%;
+    height: auto;
 }
