@@ -5,13 +5,14 @@ import layoutStyles from "@/styles/layout.module.css";
 import styles from "@/styles/myPage.module.css";
 import { SplitArrowIcon } from "@/assets/icons";
 import MyPageReview from "./MyPageReview";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { patchProfileImage } from "@/api/user";
+import { fetchProfile, patchProfileImage } from "@/api/user";
 
 function MyPage({ profile, isLoading }: MyPageProps) {
   const router = useRouter();
   const flieInput = useRef<HTMLInputElement>(null);
+  const [userImage, setUserImage] = useState(profile?.profile_image);
   // 이미지 인풋과 연동
   const onclickImage = () => {
     if (flieInput.current) {
@@ -25,8 +26,10 @@ function MyPage({ profile, isLoading }: MyPageProps) {
     console.log("전송할 파일", image_file);
 
     try {
-      const data = await patchProfileImage(image_file);
+      const { data } = await patchProfileImage(image_file);
       console.log("프로필 변경 성공", data);
+      const freshProfile = await fetchProfile();
+      setUserImage(freshProfile.data);
     } catch (err: any) {
       console.error("오류", err.response?.data || err.message);
     }
@@ -70,7 +73,7 @@ function MyPage({ profile, isLoading }: MyPageProps) {
           <div className={styles.boxWrap}>
             <div className={styles.imageBox}>
               <Image
-                src={profile.profile_image || "/images/user/UserProfile.png"}
+                src={userImage || "/images/user/UserProfile.png"}
                 width={120}
                 height={120}
                 alt="프로필"

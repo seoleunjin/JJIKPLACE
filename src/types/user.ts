@@ -21,4 +21,24 @@ interface MyReviewType {
   ps_id: number;
   name: string;
 }
-export type { profileType, MyPageProps, MyReviewType };
+
+// 내 리뷰
+interface MyReviewDetail {
+  has_more: boolean;
+  items: MyReviewitem | null;
+  page: number;
+  size: number;
+  total: number;
+}
+
+interface MyReviewitem {
+  review_id: number;
+  ps_id: number;
+  name: string;
+  content: string;
+  rating: number;
+  image_url: string | null;
+  created_at: string;
+  updated_at: string;
+}
+export type { profileType, MyPageProps, MyReviewType, MyReviewDetail };
