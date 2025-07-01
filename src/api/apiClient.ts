@@ -26,4 +26,16 @@ authInstance.interceptors.request.use((config) => {
   return config;
 });
 
-export { instance, authInstance, instanceBase };
+const userInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
+});
+
+userInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("accessToken");
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+export { instance, authInstance, instanceBase, userInstance };

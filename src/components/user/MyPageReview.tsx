@@ -50,9 +50,9 @@ function MyPageReview() {
           <div className={layoutStyles.width}>
             <div className={MyPageStyles.title}>
               <h2>내 리뷰</h2>
-              <button type="button" className={commonStyles.btnBase}>
+              <Link href={"/user/writeReview"} className={commonStyles.btnBase}>
                 관리
-              </button>
+              </Link>
             </div>
           </div>
           <div className={styles.reviewSwiper}>

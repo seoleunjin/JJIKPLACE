@@ -1,4 +1,4 @@
-import { authInstance } from "./apiClient";
+import { authInstance, userInstance } from "./apiClient";
 
 const fetchProfile = () => {
   return authInstance.get("/profile/me");
@@ -8,10 +8,15 @@ const fetchMyReviews = () => {
   return authInstance.get("/profile/my-reviews");
 };
 
-const patchProfileImage = (imageFile: File) => {
+const patchProfileImage = (image_file: File) => {
   const formData = new FormData();
-  formData.append("image_file", imageFile);
+  formData.append("image_file", image_file);
 
-  return authInstance.patch("/profile/image", formData);
+  return userInstance.patch("/profile/image", formData);
 };
-export { fetchProfile, fetchMyReviews, patchProfileImage };
+
+const fetchReviewDetail = () => {
+  return authInstance.get("/profile/my-reviews/detail");
+};
+
+export { fetchProfile, fetchMyReviews, patchProfileImage, fetchReviewDetail };

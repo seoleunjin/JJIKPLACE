@@ -5,8 +5,9 @@ import layoutStyles from "@/styles/layout.module.css";
 import styles from "@/styles/myPage.module.css";
 import { SplitArrowIcon } from "@/assets/icons";
 import MyPageReview from "./MyPageReview";
-import React, { ChangeEvent, useRef } from "react";
+import React, { useRef } from "react";
 import { useRouter } from "next/router";
+import { patchProfileImage } from "@/api/user";
 
 function MyPage({ profile, isLoading }: MyPageProps) {
   const router = useRouter();
@@ -18,10 +19,18 @@ function MyPage({ profile, isLoading }: MyPageProps) {
     }
   };
   // 프로필 체인지
-  // const handleEditProfile = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const imageFile = e.target.files;
-  //   console.log("파일 링크", imageFile);
-  // };
+  const handleEditProfile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const image_file = e.target.files?.[0];
+    if (!image_file) return;
+    console.log("전송할 파일", image_file);
+
+    try {
+      const data = await patchProfileImage(image_file);
+      console.log("프로필 변경 성공", data);
+    } catch (err: any) {
+      console.error("오류", err.response?.data || err.message);
+    }
+  };
   // 로그아웃
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
@@ -81,8 +90,8 @@ function MyPage({ profile, isLoading }: MyPageProps) {
               <input
                 type="file"
                 id="profile-upload"
-                // onChange={handleEditProfile}
-                accept="image/jpg,impge/png,image/jpeg"
+                onChange={handleEditProfile}
+                accept="image/jpg,image/png,image/jpeg"
                 ref={flieInput}
               />
             </div>
