@@ -17,13 +17,15 @@ export default function MapPage() {
     <div className={styles.mapPage}>
       <div className={styles.contentsWrap}>
         <div className={styles.mapWrap}>
-          <KakaoMap></KakaoMap>
+          <KakaoMap selectedPosition={selectedPosition}></KakaoMap>
         </div>
         <div className={styles.mapTop}>
           <MapCategory></MapCategory>
-          {/* <MapSearch></MapSearch> */}
+          <MapSearch onSelectPosition={setSelectedPosition}></MapSearch>
         </div>
-        <div></div>
+        <div className={styles.listWrap}>
+          <StoreList></StoreList>
+        </div>
       </div>
     </div>
   );

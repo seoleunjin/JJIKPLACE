@@ -1,3 +1,4 @@
+
 .contentsWrap {
     position: relative;
     padding-top: 60px;
@@ -6,8 +7,17 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
-    top: 70px;
+    top: 250px;
     z-index: 888;
-    max-width: 706%;
+    max-width: 706px;
     width: 92%;
+}
+
+.listWrap {
+    background: var(--color-surface);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 888;
+    width: 100%;
 }

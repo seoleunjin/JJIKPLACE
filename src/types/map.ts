@@ -12,6 +12,8 @@ interface MarkerType {
   lat: number;
   lng: number;
   name: string;
+  review_avg_score: number;
+  review_cnt: number;
   road_addr: string;
 }
 
