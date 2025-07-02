@@ -9,17 +9,22 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { MyReviewType } from "@/types/user";
 import ReviewStar from "../common/ReviewStar";
+import { useRouter } from "next/router";
 
 function MyPageReview() {
+  const router = useRouter();
   const [reviews, setReviews] = useState<MyReviewType[]>([]);
   useEffect(() => {
     const getMyReviews = async () => {
       try {
         const { data } = await fetchMyReviews();
-        console.log("리뷰 응답", data);
         setReviews(data);
       } catch (err) {
-        console.error("응답에러", err);
+        if (err.response?.status === 401) {
+          router.replace("/auth/login");
+        } else {
+          console.error("리뷰 불러오기 실패", err);
+        }
       }
     };
     getMyReviews();
@@ -50,7 +55,7 @@ function MyPageReview() {
           <div className={layoutStyles.width}>
             <div className={MyPageStyles.title}>
               <h2>내 리뷰</h2>
-              <Link href={"/user/writeReview"} className={commonStyles.btnBase}>
+              <Link href={"/user/myReview"} className={commonStyles.btnBase}>
                 관리
               </Link>
             </div>

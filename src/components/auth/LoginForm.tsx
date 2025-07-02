@@ -74,7 +74,6 @@ function LoginForm() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const res = await LoginApi(data);
-      console.log("성공", res.data);
 
       const token = res.data.access_token;
       if (token) {

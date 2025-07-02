@@ -49,7 +49,6 @@
     object-fit: cover;
 }
 .reviewContent h6 {
-    font-size: var(--text-lg);
     font-weight: 700;
     margin-bottom: 4px;
     margin-top: 24px;

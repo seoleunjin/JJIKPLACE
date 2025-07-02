@@ -1,35 +1,44 @@
-import { MyPageProps } from "@/types/user";
+import { MyPageProps, profileType } from "@/types/user";
 import Image from "next/image";
 import Link from "next/link";
 import layoutStyles from "@/styles/layout.module.css";
 import styles from "@/styles/myPage.module.css";
 import { SplitArrowIcon } from "@/assets/icons";
 import MyPageReview from "./MyPageReview";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { fetchProfile, patchProfileImage } from "@/api/user";
+import { patchProfileImage } from "@/api/user";
 
 function MyPage({ profile, isLoading }: MyPageProps) {
   const router = useRouter();
   const flieInput = useRef<HTMLInputElement>(null);
-  const [userImage, setUserImage] = useState(profile?.profile_image);
+  const [localProfile, setLocalProfile] = useState<profileType | null>(profile);
+
   // 이미지 인풋과 연동
   const onclickImage = () => {
     if (flieInput.current) {
       flieInput.current.click();
     }
   };
+
+  // 프로필 바뀌면 새로 바뀌게
+  useEffect(() => {
+    setLocalProfile(profile);
+  }, [profile]);
+
   // 프로필 체인지
   const handleEditProfile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const image_file = e.target.files?.[0];
     if (!image_file) return;
-    console.log("전송할 파일", image_file);
+    // console.log("전송할 파일", image_file);
 
     try {
       const { data } = await patchProfileImage(image_file);
-      console.log("프로필 변경 성공", data); // 여기 data 콘솔찍으면 값이 들어오는데.
-      const freshProfile = await fetchProfile(); // 여기에서 유저의 데이터를 다시 받아올때, 이미지 정보가 없음
-      setUserImage(freshProfile.data);
+      const newImage = data.profile_image;
+      setLocalProfile((prev) => ({
+        ...prev!,
+        profile_image: newImage,
+      }));
     } catch (err: any) {
       console.error("오류", err.response?.data || err.message);
     }
@@ -73,7 +82,9 @@ function MyPage({ profile, isLoading }: MyPageProps) {
           <div className={styles.boxWrap}>
             <div className={styles.imageBox}>
               <Image
-                src={userImage || "/images/user/UserProfile.png"}
+                src={
+                  localProfile?.profile_image || "/images/user/UserProfile.png"
+                }
                 width={120}
                 height={120}
                 alt="프로필"

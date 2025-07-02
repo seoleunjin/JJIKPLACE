@@ -41,4 +41,11 @@ interface MyReviewitem {
   created_at: string;
   updated_at: string;
 }
-export type { profileType, MyPageProps, MyReviewType, MyReviewDetail };
+
+export type {
+  profileType,
+  MyPageProps,
+  MyReviewType,
+  MyReviewDetail,
+  MyReviewitem,
+};

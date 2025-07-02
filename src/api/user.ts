@@ -15,8 +15,20 @@ const patchProfileImage = (image_file: File) => {
   return userInstance.patch("/profile/image", formData);
 };
 
-const fetchReviewDetail = () => {
-  return authInstance.get("/profile/my-reviews/detail");
+const fetchReviewDetail = ({ page, size }: { page: number; size: number }) => {
+  return authInstance.get(
+    `/profile/my-reviews/detail?page=${page}&size=${size}`,
+  );
 };
 
-export { fetchProfile, fetchMyReviews, patchProfileImage, fetchReviewDetail };
+const deleteReview = (reviewId: number) => {
+  return authInstance.delete(`/profile/reviews/${reviewId}`);
+};
+
+export {
+  fetchProfile,
+  fetchMyReviews,
+  patchProfileImage,
+  fetchReviewDetail,
+  deleteReview,
+};

@@ -3,6 +3,7 @@
     margin-bottom: 24px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .title h2 {
     font-size: var(--text-xl);
