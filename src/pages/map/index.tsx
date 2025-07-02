@@ -1,5 +1,4 @@
 "use client";
-import layoutStyles from "@/styles/layout.module.css";
 import { pageMeta } from "@/constants/pageMeta";
 import KakaoMap from "@/components/map/KakaoMap";
 import MapSearch from "@/components/map/Search";
@@ -16,19 +15,15 @@ export default function MapPage() {
   console.log("선택된 마커", selectedPosition);
   return (
     <div className={styles.mapPage}>
-      <div className={layoutStyles.layout_wrapper}>
-        <div className={styles.contentsWrap}>
-          <div className={styles.mapWrap}>
-            <KakaoMap selectedPosition={selectedPosition} />
-          </div>
-          <div className={styles.mapTop}>
-            <MapSearch onSelectPosition={setSelectedPosition} />
-            <MapCategory />
-          </div>
-          <div>
-            <StoreList />
-          </div>
+      <div className={styles.contentsWrap}>
+        <div className={styles.mapWrap}>
+          <KakaoMap></KakaoMap>
         </div>
+        <div className={styles.mapTop}>
+          <MapCategory></MapCategory>
+          {/* <MapSearch></MapSearch> */}
+        </div>
+        <div></div>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 .layout_wrapper {
     max-width: 768px;
-    min-width: 300px;
     width: 100%;
     margin: 0 auto;
     background: var(--color-surface);
@@ -9,7 +8,6 @@
     width: 92%;
     margin:  0 auto;
 }
-
 .body_wrap {
     min-height: calc(100vh - 153px);
 }

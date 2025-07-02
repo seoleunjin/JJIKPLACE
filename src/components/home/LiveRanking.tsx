@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomeStyles from "@/styles/home.module.css";
+import { RankingItem, RankingType } from "@/types/homeType";
+import { liveRankingAPI } from "@/api/homeApi";
 
 function LiveRanking() {
   const data = [
@@ -54,6 +56,27 @@ function LiveRanking() {
       count: 50,
     },
   ];
+
+  const [ranking, setRanking] = useState<RankingItem[]>([]);
+  const liveRanking = async () => {
+    const params: RankingType = {
+      days: 7,
+      m: 5,
+      limit: 10,
+    };
+    try {
+      const res: RankingItem[] = await liveRankingAPI(params);
+      console.log(res, "랭킹");
+      setRanking(res);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      console.log(ranking, "랭킹 결과값");
+    }
+  };
+  useEffect(() => {
+    liveRanking();
+  }, []);
 
   return (
     <article>

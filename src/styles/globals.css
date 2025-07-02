@@ -17,7 +17,7 @@
   --color-gray4: #56576A;
 
   --color-info: #19C6EC;
-  --color-success: #32C899;
+  --color-success: #4CAF50;
   --color-warning: #FFBA00;
   --color-error: #E73838;
 
@@ -42,9 +42,9 @@
 
 *{word-break: keep-all !important;}
 html {overflow-y:scroll; font-size: 62.5%;background: var(--color-surface); font-family: var(--font-family-SUITE-Regular); letter-spacing: -0.02em;  }
-body {margin:0;padding:0;font-size:1.6em;background:var(--color-surface); background: var(--color-text-primary); }
+body {margin:0;padding:0;font-size:1.6em;background:var(--color-surface); background: var(--color-text-primary);}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {font-size:1.6rem;}
+h1, h2, h3, h4, h5, h6 {font-size:1.6rem; font-weight: 400;}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 
 ul, dl,dt,dd, li {margin:0;padding:0;list-style:none}
@@ -53,7 +53,10 @@ label, input, button, select, img {vertical-align:middle;font-size:1.6rem}
 input, button {margin:0;padding:0;font-size:1.6rem}
 input[type="submit"] {cursor:pointer}
 button {cursor:pointer; background: transparent; border: none;}
-table{border-collapse: collapse; border-spacing: 0 5px;}
+table {all: unset;border-collapse: collapse;width: 100%; display: table;}
+tr {display: block;}
+th, td {margin: 0; padding: 0; border: none; background: none; text-align: left; vertical-align: top; font: inherit; color: inherit;}
+
 textarea, select {font-size:1.6rem}
 select {margin:0}
 p {margin:0;padding:0;word-break:break-all}

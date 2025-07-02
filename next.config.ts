@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+<<<<<<< HEAD
+=======
+  /* config options here */
+>>>>>>> eunjin
   reactStrictMode: false,
   webpack(config) {
     config.module.rules.push({
@@ -9,6 +13,9 @@ const nextConfig: NextConfig = {
     });
 
     return config;
+  },
+  images: {
+    domains: ["jjikplacestorage.blob.core.windows.net"],
   },
   experimental: {
     turbo: {

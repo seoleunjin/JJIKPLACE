@@ -1,8 +1,14 @@
 import { SignUpType } from "@/types/api";
-import { authInstance } from "./apiClient";
+import { instance } from "./apiClient";
 
 const SignUpAPI = (body: SignUpType) => {
-  return authInstance.post("/auth/signup", body);
+  return instance.post("/auth/signup", body);
 };
 
-export { SignUpAPI };
+const checkEmailAPI = (email: string) => {
+  return instance.post(
+    `/auth/signup/check-email?email=${encodeURIComponent(email)}`,
+  );
+};
+
+export { SignUpAPI, checkEmailAPI };
