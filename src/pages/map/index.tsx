@@ -6,6 +6,7 @@ import MapSearch from "@/components/map/Search";
 import MapCategory from "@/components/map/Category";
 import styles from "@/styles/map.module.css";
 import { useState } from "react";
+import StoreList from "@/components/map/StoreList";
 
 export default function MapPage() {
   const [selectedPosition, setSelectedPosition] = useState<{
@@ -24,7 +25,9 @@ export default function MapPage() {
             <MapSearch onSelectPosition={setSelectedPosition} />
             <MapCategory />
           </div>
-          <div></div>
+          <div>
+            <StoreList />
+          </div>
         </div>
       </div>
     </div>
