@@ -1,3 +1,4 @@
+// components/map/KakaoMap.tsx
 "use client";
 
 import styles from "@/styles/kakaoMap.module.css";
@@ -7,34 +8,26 @@ import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeMap";
 import { setLevel } from "@/features/map/mapSlice";
 import { useMapDataFetch } from "@/hooks/useMapDataFetch";
-import type { ClusterType } from "@/types/map";
 
-interface KakaoMapProps {
-  selectedPosition: { lat: number; lng: number } | null;
-}
-
-function KakaoMap({ selectedPosition }: KakaoMapProps) {
+function KakaoMap() {
   const scriptLoad = useKakaoLoader();
   const mapRef = useRef<kakao.maps.Map | null>(null);
 
   const dispatch = useAppDispatch();
-  const { level, markers, clusters, category } = useAppSelector(
-    (state) => state.map,
-  );
+  const { level, markers, clusters, category, selectedPosition } =
+    useAppSelector((state) => state.map);
   const { fetchMapData } = useMapDataFetch();
 
-  // 클러스터 클릭 시 확대 및 이동
-  const onClusterclick = (cluster: ClusterType) => {
+  const onClusterclick = (cluster: { lat: number; lng: number }) => {
     const map = mapRef.current;
     if (!map) return;
-
     const nextLevel = map.getLevel() - 3;
     map.setLevel(nextLevel, {
       anchor: new kakao.maps.LatLng(cluster.lat, cluster.lng),
     });
   };
 
-  // 선택 좌표 변경 시 지도 이동 및 줌 레벨 조정 + 상태 동기화 + 마커 데이터 재요청
+  // ✅ 선택된 위치로 지도 이동
   useEffect(() => {
     if (mapRef.current && selectedPosition) {
       const moveLatLng = new kakao.maps.LatLng(
@@ -44,7 +37,6 @@ function KakaoMap({ selectedPosition }: KakaoMapProps) {
       mapRef.current.setCenter(moveLatLng);
       mapRef.current.setLevel(2);
       dispatch(setLevel(2));
-
       fetchMapData(mapRef.current, 2, category);
     }
   }, [selectedPosition, dispatch, fetchMapData, category]);
@@ -72,9 +64,9 @@ function KakaoMap({ selectedPosition }: KakaoMapProps) {
             fetchMapData(map, map.getLevel(), category);
           }}
         >
-          {level < 3 || selectedPosition
+          {level < 3
             ? markers.map((marker) => {
-                const isSelected =
+                const isSearchSelected =
                   selectedPosition &&
                   Math.abs(marker.lat - selectedPosition.lat) < 0.00001 &&
                   Math.abs(marker.lng - selectedPosition.lng) < 0.00001;
@@ -84,7 +76,7 @@ function KakaoMap({ selectedPosition }: KakaoMapProps) {
                     key={marker.id}
                     position={{ lat: marker.lat, lng: marker.lng }}
                     image={{
-                      src: isSelected ? "/pin-active.svg" : "/pin.svg",
+                      src: isSearchSelected ? "/pin-active.svg" : "/pin.svg",
                       size: { width: 30, height: 38 },
                       options: { offset: { x: 21, y: 49 } },
                     }}

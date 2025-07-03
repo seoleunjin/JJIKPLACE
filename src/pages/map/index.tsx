@@ -4,24 +4,25 @@ import KakaoMap from "@/components/map/KakaoMap";
 import MapSearch from "@/components/map/Search";
 import MapCategory from "@/components/map/Category";
 import styles from "@/styles/map.module.css";
-import { useState } from "react";
 import StoreList from "@/components/map/StoreList";
+import Link from "next/link";
 
 export default function MapPage() {
-  const [selectedPosition, setSelectedPosition] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
-  console.log("선택된 마커", selectedPosition);
   return (
     <div className={styles.mapPage}>
       <div className={styles.contentsWrap}>
         <div className={styles.mapWrap}>
-          <KakaoMap selectedPosition={selectedPosition}></KakaoMap>
+          <KakaoMap></KakaoMap>
         </div>
         <div className={styles.mapTop}>
           <MapCategory></MapCategory>
-          <MapSearch onSelectPosition={setSelectedPosition}></MapSearch>
+          <div>
+            <Link href={"/map/searchLocation"}>
+              <input type="text" />
+            </Link>
+            <Link href={"/"}></Link>
+          </div>
+          {/* <MapSearch></MapSearch> */}
         </div>
         <div className={styles.listWrap}>
           <StoreList></StoreList>

@@ -2,12 +2,14 @@ import { getMapSearch } from "@/api/map";
 import { setSelectedPosition } from "@/features/map/mapSlice";
 import { useAppDispatch } from "@/hooks/storeMap";
 import { MarkerType } from "@/types/map";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
-function MapSearch() {
+function SearchLocation() {
   const dispatch = useAppDispatch();
   const [value, setValue] = useState("");
   const [filteredMarkers, setFilteredMarkers] = useState<MarkerType[]>([]);
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -42,8 +44,17 @@ function MapSearch() {
     }
   };
 
+  const handleSelect = (marker: MarkerType) => {
+    dispatch(
+      setSelectedPosition({
+        lat: marker.lat,
+        lng: marker.lng,
+      }),
+    );
+    router.push("/map");
+  };
   return (
-    <div>
+    <div style={{ paddingTop: "200px" }}>
       <input
         type="text"
         placeholder="매장명을 입력하세요"
@@ -61,14 +72,7 @@ function MapSearch() {
             <li
               key={marker.id}
               style={{ cursor: "pointer" }}
-              onClick={() =>
-                dispatch(
-                  setSelectedPosition({
-                    lat: marker.lat,
-                    lng: marker.lng,
-                  }),
-                )
-              }
+              onClick={() => handleSelect(marker)}
             >
               <strong>{marker.name}</strong> - {marker.road_addr}
             </li>
@@ -79,4 +83,4 @@ function MapSearch() {
   );
 }
 
-export default MapSearch;
+export default SearchLocation;

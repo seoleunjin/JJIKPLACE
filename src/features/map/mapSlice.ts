@@ -1,12 +1,18 @@
 // features/map/mapSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ClusterType, MarkerType, MapState } from "@/types/map";
+import {
+  ClusterType,
+  MarkerType,
+  MapState,
+  SelectedPosition,
+} from "@/types/map";
 
 const initialState: MapState = {
   level: 2,
   markers: [],
   clusters: [],
   category: "",
+  selectedPosition: null,
 };
 
 const mapSlice = createSlice({
@@ -25,6 +31,9 @@ const mapSlice = createSlice({
     setCategory(state, action: PayloadAction<string>) {
       state.category = action.payload;
     },
+    setSelectedPosition(state, action: PayloadAction<SelectedPosition | null>) {
+      state.selectedPosition = action.payload;
+    },
     resetMapState(state) {
       state.level = 2;
       state.markers = [];
@@ -34,6 +43,12 @@ const mapSlice = createSlice({
   },
 });
 
-export const { setLevel, resetMapState, setMarkers, setClusters, setCategory } =
-  mapSlice.actions;
+export const {
+  setLevel,
+  resetMapState,
+  setMarkers,
+  setClusters,
+  setCategory,
+  setSelectedPosition,
+} = mapSlice.actions;
 export default mapSlice.reducer;

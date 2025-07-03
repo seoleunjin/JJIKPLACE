@@ -1,10 +1,15 @@
 import { MapBounds } from "./api";
 
+interface SelectedPosition {
+  lat: number;
+  lng: number;
+}
 interface MapState {
   level: number;
   markers: MarkerType[];
   clusters: ClusterType[];
   category: string;
+  selectedPosition: SelectedPosition | null;
 }
 
 interface MarkerType {
@@ -38,6 +43,7 @@ interface FetchClustersParams {
 }
 
 export type {
+  SelectedPosition,
   MarkerLevel,
   MapState,
   MarkerType,
