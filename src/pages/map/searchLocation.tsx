@@ -1,12 +1,13 @@
 import { getMapSearch } from "@/api/map";
-import { setSelectedPosition } from "@/features/map/mapSlice";
-import { useAppDispatch } from "@/hooks/storeMap";
+import { pageMeta } from "@/constants/pageMeta";
 import { MarkerType } from "@/types/map";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import layoutStyles from "@/styles/layout.module.css";
+import commonStyles from "@/styles/common.module.css";
+import styles from "@/styles/searchLocation.module.css";
 
 function SearchLocation() {
-  const dispatch = useAppDispatch();
   const [value, setValue] = useState("");
   const [filteredMarkers, setFilteredMarkers] = useState<MarkerType[]>([]);
   const router = useRouter();
@@ -45,42 +46,62 @@ function SearchLocation() {
   };
 
   const handleSelect = (marker: MarkerType) => {
-    dispatch(
-      setSelectedPosition({
-        lat: marker.lat,
-        lng: marker.lng,
-      }),
-    );
-    router.push("/map");
+    router.push({
+      pathname: "/map",
+      query: {
+        id: marker.id,
+        lat: marker.lat.toString(),
+        lng: marker.lng.toString(),
+      },
+    });
   };
   return (
-    <div style={{ paddingTop: "200px" }}>
-      <input
-        type="text"
-        placeholder="매장명을 입력하세요"
-        value={value}
-        onChange={handleChange}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") handleSearch();
-        }}
-      />
-      <button onClick={handleSearch}>검색</button>
-
-      {filteredMarkers.length > 0 && (
-        <ul>
-          {filteredMarkers.slice(0, 5).map((marker) => (
-            <li
-              key={marker.id}
-              style={{ cursor: "pointer" }}
-              onClick={() => handleSelect(marker)}
-            >
-              <strong>{marker.name}</strong> - {marker.road_addr}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className={styles.searchPage}>
+      <div className={styles.searchBox}>
+        <div className={layoutStyles.width}>
+          <div className={styles.searchWrap}>
+            <input
+              type="text"
+              placeholder="지역이나 상점을 검색해보세요."
+              value={value}
+              onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSearch();
+              }}
+            />
+            <button onClick={handleSearch}>검색</button>
+          </div>
+        </div>
+      </div>
+      <div className={styles.listBox}>
+        <div className={layoutStyles.width}>
+          <span>검색결과</span>
+        </div>
+        {filteredMarkers.length > 0 && (
+          <ul>
+            {filteredMarkers.map((marker) => (
+              <li key={marker.id}>
+                <div className={styles.itemBox}>
+                  <div>
+                    <h6>{marker.name}</h6>
+                    <p>{marker.road_addr}</p>
+                  </div>
+                  <button
+                    className={commonStyles.btnBase}
+                    onClick={() => handleSelect(marker)}
+                  >
+                    선택
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
 
 export default SearchLocation;
+
+SearchLocation.title = pageMeta.search.title;

@@ -7,7 +7,7 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
-    top: 200px;
+    top: 80px;
     z-index: 888;
     max-width: 706px;
     width: 92%;
@@ -20,4 +20,24 @@
     bottom: 0;
     z-index: 888;
     width: 100%;
+}
+
+.searchWrap {
+    display: flex;
+    justify-content: space-between;
+    gap: 0 6px;
+    margin-bottom: 6px;
+}
+.searchWrap .searchBox {
+    width: 100%;
+}
+.searchWrap input {
+    width: 100%;
+    line-height: 50px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.16);
+    border-radius: 5px;
+    padding: 0 16px;
+}
+.searchWrap input::placeholder {
+    color: var(--color-gray3);
 }

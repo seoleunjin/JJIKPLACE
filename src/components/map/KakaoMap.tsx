@@ -1,17 +1,19 @@
-// components/map/KakaoMap.tsx
 "use client";
 
 import styles from "@/styles/kakaoMap.module.css";
 import useKakaoLoader from "@/components/map/UseKakaoLoaderOrigin";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeMap";
-import { setLevel } from "@/features/map/mapSlice";
+import { setLevel, setSelectedPosition } from "@/features/map/mapSlice";
 import { useMapDataFetch } from "@/hooks/useMapDataFetch";
+import { useRouter } from "next/router";
 
 function KakaoMap() {
+  const router = useRouter();
   const scriptLoad = useKakaoLoader();
   const mapRef = useRef<kakao.maps.Map | null>(null);
+  const [mapCreated, setMapCreated] = useState(false);
 
   const dispatch = useAppDispatch();
   const { level, markers, clusters, category, selectedPosition } =
@@ -27,9 +29,22 @@ function KakaoMap() {
     });
   };
 
-  // ✅ 선택된 위치로 지도 이동
+  // ✅ 1. query에서 좌표 세팅
   useEffect(() => {
-    if (mapRef.current && selectedPosition) {
+    const { lat, lng } = router.query;
+    if (lat && lng) {
+      dispatch(
+        setSelectedPosition({
+          lat: parseFloat(lat as string),
+          lng: parseFloat(lng as string),
+        }),
+      );
+    }
+  }, [router.query, dispatch]);
+
+  // ✅ 2. 지도 준비 완료 후 selectedPosition 반영
+  useEffect(() => {
+    if (mapCreated && selectedPosition && mapRef.current) {
       const moveLatLng = new kakao.maps.LatLng(
         selectedPosition.lat,
         selectedPosition.lng,
@@ -39,7 +54,39 @@ function KakaoMap() {
       dispatch(setLevel(2));
       fetchMapData(mapRef.current, 2, category);
     }
-  }, [selectedPosition, dispatch, fetchMapData, category]);
+  }, [mapCreated, selectedPosition, dispatch, fetchMapData, category]);
+
+  const handleMarkerClick = ({
+    id,
+    lat,
+    lng,
+    router,
+  }: {
+    id: number;
+    lat: number;
+    lng: number;
+    router: ReturnType<typeof useRouter>;
+  }) => {
+    const newPos = { lat, lng };
+
+    dispatch(setSelectedPosition(newPos));
+    dispatch(setLevel(2));
+    mapRef.current?.setCenter(new kakao.maps.LatLng(lat, lng));
+    mapRef.current?.setLevel(2);
+
+    router.push(
+      {
+        pathname: router.pathname,
+        query: {
+          id,
+          lat: lat.toFixed(6),
+          lng: lng.toFixed(6),
+        },
+      },
+      undefined,
+      { shallow: true },
+    );
+  };
 
   return (
     <div>
@@ -51,6 +98,7 @@ function KakaoMap() {
           level={level}
           onCreate={(map) => {
             mapRef.current = map;
+            setMapCreated(true);
             fetchMapData(map, map.getLevel(), category);
           }}
           onZoomChanged={(map) => {
@@ -68,8 +116,7 @@ function KakaoMap() {
             ? markers.map((marker) => {
                 const isSearchSelected =
                   selectedPosition &&
-                  Math.abs(marker.lat - selectedPosition.lat) < 0.00001 &&
-                  Math.abs(marker.lng - selectedPosition.lng) < 0.00001;
+                  marker.id === parseInt(router.query.id as string, 10);
 
                 return (
                   <MapMarker
@@ -80,6 +127,14 @@ function KakaoMap() {
                       size: { width: 30, height: 38 },
                       options: { offset: { x: 21, y: 49 } },
                     }}
+                    onClick={() =>
+                      handleMarkerClick({
+                        id: marker.id,
+                        lat: marker.lat,
+                        lng: marker.lng,
+                        router,
+                      })
+                    }
                   />
                 );
               })

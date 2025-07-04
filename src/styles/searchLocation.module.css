@@ -1,0 +1,53 @@
+.searchPage {
+    padding-top: 90px;
+}
+.searchBox {
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 10px solid var(--color-secondary4);
+}
+.searchWrap {
+    display: flex;
+    justify-content: space-between;
+    gap: 0 6px;
+    height: 50px;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.16);
+    padding: 0 16px;
+}
+.searchWrap input {
+    width: 100%;
+}
+.searchWrap input::placeholder {
+    color: var(--color-gray3);
+}
+
+.listBox span {
+    color: var(--color-gray3);
+}
+.listBox ul {
+    margin-bottom: 60px;
+}
+.listBox li{
+    border-bottom: 1px solid var(--color-gray2);
+}
+.itemBox {
+    width: 92%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+.listBox li:last-child {
+    border-bottom: 0px solid transparent;
+}
+.listBox li h6{
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.listBox li p {
+    color: var(--color-gray3);
+}
