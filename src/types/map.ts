@@ -4,12 +4,19 @@ interface SelectedPosition {
   lat: number;
   lng: number;
 }
+
+interface SearchPosition {
+  lat: number;
+  lng: number;
+}
+
 interface MapState {
   level: number;
   markers: MarkerType[];
   clusters: ClusterType[];
   category: string;
   selectedPosition: SelectedPosition | null;
+  searchPosition: SearchPosition | null;
 }
 
 interface MarkerType {

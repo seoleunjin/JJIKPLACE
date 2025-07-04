@@ -16,8 +16,14 @@ function KakaoMap() {
   const [mapCreated, setMapCreated] = useState(false);
 
   const dispatch = useAppDispatch();
-  const { level, markers, clusters, category, selectedPosition } =
-    useAppSelector((state) => state.map);
+  const {
+    level,
+    markers,
+    clusters,
+    category,
+    selectedPosition,
+    searchPosition,
+  } = useAppSelector((state) => state.map);
   const { fetchMapData } = useMapDataFetch();
 
   const onClusterclick = (cluster: { lat: number; lng: number }) => {
@@ -55,6 +61,20 @@ function KakaoMap() {
       fetchMapData(mapRef.current, 2, category);
     }
   }, [mapCreated, selectedPosition, dispatch, fetchMapData, category]);
+
+  // ✅ 3. searchPosition 변경 시 지도 이동 + 클러스터 호출
+  useEffect(() => {
+    if (mapRef.current && searchPosition) {
+      const center = new window.kakao.maps.LatLng(
+        searchPosition.lat,
+        searchPosition.lng,
+      );
+      mapRef.current.setCenter(center);
+      mapRef.current.setLevel(6);
+      dispatch(setLevel(6));
+      fetchMapData(mapRef.current, 6, category);
+    }
+  }, [searchPosition, category, dispatch, fetchMapData]);
 
   const handleMarkerClick = ({
     id,

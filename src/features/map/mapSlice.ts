@@ -1,4 +1,3 @@
-// features/map/mapSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   ClusterType,
@@ -13,6 +12,7 @@ const initialState: MapState = {
   clusters: [],
   category: "",
   selectedPosition: null,
+  searchPosition: null,
 };
 
 const mapSlice = createSlice({
@@ -34,11 +34,19 @@ const mapSlice = createSlice({
     setSelectedPosition(state, action: PayloadAction<SelectedPosition | null>) {
       state.selectedPosition = action.payload;
     },
+    setSearchPosition(
+      state,
+      action: PayloadAction<{ lat: number; lng: number } | null>,
+    ) {
+      state.searchPosition = action.payload;
+    },
     resetMapState(state) {
       state.level = 2;
       state.markers = [];
       state.clusters = [];
       state.category = "";
+      state.searchPosition = null; // ✅ 초기화도 포함
+      state.selectedPosition = null;
     },
   },
 });
@@ -50,5 +58,7 @@ export const {
   setClusters,
   setCategory,
   setSelectedPosition,
+  setSearchPosition, // ✅ export
 } = mapSlice.actions;
+
 export default mapSlice.reducer;

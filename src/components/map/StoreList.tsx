@@ -3,7 +3,6 @@ import { useAppSelector } from "@/hooks/storeMap";
 function StoreList() {
   const { markers } = useAppSelector((state) => state.map);
   const category = useAppSelector((state) => state.map.category);
-  console.log("리스트", markers);
   return (
     <div>
       <ul>

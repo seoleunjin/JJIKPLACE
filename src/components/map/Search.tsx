@@ -1,76 +1,103 @@
-import { getMapSearch } from "@/api/map";
-import { setSelectedPosition } from "@/features/map/mapSlice";
+"use client";
+
+import { useState, useEffect } from "react";
 import { useAppDispatch } from "@/hooks/storeMap";
-import { MarkerType } from "@/types/map";
-import { useState } from "react";
+import { setSearchPosition } from "@/features/map/mapSlice";
+
+type AddressResult = {
+  address_name: string;
+  y: string;
+  x: string;
+};
 
 function MapSearch() {
-  const dispatch = useAppDispatch();
   const [value, setValue] = useState("");
-  const [filteredMarkers, setFilteredMarkers] = useState<MarkerType[]>([]);
+  const [results, setResults] = useState<AddressResult[]>([]);
+  const dispatch = useAppDispatch();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+  const handleSearchClick = async (address: string) => {
+    const geocoder = new window.kakao.maps.services.Geocoder();
+    geocoder.addressSearch(address, (result, status) => {
+      if (status === kakao.maps.services.Status.OK && result.length > 0) {
+        const { y, x } = result[0];
+        dispatch(setSearchPosition({ lat: parseFloat(y), lng: parseFloat(x) }));
+      } else {
+        alert("주소 변환 실패");
+      }
+    });
   };
 
-  const handleSearch = async () => {
-    const keyword = value.trim().toLowerCase();
-    if (!keyword) {
-      alert("검색어를 입력해주세요");
+  useEffect(() => {
+    if (!value.trim()) {
+      setResults([]);
       return;
     }
 
-    const bounds = {
-      swLat: 33.0,
-      swLng: 124.0,
-      neLat: 39.5,
-      neLng: 132.0,
-    };
+    const timeout = setTimeout(() => {
+      const ps = new kakao.maps.services.Places();
 
-    try {
-      const response = await getMapSearch(bounds);
-      const markers = response.data.markers;
+      ps.keywordSearch(value, (data, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          const seen = new Set<string>();
+          const filtered = data.filter((d) => {
+            const addr = d.address_name;
+            // "동" 또는 "면" 포함 && 숫자 없는 주소 && 중복 제거
+            const isValid =
+              (addr.includes("동") || addr.includes("면")) && !/\d/.test(addr);
+            if (isValid && !seen.has(addr)) {
+              seen.add(addr);
+              return true;
+            }
+            return false;
+          });
 
-      const filtered = markers.filter((marker: MarkerType) => {
-        const name = marker.name?.toLowerCase() || "";
-        const addr = marker.road_addr?.toLowerCase() || "";
-        return name.includes(keyword) || addr.includes(keyword);
+          setResults(filtered); // 전체 결과 보여주기
+        } else {
+          setResults([]);
+        }
       });
-      setFilteredMarkers(filtered);
-    } catch (error) {
-      console.error("검색 중 오류 발생:", error);
-    }
-  };
+    }, 300); // debounce
+
+    return () => clearTimeout(timeout);
+  }, [value]);
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <input
         type="text"
-        placeholder="매장명을 입력하세요"
+        placeholder="동이나 면 이름을 입력하세요"
         value={value}
-        onChange={handleChange}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") handleSearch();
-        }}
+        onChange={(e) => setValue(e.target.value)}
+        style={{ width: "100%", padding: "8px" }}
       />
-      <button onClick={handleSearch}>검색</button>
-
-      {filteredMarkers.length > 0 && (
-        <ul>
-          {filteredMarkers.slice(0, 5).map((marker) => (
+      {results.length > 0 && (
+        <ul
+          style={{
+            position: "absolute",
+            top: "40px",
+            left: 0,
+            right: 0,
+            background: "#fff",
+            border: "1px solid #ccc",
+            zIndex: 1000,
+            maxHeight: "300px", // 결과 많을 경우 스크롤
+            overflowY: "auto",
+            listStyle: "none",
+            padding: 0,
+            margin: 0,
+          }}
+        >
+          {results.map((item, idx) => (
             <li
-              key={marker.id}
-              style={{ cursor: "pointer" }}
-              onClick={() =>
-                dispatch(
-                  setSelectedPosition({
-                    lat: marker.lat,
-                    lng: marker.lng,
-                  }),
-                )
-              }
+              key={idx}
+              onClick={() => handleSearchClick(item.address_name)}
+              style={{
+                padding: "8px",
+                cursor: "pointer",
+                borderBottom: "1px solid #eee",
+              }}
             >
-              <strong>{marker.name}</strong> - {marker.road_addr}
+              {item.address_name}
             </li>
           ))}
         </ul>
