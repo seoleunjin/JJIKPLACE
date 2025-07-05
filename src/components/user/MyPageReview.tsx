@@ -45,7 +45,7 @@ function MyPageReview() {
               <p>아직 작성한 리뷰가 없어요</p>
               <span>이용한 매장의 리뷰로 남겨보세요!</span>
             </div>
-            <Link href={"/writeReview"} className={styles.reviewLink}>
+            <Link href={"/write-review"} className={styles.reviewLink}>
               작성하기
             </Link>
           </div>
@@ -66,7 +66,7 @@ function MyPageReview() {
                 <SwiperSlide key={index}>
                   <div className={styles.imageWrap}>
                     <Image
-                      src={"/images/common/NoImage.png"}
+                      src={review?.image_url || "/images/common/NoImage.png"}
                       width={200}
                       height={200}
                       alt="리뷰 이미지"

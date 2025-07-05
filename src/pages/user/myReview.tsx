@@ -84,7 +84,7 @@ function WriteReview() {
             <li key={index}>
               <div className={styles.imageWrap}>
                 <Image
-                  src={"/images/common/NoImage.png"}
+                  src={review?.image_url || "/images/common/NoImage.png"}
                   width={150}
                   height={150}
                   alt="리뷰 이미지"

@@ -215,10 +215,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* padding: 10px; */
 }
 .high_ranking{
     display: flex;
-    gap: 40px;
+    gap: 26px;
 }
 .rank0 {order: 0;;}
 .rank1 {order: 1;  transform: scale(1.15)}
@@ -231,7 +232,7 @@
     gap: 16px;
 }
 .high_ranking_title{
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     line-height: 140%;
     text-align: center;
     white-space: pre-line;

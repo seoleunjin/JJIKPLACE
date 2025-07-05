@@ -14,7 +14,7 @@ const Menu = ({ onClose }: MenuProps) => {
   const menuData = [
     { id: "menu01", title: "지도", path: "/map" },
     { id: "menu02", title: "포즈추천", path: "/pose" },
-    { id: "menu03", title: "리뷰등록", path: "/reviewWrite" },
+    { id: "menu03", title: "리뷰등록", path: "/write-review" },
     { id: "menu04", title: "마이페이지", path: "/user" },
   ];
 

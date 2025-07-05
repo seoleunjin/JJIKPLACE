@@ -3,6 +3,19 @@ import MenuClose from "./MenuClose.svg";
 import BackIcon from "./BackIcon.svg";
 import SplitArrowIcon from "./SplitArrow.svg";
 import Star from "./Star.svg";
+import Star27 from "./Star27.svg";
 import StarActive from "./StarActive.svg";
+import StarActive27 from "./StarActive27.svg";
+import camera from "./camera.svg";
 
-export { MenuIcon, MenuClose, BackIcon, SplitArrowIcon, Star, StarActive };
+export {
+  MenuIcon,
+  MenuClose,
+  BackIcon,
+  SplitArrowIcon,
+  Star,
+  Star27,
+  StarActive,
+  StarActive27,
+  camera,
+};

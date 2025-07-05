@@ -1,4 +1,4 @@
-import { authInstance, userInstance } from "./apiClient";
+import { authInstance, instanceBase, userInstance } from "./apiClient";
 
 const fetchProfile = () => {
   return authInstance.get("/profile/me");
@@ -25,10 +25,22 @@ const deleteReview = (reviewId: number) => {
   return authInstance.delete(`/profile/reviews/${reviewId}`);
 };
 
+// 리뷰등록
+const createReview = (body: FormData) => {
+  const token = localStorage.getItem("accessToken");
+  return instanceBase.post(`/review`, body, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: token ? `Bearer ${token}` : undefined,
+    },
+  });
+};
+
 export {
   fetchProfile,
   fetchMyReviews,
   patchProfileImage,
   fetchReviewDetail,
   deleteReview,
+  createReview,
 };
