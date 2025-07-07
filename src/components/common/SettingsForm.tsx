@@ -7,6 +7,16 @@ const StyledInput = styled.input`
   width: 100%;
   padding: 16px 18px;
   border: 1px solid var(--color-gray2) !important;
+  margin-bottom: 10px;
+`;
+const StyledError = styled.p`
+  font-family: var(--font-family-SUITE-Regular);
+  color: var(--color-secondary5);
+  font-size: 1.8rem;
+  line-height: 140%;
+  letter-spacing: -2%;
+  margin-left: 18px;
+  margin-bottom: 10px;
 `;
 
 interface FieldProps {
@@ -33,7 +43,8 @@ function SettingsForm({ fields }: SettingsFormProps) {
             value={field.value}
             onChange={field.onChange}
           />
-          {field.error && <p style={{ color: "red" }}>{field.error}</p>}
+          {/* {<StyledError>{field.error || "\u00A0"}</StyledError>} */}
+          {field.error && <StyledError>{field.error}</StyledError>}
         </div>
       ))}
     </div>

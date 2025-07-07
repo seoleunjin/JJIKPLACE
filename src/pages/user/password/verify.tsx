@@ -24,7 +24,7 @@ function Verify() {
     try {
       await passwordVerifyAPI(password);
       // console.log(res);
-      alert("비밀번호가 확인 되었습니다.");
+      // alert("비밀번호가 확인 되었습니다.");
       router.push("/user/password/change");
     } catch (err) {
       console.error(err);
@@ -38,18 +38,20 @@ function Verify() {
         현재 비밀번호를 입력해주세요
       </h2>
       <form onSubmit={handleSubmit}>
-        <SettingsForm
-          fields={[
-            {
-              name: "password",
-              label: "현재 비밀번호",
-              type: "password",
-              value: password,
-              onChange: handleChange,
-              error,
-            },
-          ]}
-        />
+        <div className={layoutStyles.width} style={{ marginBottom: "50px" }}>
+          <SettingsForm
+            fields={[
+              {
+                name: "password",
+                label: "현재 비밀번호",
+                type: "password",
+                value: password,
+                onChange: handleChange,
+                error,
+              },
+            ]}
+          />
+        </div>
         <FormSubmitBtn title={"저장"} disabled={!password} />
       </form>
     </article>

@@ -80,26 +80,28 @@ function Change() {
         새로운 비밀번호를 입력해주세요.
       </h2>
       <form onSubmit={handleSubmit}>
-        <SettingsForm
-          fields={[
-            {
-              name: "password",
-              label: "새로운 비밀번호",
-              type: "password",
-              value: form.password,
-              onChange: handleChange,
-              error: errors.password,
-            },
-            {
-              name: "confirmPassword",
-              label: "한번 더 입력해주세요",
-              type: "password",
-              value: form.confirmPassword,
-              onChange: handleChange,
-              error: errors.confirmPassword,
-            },
-          ]}
-        />
+        <div className={layoutStyles.width} style={{ marginBottom: "50px" }}>
+          <SettingsForm
+            fields={[
+              {
+                name: "password",
+                label: "새로운 비밀번호",
+                type: "password",
+                value: form.password,
+                onChange: handleChange,
+                error: errors.password,
+              },
+              {
+                name: "confirmPassword",
+                label: "한번 더 입력해주세요",
+                type: "password",
+                value: form.confirmPassword,
+                onChange: handleChange,
+                error: errors.confirmPassword,
+              },
+            ]}
+          />
+        </div>
         <FormSubmitBtn
           title="저장"
           disabled={!form.password || !form.confirmPassword}

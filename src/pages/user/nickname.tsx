@@ -64,18 +64,20 @@ function NickName() {
     <article className={layoutStyles.py_space}>
       <h2 className={mypageCss.user_update_title}>닉네임을 입력해주세요.</h2>
       <form onSubmit={handleSubmit}>
-        <SettingsForm
-          fields={[
-            {
-              name: "nickname",
-              label: "닉네임",
-              type: "text",
-              value: nickname,
-              onChange: handleChange,
-              error: error,
-            },
-          ]}
-        />
+        <div className={layoutStyles.width} style={{ marginBottom: "50px" }}>
+          <SettingsForm
+            fields={[
+              {
+                name: "nickname",
+                label: "닉네임",
+                type: "text",
+                value: nickname,
+                onChange: handleChange,
+                error: error,
+              },
+            ]}
+          />
+        </div>
         <FormSubmitBtn title={"저장"} disabled={!nickname} />
       </form>
     </article>
