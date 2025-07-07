@@ -10,10 +10,14 @@ import { useRouter } from "next/router";
 
 const WriteReviewForm = () => {
   const router = useRouter();
+  const { store, name } = router.query;
+  const decodedName = decodeURIComponent(name as string);
+  console.log(decodedName);
+
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [rating, setRating] = useState<number>(0);
   const [content, setContent] = useState("");
-  const [psId] = useState(182536028); // 실제 매장 ID로 대체 필요
+  const [psId] = useState(store);
 
   const submitReview = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,7 +59,7 @@ const WriteReviewForm = () => {
         className={`${layoutStyles.width} ${writeReviewStyles.point_section}`}
       >
         <p>
-          <span></span>점은 어떠셨나요?
+          <span>{decodedName}</span>은 어떠셨나요?
         </p>
         <CountStar value={rating} onChange={setRating}></CountStar>
       </div>

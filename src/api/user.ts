@@ -30,10 +30,29 @@ const createReview = (body: FormData) => {
   const token = localStorage.getItem("accessToken");
   return instanceBase.post(`/review`, body, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "multipart/form-data", //Content-Type 때문에
       Authorization: token ? `Bearer ${token}` : undefined,
     },
   });
+};
+// 닉네임 변경
+const nicknameUpdateAPI = (body: { nickname: string }) => {
+  return authInstance.patch("/profile/me/nickname", body);
+};
+// 비밀번호 확인
+const passwordVerifyAPI = (currentPassword: string) => {
+  return authInstance.post("/profile/me/password/verify", null, {
+    params: {
+      current_password: currentPassword,
+    },
+  });
+};
+// 비밀번호 변경
+const passwordChangeAPI = (body: {
+  new_password: string;
+  new_password_check: string;
+}) => {
+  return authInstance.patch("/profile/me/password", body);
 };
 
 export {
@@ -43,4 +62,7 @@ export {
   fetchReviewDetail,
   deleteReview,
   createReview,
+  nicknameUpdateAPI,
+  passwordVerifyAPI,
+  passwordChangeAPI,
 };

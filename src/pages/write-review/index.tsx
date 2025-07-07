@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import { pageMeta } from "@/constants/pageMeta";
+import SearchStore from "@/components/map/SearchStore";
 import { useRouter } from "next/router";
-import MapSearch from "@/components/map/Search";
 
 const WriteReview = () => {
   const router = useRouter();
-  const write = () => {
-    router.push("/write-review/form");
-  };
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      router.push("/auth/login");
+    }
+  }, []);
 
   return (
     <article style={{ paddingTop: "60px" }} className={`${layoutStyles.width}`}>
-      <p onClick={write}>검색</p>
-      <MapSearch />
+      <SearchStore />
     </article>
   );
 };
