@@ -2,9 +2,9 @@
 
 import { useAppSelector } from "@/hooks/storeMap";
 import { useRouter } from "next/router";
-import axios from "axios";
 import { useEffect } from "react";
 import { getNearbyStudios } from "@/api/map";
+import Image from "next/image";
 
 export default function StoreCard() {
   const selectedPosition = useAppSelector(
@@ -37,8 +37,12 @@ export default function StoreCard() {
 
   if (!selectedStore) return null;
 
+  const handleClick = () => {
+    router.push(`/store/${id}`);
+  };
+
   return (
-    <div className="store-card">
+    <div className="store-card" onClick={handleClick}>
       <h3>{selectedStore.name}</h3>
       <p>{selectedStore.road_addr}</p>
       <p>리뷰 수: {selectedStore.review_cnt}</p>

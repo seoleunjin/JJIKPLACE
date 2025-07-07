@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import DecodingInfo from "@/utils/DecodingInfo";
 
 function LoginForm() {
   const router = useRouter();
@@ -77,6 +78,10 @@ function LoginForm() {
 
       const token = res.data.access_token;
       if (token) {
+        // 토큰 디코딩
+        const decoded = DecodingInfo(token);
+        console.log("디코딩된 토큰", decoded);
+
         localStorage.setItem("accessToken", token);
         router.replace("/user");
       }
