@@ -2,6 +2,7 @@ import React from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import { pageMeta } from "@/constants/pageMeta";
 import { useRouter } from "next/router";
+import MapSearch from "@/components/map/Search";
 
 const WriteReview = () => {
   const router = useRouter();
@@ -12,6 +13,7 @@ const WriteReview = () => {
   return (
     <article style={{ paddingTop: "60px" }} className={`${layoutStyles.width}`}>
       <p onClick={write}>검색</p>
+      <MapSearch />
     </article>
   );
 };
