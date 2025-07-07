@@ -117,14 +117,16 @@ function MyPage({ profile, isLoading }: MyPageProps) {
             <h2>{profile.nickname}</h2>
 
             {/* 링크로 바껴야 함 */}
-            <div className={styles.editNick}>
-              <Image
-                src={"/images/user/EditUserNick.png"}
-                width={19}
-                height={18}
-                alt="닉네임 수정"
-              />
-            </div>
+            <Link href="/user/nickname">
+              <div className={styles.editNick}>
+                <Image
+                  src="/images/user/EditUserNick.png"
+                  width={19}
+                  height={18}
+                  alt="닉네임 수정"
+                />
+              </div>
+            </Link>
           </div>
         </div>
         {/* 프로필 상단 끝*/}
@@ -145,9 +147,9 @@ function MyPage({ profile, isLoading }: MyPageProps) {
               <h6>비밀번호</h6>
               <div className={styles.linkWrap}>
                 <p>*********</p>
-                <button type="button">
+                <Link href="/user/password/verify">
                   <SplitArrowIcon className={styles.LinkBtn} />
-                </button>
+                </Link>
               </div>
             </li>
           </ul>
