@@ -4,6 +4,7 @@ import {
   MarkerType,
   MapState,
   SelectedPosition,
+  CurrentPosition,
 } from "@/types/map";
 
 const initialState: MapState = {
@@ -13,6 +14,7 @@ const initialState: MapState = {
   category: "",
   selectedPosition: null,
   searchPosition: null,
+  currentPosition: null,
 };
 
 const mapSlice = createSlice({
@@ -34,6 +36,9 @@ const mapSlice = createSlice({
     setSelectedPosition(state, action: PayloadAction<SelectedPosition | null>) {
       state.selectedPosition = action.payload;
     },
+    setCurrentPosition(state, action: PayloadAction<CurrentPosition | null>) {
+      state.currentPosition = action.payload;
+    },
     setSearchPosition(
       state,
       action: PayloadAction<{ lat: number; lng: number } | null>,
@@ -45,8 +50,9 @@ const mapSlice = createSlice({
       state.markers = [];
       state.clusters = [];
       state.category = "";
-      state.searchPosition = null; // ✅ 초기화도 포함
+      state.searchPosition = null;
       state.selectedPosition = null;
+      state.currentPosition = null;
     },
   },
 });
@@ -58,7 +64,8 @@ export const {
   setClusters,
   setCategory,
   setSelectedPosition,
-  setSearchPosition, // ✅ export
+  setSearchPosition,
+  setCurrentPosition,
 } = mapSlice.actions;
 
 export default mapSlice.reducer;

@@ -5,6 +5,11 @@ interface SelectedPosition {
   lng: number;
 }
 
+interface CurrentPosition {
+  lat: number;
+  lng: number;
+}
+
 interface SearchPosition {
   lat: number;
   lng: number;
@@ -17,6 +22,7 @@ interface MapState {
   category: string;
   selectedPosition: SelectedPosition | null;
   searchPosition: SearchPosition | null;
+  currentPosition: CurrentPosition | null;
 }
 
 interface MarkerType {
@@ -53,6 +59,7 @@ interface FetchClustersParams {
 
 export type {
   SelectedPosition,
+  CurrentPosition,
   MarkerLevel,
   MapState,
   MarkerType,

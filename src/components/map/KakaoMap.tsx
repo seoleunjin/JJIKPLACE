@@ -5,11 +5,17 @@ import useKakaoLoader from "@/components/map/UseKakaoLoaderOrigin";
 import { useRef, useEffect, useState } from "react";
 import { CustomOverlayMap, Map, MapMarker } from "react-kakao-maps-sdk";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeMap";
-import { setLevel, setSelectedPosition } from "@/features/map/mapSlice";
+import {
+  setLevel,
+  setSelectedPosition,
+  setCurrentPosition,
+} from "@/features/map/mapSlice";
 import { useMapDataFetch } from "@/hooks/useMapDataFetch";
 import { useRouter } from "next/router";
+import { CurrentPosition } from "@/assets/icons";
 
 function KakaoMap() {
+  const [isActive, setIsActive] = useState(false);
   const router = useRouter();
   const scriptLoad = useKakaoLoader();
   const mapRef = useRef<kakao.maps.Map | null>(null);
@@ -22,20 +28,12 @@ function KakaoMap() {
     clusters,
     category,
     selectedPosition,
+    currentPosition,
     searchPosition,
   } = useAppSelector((state) => state.map);
   const { fetchMapData } = useMapDataFetch();
 
-  const onClusterclick = (cluster: { lat: number; lng: number }) => {
-    const map = mapRef.current;
-    if (!map) return;
-    const nextLevel = map.getLevel() - 3;
-    map.setLevel(nextLevel, {
-      anchor: new kakao.maps.LatLng(cluster.lat, cluster.lng),
-    });
-  };
-
-  // ✅ 1. query에서 좌표 세팅
+  // query에서 좌표 세팅 (선택된 위치)
   useEffect(() => {
     const { lat, lng } = router.query;
     if (lat && lng) {
@@ -48,7 +46,7 @@ function KakaoMap() {
     }
   }, [router.query, dispatch]);
 
-  // ✅ 2. 지도 준비 완료 후 selectedPosition 반영
+  // 지도 생성 후 선택 위치로 이동
   useEffect(() => {
     if (mapCreated && selectedPosition && mapRef.current) {
       const moveLatLng = new kakao.maps.LatLng(
@@ -62,10 +60,10 @@ function KakaoMap() {
     }
   }, [mapCreated, selectedPosition, dispatch, fetchMapData, category]);
 
-  // ✅ 3. searchPosition 변경 시 지도 이동 + 클러스터 호출
+  // searchPosition 변경 시 지도 이동 및 데이터 fetch
   useEffect(() => {
     if (mapRef.current && searchPosition) {
-      const center = new window.kakao.maps.LatLng(
+      const center = new kakao.maps.LatLng(
         searchPosition.lat,
         searchPosition.lng,
       );
@@ -75,6 +73,50 @@ function KakaoMap() {
       fetchMapData(mapRef.current, 6, category);
     }
   }, [searchPosition, category, dispatch, fetchMapData]);
+
+  // 현위치 버튼 클릭 시 처리 함수
+  const handleGoToCurrentLocation = () => {
+    if (!mapRef.current) return;
+
+    if (isActive) {
+      dispatch(setCurrentPosition(null));
+      setIsActive(false);
+    } else {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            const locPosition = new kakao.maps.LatLng(lat, lng);
+
+            mapRef.current!.setCenter(locPosition);
+            mapRef.current!.setLevel(2);
+            dispatch(setLevel(2));
+
+            dispatch(setCurrentPosition({ lat, lng }));
+
+            fetchMapData(mapRef.current!, 2, category);
+            setIsActive(true);
+          },
+          (error) => {
+            alert("위치 정보를 가져올 수 없습니다.");
+            console.error(error);
+          },
+        );
+      } else {
+        alert("이 브라우저는 위치 정보 사용을 지원하지 않습니다.");
+      }
+    }
+  };
+
+  const onClusterclick = (cluster: { lat: number; lng: number }) => {
+    const map = mapRef.current;
+    if (!map) return;
+    const nextLevel = map.getLevel() - 3;
+    map.setLevel(nextLevel, {
+      anchor: new kakao.maps.LatLng(cluster.lat, cluster.lng),
+    });
+  };
 
   const handleMarkerClick = ({
     id,
@@ -109,7 +151,17 @@ function KakaoMap() {
   };
 
   return (
-    <div>
+    <div className={styles.kakaoMap}>
+      {/* 내 위치 이동 버튼 */}
+      <div className={styles.elementBox}>
+        <button
+          className={isActive ? styles.curLocBtnActive : styles.curLocBtn}
+          onClick={handleGoToCurrentLocation}
+        >
+          <CurrentPosition />
+        </button>
+      </div>
+
       {scriptLoad ? (
         <Map
           id="map"
@@ -132,6 +184,7 @@ function KakaoMap() {
             fetchMapData(map, map.getLevel(), category);
           }}
         >
+          {/* 일반 마커들 */}
           {level < 3
             ? markers.map((marker) => {
                 const isSearchSelected =
@@ -172,6 +225,17 @@ function KakaoMap() {
                   </div>
                 </CustomOverlayMap>
               ))}
+
+          {currentPosition && level < 6 && (
+            <MapMarker
+              position={{ lat: currentPosition.lat, lng: currentPosition.lng }}
+              image={{
+                src: "/my-location.png",
+                size: { width: 35, height: 35 },
+                options: { offset: { x: 18, y: 36 } },
+              }}
+            />
+          )}
         </Map>
       ) : (
         <div>

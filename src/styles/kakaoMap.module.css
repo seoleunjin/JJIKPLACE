@@ -1,3 +1,6 @@
+.kakaoMap {
+    position: relative;
+}
 .clusterMarker {
     width: 50px;
     height: 50px;
@@ -11,4 +14,30 @@
     font-size: var(--text-base);
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.16);
     cursor: pointer;
+}
+.elementBox {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    z-index: 999;
+    right: 4%;
+    top: 30%;
+}
+.elementBox button {
+    height: 45px;
+    width: 45px;
+    border-radius: 5px;
+    background: var(--color-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.16);
+}
+.elementBox .curLocBtn {
+    color: var(--color-gray2);
+}
+
+.elementBox .curLocBtnActive {
+    color: var(--color-text-primary);
 }

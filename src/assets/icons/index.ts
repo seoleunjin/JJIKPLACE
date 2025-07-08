@@ -9,6 +9,7 @@ import StoreListStar from "./StoreListStar.svg";
 import Heart from "./Heart.svg";
 import StarActive27 from "./StarActive27.svg";
 import camera from "./camera.svg";
+import CurrentPosition from "./CurrentPosition.svg";
 
 export {
   MenuIcon,
@@ -22,4 +23,5 @@ export {
   Star27,
   StarActive27,
   camera,
+  CurrentPosition,
 };
