@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import layoutStyles from "@/styles/layout.module.css";
 import { pageMeta } from "@/constants/pageMeta";
 import SearchStore from "@/components/map/SearchStore";
 import { useRouter } from "next/router";
@@ -15,7 +14,7 @@ const WriteReview = () => {
   }, []);
 
   return (
-    <article style={{ paddingTop: "60px" }} className={`${layoutStyles.width}`}>
+    <article style={{ paddingTop: "60px" }}>
       <SearchStore />
     </article>
   );

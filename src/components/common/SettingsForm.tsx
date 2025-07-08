@@ -2,12 +2,14 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledInput = styled.input`
-  border-radius: 5px;
-  height: 57px;
-  width: 100%;
-  padding: 16px 18px;
-  border: 1px solid var(--color-gray2) !important;
-  margin-bottom: 10px;
+  && {
+    border-radius: 5px;
+    height: 57px;
+    width: 100%;
+    padding: 16px 18px;
+    border: 1px solid var(--color-gray2) !important;
+    margin-bottom: 10px;
+  }
 `;
 const StyledError = styled.p`
   font-family: var(--font-family-SUITE-Regular);
