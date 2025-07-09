@@ -1,11 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  ClusterType,
-  MarkerType,
-  MapState,
-  SelectedPosition,
-  CurrentPosition,
-} from "@/types/map";
+import { ClusterType, MarkerType, MapState, Position } from "@/types/map";
 
 const initialState: MapState = {
   level: 2,
@@ -15,6 +9,8 @@ const initialState: MapState = {
   selectedPosition: null,
   searchPosition: null,
   currentPosition: null,
+  startPoint: null,
+  endPoint: null,
 };
 
 const mapSlice = createSlice({
@@ -33,17 +29,20 @@ const mapSlice = createSlice({
     setCategory(state, action: PayloadAction<string>) {
       state.category = action.payload;
     },
-    setSelectedPosition(state, action: PayloadAction<SelectedPosition | null>) {
+    setSelectedPosition(state, action: PayloadAction<Position | null>) {
       state.selectedPosition = action.payload;
     },
-    setCurrentPosition(state, action: PayloadAction<CurrentPosition | null>) {
+    setCurrentPosition(state, action: PayloadAction<Position | null>) {
       state.currentPosition = action.payload;
     },
-    setSearchPosition(
-      state,
-      action: PayloadAction<{ lat: number; lng: number } | null>,
-    ) {
+    setSearchPosition(state, action: PayloadAction<Position | null>) {
       state.searchPosition = action.payload;
+    },
+    setStartPoint(state, action: PayloadAction<Position | null>) {
+      state.startPoint = action.payload;
+    },
+    setEndPoint(state, action: PayloadAction<Position | null>) {
+      state.endPoint = action.payload;
     },
     resetMapState(state) {
       state.level = 2;
@@ -53,6 +52,8 @@ const mapSlice = createSlice({
       state.searchPosition = null;
       state.selectedPosition = null;
       state.currentPosition = null;
+      state.startPoint = null;
+      state.endPoint = null;
     },
   },
 });
@@ -64,8 +65,10 @@ export const {
   setClusters,
   setCategory,
   setSelectedPosition,
-  setSearchPosition,
   setCurrentPosition,
+  setSearchPosition,
+  setStartPoint,
+  setEndPoint,
 } = mapSlice.actions;
 
 export default mapSlice.reducer;

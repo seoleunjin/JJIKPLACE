@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    domains: ["jjikplacestorage.blob.core.windows.net"],
+    domains: ["jjikplacestorage0063.blob.core.windows.net"],
   },
   experimental: {
     turbo: {

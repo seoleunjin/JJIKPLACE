@@ -1,28 +1,19 @@
 import { MapBounds } from "./api";
 
-interface SelectedPosition {
+interface Position {
   lat: number;
   lng: number;
 }
-
-interface CurrentPosition {
-  lat: number;
-  lng: number;
-}
-
-interface SearchPosition {
-  lat: number;
-  lng: number;
-}
-
 interface MapState {
   level: number;
   markers: MarkerType[];
   clusters: ClusterType[];
   category: string;
-  selectedPosition: SelectedPosition | null;
-  searchPosition: SearchPosition | null;
-  currentPosition: CurrentPosition | null;
+  selectedPosition: Position | null;
+  currentPosition: Position | null;
+  searchPosition: Position | null;
+  startPoint: Position | null;
+  endPoint: Position | null;
 }
 
 interface MarkerType {
@@ -58,8 +49,7 @@ interface FetchClustersParams {
 }
 
 export type {
-  SelectedPosition,
-  CurrentPosition,
+  Position,
   MarkerLevel,
   MapState,
   MarkerType,

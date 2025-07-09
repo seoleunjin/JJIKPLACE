@@ -30,6 +30,8 @@ function KakaoMap() {
     selectedPosition,
     currentPosition,
     searchPosition,
+    startPoint,
+    endPoint,
   } = useAppSelector((state) => state.map);
   const { fetchMapData } = useMapDataFetch();
 
@@ -149,6 +151,68 @@ function KakaoMap() {
       { shallow: true },
     );
   };
+  useEffect(() => {
+    async function getCarDirection() {
+      if (!startPoint || !endPoint) return;
+
+      const REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
+      const url = "https://apis-navi.kakaomobility.com/v1/directions";
+      const origin = `${startPoint.lng},${startPoint.lat}`;
+      const destination = `${endPoint.lng},${endPoint.lat}`;
+
+      const headers = {
+        Authorization: `KakaoAK ${REST_API_KEY}`,
+        "Content-Type": "application/json",
+      };
+
+      const queryParams = new URLSearchParams({
+        origin,
+        destination,
+        vehicle: "pedestrian",
+      });
+
+      const requestUrl = `${url}?${queryParams}`;
+
+      try {
+        const response = await fetch(requestUrl, {
+          method: "GET",
+          headers,
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("길찾기 응답", data);
+
+        const linePath: kakao.maps.LatLng[] = [];
+
+        data.routes[0].sections[0].roads.forEach((road: any) => {
+          const vertexes = road.vertexes;
+          for (let i = 0; i < vertexes.length; i += 2) {
+            linePath.push(new kakao.maps.LatLng(vertexes[i + 1], vertexes[i]));
+          }
+        });
+
+        // 지도가 준비되었을 때만 그리기
+        if (mapRef.current) {
+          const polyline = new kakao.maps.Polyline({
+            path: linePath,
+            strokeWeight: 5,
+            strokeColor: "#000000",
+            strokeOpacity: 0.7,
+            strokeStyle: "solid",
+          });
+          polyline.setMap(mapRef.current);
+        }
+      } catch (error) {
+        console.error("길찾기 요청 오류:", error);
+      }
+    }
+
+    getCarDirection();
+  }, [startPoint, endPoint]);
 
   return (
     <div className={styles.kakaoMap}>
