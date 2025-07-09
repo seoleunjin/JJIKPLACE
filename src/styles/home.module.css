@@ -236,15 +236,21 @@
 
 /* Live Ranking */
 .live_rank_thumnail{
-    background-color: rgb(202, 202, 202);
     display: flex;
     align-items: center;
     justify-content: center;
-    /* padding: 10px; */
+    background-image: url("/images/home/ranking_background.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 .high_ranking{
     display: flex;
     gap: 26px;
+}
+.rank_crown_image{
+    width: 23px !important;
+    height: 14px !important;
 }
 .rank0 {order: 0;;}
 .rank1 {order: 1;  transform: scale(1.15)}
@@ -253,6 +259,7 @@
     font-family: var(--font-family-SUITE-Bold);
     color: #FFFFFF; 
     display: flex;
+    align-items: center;
     flex-direction: column;
     gap: 16px;
 }
@@ -267,7 +274,7 @@
     font-size: 1rem;
     text-align: center;
     border-radius: 32px;
-    padding: 6px 8px;
+    padding: 6px 12px;
 }
 
 .row_ranking{}
