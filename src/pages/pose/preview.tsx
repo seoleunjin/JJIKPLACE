@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import posecss from "@/styles/pose.module.css";
 import { pageMeta } from "@/constants/pageMeta";
@@ -106,12 +106,51 @@ const Preview = () => {
     });
   }, [router.isReady, router.query]);
 
+  const [filter, setFilter] = useState("");
+
   return (
     <article style={{ paddingTop: "60px" }} className={`${layoutStyles.width}`}>
       <div className={posecss.frame_wrapper} ref={containerRef}>
-        <canvas className={posecss.frame_canvas} ref={canvasRef} />
+        <canvas
+          className={`${posecss.frame_canvas}
+          ${filter === "bright" ? posecss.warm_filter : filter === "bw" ? posecss.bw_filter : filter === "dream" ? posecss.dreamy_filter : ""}`}
+          ref={canvasRef}
+        />
       </div>
-      <p>필터변경</p>
+
+      <div className={posecss.preview_filter}>
+        <p className={posecss.filter_title}>필터 선택</p>
+        <ul className={posecss.filter_list}>
+          <li onClick={() => setFilter("original")}>
+            <div
+              style={{ backgroundColor: "#f0f0f0" }}
+              className={posecss.filter_btn}
+            ></div>
+            원본
+          </li>
+          <li onClick={() => setFilter("bright")}>
+            <div
+              style={{ backgroundColor: "#fff8e1" }}
+              className={posecss.filter_btn}
+            ></div>
+            화사한
+          </li>
+          <li onClick={() => setFilter("dream")}>
+            <div
+              style={{ backgroundColor: "#e1bee7" }}
+              className={posecss.filter_btn}
+            ></div>
+            몽환
+          </li>
+          <li onClick={() => setFilter("bw")}>
+            <div
+              style={{ backgroundColor: "#cfd8dc" }}
+              className={posecss.filter_btn}
+            ></div>
+            흑백
+          </li>
+        </ul>
+      </div>
     </article>
   );
 };

@@ -4,6 +4,7 @@ import HomeStyles from "@/styles/home.module.css";
 import KakaoMap from "../map/KakaoMap";
 import PhotoStudioList from "./PhotoStudioList";
 import { useRouter } from "next/router";
+import Search from "@/assets/icons/search.svg";
 import Link from "next/link";
 
 function PhotoStudioFinder() {
@@ -12,10 +13,16 @@ function PhotoStudioFinder() {
 
   const searching = () => {
     // alert(`${search} 검색`);
-    sessionStorage.setItem("searchKeyword", search);
-    router.push({
-      pathname: "/map/searchLocation",
-    });
+    const trimmedSearch = search.trim();
+
+    if (!trimmedSearch) {
+      alert("검색어를 입력해주세요");
+    } else {
+      sessionStorage.setItem("searchKeyword", search);
+      router.push({
+        pathname: "/map/searchLocation",
+      });
+    }
   };
 
   return (
@@ -27,7 +34,7 @@ function PhotoStudioFinder() {
         <p className={HomeStyles.home_sub_title}>
           원하는 지역을 검색하고 가까운 셀프사진관을 찾아보세요.
         </p>
-        <div>
+        <div className={HomeStyles.search_box}>
           <input
             className={HomeStyles.search_input}
             value={search}
@@ -42,6 +49,7 @@ function PhotoStudioFinder() {
             type="search"
             placeholder="원하는 지역을 검색해보세요."
           />
+          <Search onClick={searching} className={HomeStyles.search_icon} />
         </div>
       </div>
       <div className={HomeStyles.photostudio_map_wrapper}>
