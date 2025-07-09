@@ -1,4 +1,4 @@
-export const poseImages = Array.from({ length: 23 }, (_, i) => ({
+export const poseImages = Array.from({ length: 44 }, (_, i) => ({
   id: i + 1,
   src: `/images/pose/pose/pose${String(i + 1).padStart(2, "0")}.png`,
 }));

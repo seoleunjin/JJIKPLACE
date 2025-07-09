@@ -7,6 +7,7 @@ import { createReview } from "@/api/user";
 import CountStar from "@/components/common/CountStar";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const WriteReviewForm = () => {
   const router = useRouter();
@@ -35,7 +36,18 @@ const WriteReviewForm = () => {
       router.push("/user");
       // console.log("리뷰 등록 성공:", res.data);
     } catch (err) {
-      console.error("리뷰 등록 실패:", err);
+      if (axios.isAxiosError(err)) {
+        const status = err.response?.status;
+        if (status === 401) {
+          alert("세션이 만료 되었습니다. 다시 로그인 해주세요.");
+          localStorage.removeItem("accessToken");
+          router.push("/auth/login");
+        } else {
+          alert("알 수 없는 오류가 발생했습니다.");
+        }
+      } else {
+        alert("알 수 없는 오류가 발생했습니다.");
+      }
     }
   };
 

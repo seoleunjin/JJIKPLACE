@@ -4,16 +4,18 @@ import HomeStyles from "@/styles/home.module.css";
 import KakaoMap from "../map/KakaoMap";
 import PhotoStudioList from "./PhotoStudioList";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 function PhotoStudioFinder() {
   const router = useRouter();
-  const pushMap = () => {
-    router.push("/map");
-  };
-
   const [search, setSearch] = useState("");
+
   const searching = () => {
-    alert(`${search} 검색`);
+    // alert(`${search} 검색`);
+    sessionStorage.setItem("searchKeyword", search);
+    router.push({
+      pathname: "/map/searchLocation",
+    });
   };
 
   return (
@@ -50,9 +52,9 @@ function PhotoStudioFinder() {
           <PhotoStudioList />
         </div>
       </div>
-      <p onClick={pushMap} className={HomeStyles.photostudio_more_btn}>
+      <Link href={"/map"} className={HomeStyles.photostudio_more_btn}>
         더 많은 사진관 보러가기
-      </p>
+      </Link>
     </article>
   );
 }

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import styles from "@/styles/myReviewDetail.module.css";
 import commonStyles from "@/styles/common.module.css";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 function WriteReview() {
   const [reviews, setReviews] = useState<MyReviewitem[]>([]);
@@ -25,11 +26,16 @@ function WriteReview() {
         setHasMore(data.has_more);
         setTotal(data.total);
         console.log(data);
-      } catch (err: any) {
-        if (err.response?.status === 401) {
-          router.replace("/auth/login");
+      } catch (err) {
+        if (axios.isAxiosError(err)) {
+          const status = err.response?.status;
+          if (status === 401) {
+            router.replace("/auth/login");
+          } else {
+            console.error("리뷰 불러오기 실패", err.message);
+          }
         } else {
-          console.error("리뷰 불러오기 실패", err);
+          console.error("알 수 없는 에러", err);
         }
       }
     };

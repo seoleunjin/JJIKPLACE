@@ -74,7 +74,7 @@ function FramePage() {
       </div>
       <div className={posecss.frame_btn} onClick={photoPreview}>
         <div></div>
-        <p>프레임 넣기</p>
+        <p>미리 보기</p>
       </div>
     </article>
   );

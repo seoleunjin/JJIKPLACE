@@ -60,7 +60,7 @@ function PosePage() {
       </div>
       <div className={posecss.frame_btn} onClick={photoPreview}>
         <div></div>
-        <p>미리보기</p>
+        <p>포즈 선택</p>
       </div>
     </article>
   );

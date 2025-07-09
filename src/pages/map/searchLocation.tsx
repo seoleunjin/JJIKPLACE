@@ -2,7 +2,7 @@ import { getMapSearch } from "@/api/map";
 import { pageMeta } from "@/constants/pageMeta";
 import { MarkerType } from "@/types/map";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import commonStyles from "@/styles/common.module.css";
 import styles from "@/styles/searchLocation.module.css";
@@ -12,12 +12,21 @@ function SearchLocation() {
   const [filteredMarkers, setFilteredMarkers] = useState<MarkerType[]>([]);
   const router = useRouter();
 
+  // 홈 메인에서 검색으로 접근
+  useEffect(() => {
+    const keyword = sessionStorage.getItem("searchKeyword");
+    if (keyword) {
+      setValue(keyword);
+      sessionStorage.removeItem("searchKeyword");
+      handleSearch(keyword);
+    }
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-
-  const handleSearch = async () => {
-    const keyword = value.trim().toLowerCase();
+  const handleSearch = async (searchValue?: string) => {
+    const keyword = (searchValue ?? value).trim().toLowerCase();
     if (!keyword) {
       alert("검색어를 입력해주세요");
       return;
@@ -55,6 +64,7 @@ function SearchLocation() {
       },
     });
   };
+
   return (
     <div className={styles.searchPage}>
       <div className={styles.searchBox}>
@@ -69,7 +79,7 @@ function SearchLocation() {
                 if (e.key === "Enter") handleSearch();
               }}
             />
-            <button onClick={handleSearch}>검색</button>
+            <button onClick={() => handleSearch()}>검색</button>
           </div>
         </div>
       </div>

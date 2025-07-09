@@ -29,7 +29,6 @@ function SearchStore() {
       neLat: 39.5,
       neLng: 132.0,
     };
-
     try {
       const response = await getMapSearch(bounds);
       const markers = response.data.markers;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import HomeStyles from "@/styles/home.module.css";
 import { RankingItem, RankingType } from "@/types/homeType";
 import { liveRankingAPI } from "@/api/homeApi";
+import { useRouter } from "next/router";
 
 function LiveRanking() {
   const [ranking, setRanking] = useState<RankingItem[]>([]);
@@ -25,6 +26,16 @@ function LiveRanking() {
     liveRanking();
   }, []);
 
+  // 해당 가게로 이동
+  const router = useRouter();
+  const storeMark = (id: number) => {
+    router.push({
+      pathname: "/map",
+      query: { id: id },
+      // lat, lng 값이 필요
+    });
+  };
+
   return (
     <article>
       <div>
@@ -39,6 +50,7 @@ function LiveRanking() {
         <ul className={HomeStyles.high_ranking}>
           {ranking.slice(0, 3).map((item, index) => (
             <li
+              onClick={() => storeMark(item.ps_id)}
               key={item.ps_id}
               className={
                 index === 0
@@ -49,6 +61,12 @@ function LiveRanking() {
               }
             >
               <div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/images/home/rank_${index + 1}st.svg`}
+                  alt={`${index + 1}st rank badge`}
+                  className={HomeStyles.rank_crown_image}
+                />
                 <p className={HomeStyles.high_ranking_title}>
                   {item.name.split(" ").map((word, idx) => (
                     <React.Fragment key={idx}>
@@ -67,7 +85,7 @@ function LiveRanking() {
       </div>
       <ul className={HomeStyles.row_ranking}>
         {ranking.slice(3).map((item, index) => (
-          <li key={item.ps_id}>
+          <li key={item.ps_id} onClick={() => storeMark(item.ps_id)}>
             <div>
               <span className={HomeStyles.lg_fonts}>{index + 4}</span>
               <span>{item.name}</span>
