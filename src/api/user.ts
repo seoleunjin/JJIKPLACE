@@ -55,6 +55,16 @@ const passwordChangeAPI = (body: {
   return authInstance.patch("/profile/me/password", body);
 };
 
+// 찜 목록
+const FavoriteListAPI = () => {
+  return authInstance.get("/profile/my-favorites");
+};
+
+// 찜 삭제
+const FavoriteDelAPI = (ps_id: number) => {
+  return authInstance.delete(`/favorite/${ps_id}`);
+};
+
 export {
   fetchProfile,
   fetchMyReviews,
@@ -65,4 +75,6 @@ export {
   nicknameUpdateAPI,
   passwordVerifyAPI,
   passwordChangeAPI,
+  FavoriteListAPI,
+  FavoriteDelAPI,
 };

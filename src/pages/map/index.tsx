@@ -14,6 +14,7 @@ export default function MapPage() {
   const selectedPosition = useAppSelector(
     (state) => state.map.selectedPosition,
   );
+
   return (
     <div className={styles.mapPage}>
       <div className={styles.contentsWrap}>

@@ -17,7 +17,6 @@ function UserPage() {
         setProfile(user);
       } catch {
         setIsLoading(false);
-        alert("로그인 후 이용해주세요.");
       }
     };
     fetchUserProfile();

@@ -26,6 +26,7 @@ interface MarkerType {
   road_addr: string;
   thumbnail_url: string | null;
   categories: string[];
+  is_favorite: boolean;
 }
 
 interface ClusterType {

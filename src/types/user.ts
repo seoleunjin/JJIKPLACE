@@ -42,10 +42,20 @@ interface MyReviewitem {
   updated_at: string;
 }
 
+// 찜 아이템 타입
+interface FavoriteItemType {
+  created_at: string;
+  name: string;
+  ps_id: number;
+  road_addr: string;
+  thumbnail_url: string | null;
+}
+
 export type {
   profileType,
   MyPageProps,
   MyReviewType,
   MyReviewDetail,
   MyReviewitem,
+  FavoriteItemType,
 };

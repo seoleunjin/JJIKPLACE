@@ -1,11 +1,46 @@
-import { useAppSelector } from "@/hooks/storeMap";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeMap";
 import Image from "next/image";
 import styles from "@/styles/storeList.module.css";
 import Link from "next/link";
 import { Heart, StoreListStar } from "@/assets/icons";
+import { toggleFavorite } from "@/api/map";
+import { MarkerType } from "@/types/map";
+import { setMarkers } from "@/features/map/mapSlice";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 function StoreList() {
+  const route = useRouter();
   const { markers } = useAppSelector((state) => state.map);
+  const dispatch = useAppDispatch();
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("accessToken");
+      setAccessToken(token);
+    }
+  }, []);
+
+  const handleFavoriteClick = async (marker: MarkerType) => {
+    const currentFavorite = marker.is_favorite;
+    const newFavorite = !currentFavorite;
+    try {
+      await toggleFavorite(marker.id, newFavorite);
+
+      const updatedMarkers = markers.map((m) =>
+        m.id === marker.id ? { ...m, is_favorite: newFavorite } : m,
+      );
+      dispatch(setMarkers(updatedMarkers));
+    } catch (e: any) {
+      console.error("찜 토글 실패", e);
+      if (accessToken === null) {
+        alert("로그인 후 이용해주세요");
+        route.replace("/auth/login");
+      }
+    }
+  };
+
   return (
     <div className={styles.storeList}>
       <div className={styles.barWrap}>
@@ -25,9 +60,16 @@ function StoreList() {
             <div className={styles.contextBox}>
               <div className={styles.header}>
                 <h6>{marker.name}</h6>
-                <button className={styles.heartBtn}>
-                  <Heart />
-                </button>
+                {accessToken && (
+                  <button
+                    className={
+                      marker.is_favorite ? styles.heartBtnAc : styles.heartBtn
+                    }
+                    onClick={() => handleFavoriteClick(marker)}
+                  >
+                    <Heart />
+                  </button>
+                )}
               </div>
               <div className={styles.storeDistance}>
                 <p>-</p>

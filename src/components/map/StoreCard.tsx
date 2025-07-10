@@ -16,7 +16,6 @@ export default function StoreCard() {
   const id = parseInt(router.query.id as string, 10);
   const selectedStore = markers.find((marker) => marker.id === id);
 
-  // ✅ selectedPosition 기반 API 호출
   useEffect(() => {
     if (!selectedPosition) return;
 
