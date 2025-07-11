@@ -8,6 +8,7 @@ import { MarkerType } from "@/types/map";
 import { setMarkers } from "@/features/map/mapSlice";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { AxiosError } from "axios";
 
 function StoreList() {
   const route = useRouter();
@@ -32,8 +33,9 @@ function StoreList() {
         m.id === marker.id ? { ...m, is_favorite: newFavorite } : m,
       );
       dispatch(setMarkers(updatedMarkers));
-    } catch (e: any) {
-      console.error("찜 토글 실패", e);
+    } catch (e) {
+      const axiosError = e as AxiosError;
+      console.error("찜 토글 실패", axiosError);
       if (accessToken === null) {
         alert("로그인 후 이용해주세요");
         route.replace("/auth/login");
@@ -70,9 +72,6 @@ function StoreList() {
                     <Heart />
                   </button>
                 )}
-              </div>
-              <div className={styles.storeDistance}>
-                <p>-</p>
               </div>
               <div className={styles.reviewStats}>
                 <span className={styles.rating}>

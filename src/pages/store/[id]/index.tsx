@@ -1,3 +1,4 @@
+import layoutStyles from "@/styles/layout.module.css";
 import { StudioReviewList } from "@/api/review";
 import { ImageGalleryApi, StoreDetailApi } from "@/api/store";
 import { pageMeta } from "@/constants/pageMeta";
@@ -36,7 +37,7 @@ function StorePage() {
 
   return (
     <div style={{ paddingTop: "200px" }}>
-      <div>
+      <div className={layoutStyles.width}>
         {store ? (
           <div>
             {store.categories.map((cat, i) => (

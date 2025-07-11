@@ -10,6 +10,7 @@ import Link from "next/link";
 import { MyReviewType } from "@/types/user";
 import ReviewStar from "../common/ReviewStar";
 import { useRouter } from "next/router";
+import { AxiosError } from "axios";
 
 function MyPageReview() {
   const router = useRouter();
@@ -20,7 +21,8 @@ function MyPageReview() {
         const { data } = await fetchMyReviews();
         setReviews(data);
       } catch (err) {
-        if (err.response?.status === 401) {
+        const axiosError = err as AxiosError;
+        if (axiosError.response?.status === 401) {
           router.replace("/auth/login");
         } else {
           console.error("리뷰 불러오기 실패", err);
@@ -74,7 +76,9 @@ function MyPageReview() {
                   </div>
                   <div className={styles.reviewContent}>
                     <h6>{review.name}</h6>
-                    <ReviewStar rating={review.rating} />
+                    <div className={styles.ratingWrap}>
+                      <ReviewStar rating={review.rating} />
+                    </div>
                     <p>{review.content}</p>
                     <span>{review.created_at}</span>
                   </div>

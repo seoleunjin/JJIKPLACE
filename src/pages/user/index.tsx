@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { fetchProfile } from "@/api/user";
 import { profileType } from "@/types/user";
 import { useRouter } from "next/router";
+import { AxiosError } from "axios";
 
 function UserPage() {
   const [profile, setProfile] = useState<profileType | null>(null);
@@ -17,13 +18,10 @@ function UserPage() {
         const res = await fetchProfile();
         const user = res.data.user;
         setProfile(user);
-
-        if (Response.status === 401) {
-          router.replace("/auth/login");
-        }
-      } catch (error: any) {
+      } catch (err) {
+        const axiosError = err as AxiosError;
         setIsLoading(false);
-        if (error.response?.status === 401) {
+        if (axiosError.response?.status === 401) {
           router.replace("/auth/login");
         }
       }

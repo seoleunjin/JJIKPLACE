@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { patchProfileImage } from "@/api/user";
 import FavoriteList from "./FavoriteList";
 import Loading from "../common/Loading";
+import { AxiosError } from "axios";
 
 function MyPage({ profile, isLoading }: MyPageProps) {
   const router = useRouter();
@@ -41,10 +42,11 @@ function MyPage({ profile, isLoading }: MyPageProps) {
         ...prev!,
         profile_image: newImage,
       }));
-    } catch (err: any) {
-      console.error("오류", err.response?.data || err.message);
+    } catch (err) {
+      const axiosError = err as AxiosError;
+      console.error("오류", axiosError.response?.data || axiosError.message);
 
-      if (err.response.status === 401) {
+      if (axiosError.response?.status === 401) {
         alert("로그인 후 이용해주세요");
         router.replace("/auth/login");
       }

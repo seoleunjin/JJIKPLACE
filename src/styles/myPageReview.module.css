@@ -50,7 +50,6 @@
 }
 .reviewContent h6 {
     font-weight: 700;
-    margin-bottom: 4px;
     margin-top: 24px;
     display: -webkit-box;
     display: box;
@@ -61,7 +60,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+.ratingWrap {
+    margin-top: 4px;
+}
 .reviewContent p {
     margin-top: 12px;
     margin-bottom: 16px;
