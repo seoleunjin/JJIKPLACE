@@ -4,10 +4,12 @@ import layoutStyles from "@/styles/layout.module.css";
 import { useEffect, useState } from "react";
 import { fetchProfile } from "@/api/user";
 import { profileType } from "@/types/user";
+import { useRouter } from "next/router";
 
 function UserPage() {
   const [profile, setProfile] = useState<profileType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -15,8 +17,15 @@ function UserPage() {
         const res = await fetchProfile();
         const user = res.data.user;
         setProfile(user);
-      } catch {
+
+        if (Response.status === 401) {
+          router.replace("/auth/login");
+        }
+      } catch (error: any) {
         setIsLoading(false);
+        if (error.response?.status === 401) {
+          router.replace("/auth/login");
+        }
       }
     };
     fetchUserProfile();

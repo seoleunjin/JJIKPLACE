@@ -37,14 +37,19 @@ function FavoriteList() {
       queryFn: async ({ pageParam }: QueryFunctionContext) => {
         const page = pageParam as number;
         const res = await FavoriteListAPI(page);
-        return res.data;
+        return {
+          ...res.data,
+          page,
+        };
       },
       getNextPageParam: (last) => {
-        return last.page < last.total ? last.page + 1 : undefined;
+        const totalPages = Math.ceil(last.total / last.size);
+        return last.page < totalPages ? last.page + 1 : undefined;
       },
       initialPageParam: 1,
     });
   };
+  useGetTopRateItems();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useGetTopRateItems();
@@ -52,9 +57,7 @@ function FavoriteList() {
 
   const { ref, inView } = useInView();
   useEffect(() => {
-    if (inView && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
+    if (inView && hasNextPage && !isFetchingNextPage) fetchNextPage();
     console.log("화면에 있습니까?", inView);
   }, [inView]);
 
@@ -98,6 +101,9 @@ function FavoriteList() {
       ) : (
         <div>로딩중</div>
       )} */}
+      <div className={MyPageStyles.title}>
+        <h2>찜 목록</h2>
+      </div>
       {data?.pages.map((page, index) => (
         <div key={index}>
           {page.items?.map((item) => (
