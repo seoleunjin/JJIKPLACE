@@ -1,11 +1,11 @@
 // api/map.ts
 import { MapBounds } from "@/types/api";
-import { instance, userInstance } from "./apiClient";
+import { instance, instanceBase, userInstance } from "./apiClient";
 
 function fetchClusterData(path: string, bounds: MapBounds, category?: string) {
   const { swLat, swLng, neLat, neLng } = bounds;
   const token = localStorage.getItem("accessToken");
-  const apiClient = token ? userInstance : instance;
+  const apiClient = token ? userInstance : instanceBase;
   return apiClient.get(path, {
     params: {
       sw_lat: swLat,

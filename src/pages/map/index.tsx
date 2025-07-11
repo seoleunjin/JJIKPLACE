@@ -22,7 +22,7 @@ export default function MapPage() {
           <KakaoMap></KakaoMap>
         </div>
         <div className={styles.mapTop}>
-          {/* 동 검색 개발 필요 공공데이터로 연동해서 */}
+          {/* 동 검색 개발 필요 공공데이터로 연동해서 음흠흠 */}
           <div className={styles.searchWrap}>
             <Link className={styles.searchBox} href={"/map/searchLocation"}>
               <input type="text" placeholder="지역이나 상점을 검색해보세요." />
@@ -30,7 +30,7 @@ export default function MapPage() {
             {/* <div className={styles.searchBox}>
               <MapSearch />
             </div> */}
-            <Link href={"/"}>
+            <Link href={"/map/navigation"}>
               <Image
                 src="/images/map/Navigation.png"
                 width="50"

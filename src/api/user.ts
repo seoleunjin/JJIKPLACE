@@ -56,8 +56,8 @@ const passwordChangeAPI = (body: {
 };
 
 // 찜 목록
-const FavoriteListAPI = () => {
-  return authInstance.get("/profile/my-favorites");
+const FavoriteListAPI = (page: number) => {
+  return authInstance.get(`/profile/my-favorites/?page=${page}`);
 };
 
 // 찜 삭제
