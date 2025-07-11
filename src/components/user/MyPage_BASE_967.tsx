@@ -8,11 +8,6 @@ import MyPageReview from "./MyPageReview";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { patchProfileImage } from "@/api/user";
-<<<<<<< HEAD
-import FavoriteList from "./FavoriteList";
-=======
-import Loading from "../common/Loading";
->>>>>>> dohyun
 
 function MyPage({ profile, isLoading }: MyPageProps) {
   const router = useRouter();
@@ -46,17 +41,12 @@ function MyPage({ profile, isLoading }: MyPageProps) {
       }));
     } catch (err: any) {
       console.error("오류", err.response?.data || err.message);
-
-      if (err.response.status === 401) {
-        alert("로그인 후 이용해주세요");
-        router.replace("/auth/login");
-      }
     }
   };
   // 로그아웃
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
-    router.replace("/");
+    router.replace("/auth/login");
   };
 
   if (!isLoading) {
@@ -80,7 +70,7 @@ function MyPage({ profile, isLoading }: MyPageProps) {
   }
 
   if (!profile) {
-    return <Loading />;
+    return <div>잠시만 기다려주세요</div>;
   }
 
   return (
@@ -170,13 +160,6 @@ function MyPage({ profile, isLoading }: MyPageProps) {
       <div className={styles.reviewBox}>
         <div className={styles.py_space}>
           <MyPageReview />
-        </div>
-      </div>
-
-      {/* 찜 목록 */}
-      <div className={styles.reviewBox}>
-        <div className={styles.py_space}>
-          <FavoriteList />
         </div>
       </div>
 

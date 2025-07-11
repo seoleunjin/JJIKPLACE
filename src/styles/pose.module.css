@@ -3,7 +3,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    padding: 58px 0;
+    padding: 48px 0;
 }
 .pose_list div{
     position: relative;
@@ -31,6 +31,15 @@
     font-size: 1.6rem;
     color: #FFFFFF;
 }
+.pose_title{
+    font-family: var(--font-family-SUITE-Bold);
+    color: #000;
+    font-size: 2.4rem;
+    line-height: 140%;
+    letter-spacing: -2%;
+    text-align: center;
+    margin-top: 48px;
+}
 
 /* fixed button */
 .frame_btn{
@@ -49,6 +58,9 @@
     height: 65px;
     margin-bottom: 10px;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 
@@ -62,3 +74,28 @@
     width: 100%;
     height: auto;
 }
+.preview_filter{
+
+}
+.filter_title{
+    font-family: var(--font-family-SUITE-Bold);
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+.filter_list{
+    display: flex;
+    gap: 20px;
+    cursor: pointer;
+}
+.filter_list li{
+    text-align: center;
+}
+.filter_btn{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+.warm_filter{filter: brightness(110%) saturate(120%) sepia(20%);}
+.bw_filter{filter: grayscale(100%);}
+.dreamy_filter {filter: hue-rotate(30deg) saturate(150%) brightness(115%);}

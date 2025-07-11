@@ -187,7 +187,7 @@ function KakaoMap() {
         console.log("길찾기 응답", data);
 
         const linePath: kakao.maps.LatLng[] = [];
-
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         data.routes[0].sections[0].roads.forEach((road: any) => {
           const vertexes = road.vertexes;
           for (let i = 0; i < vertexes.length; i += 2) {

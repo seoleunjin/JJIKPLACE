@@ -8,11 +8,7 @@ import MyPageReview from "./MyPageReview";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { patchProfileImage } from "@/api/user";
-<<<<<<< HEAD
 import FavoriteList from "./FavoriteList";
-=======
-import Loading from "../common/Loading";
->>>>>>> dohyun
 
 function MyPage({ profile, isLoading }: MyPageProps) {
   const router = useRouter();
@@ -80,7 +76,7 @@ function MyPage({ profile, isLoading }: MyPageProps) {
   }
 
   if (!profile) {
-    return <Loading />;
+    return <div>잠시만 기다려주세요</div>;
   }
 
   return (
