@@ -4,13 +4,13 @@ import { useAppSelector } from "@/hooks/storeMap";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { getNearbyStudios } from "@/api/map";
-import Image from "next/image";
 
 export default function StoreCard() {
   const selectedPosition = useAppSelector(
     (state) => state.map.selectedPosition,
   );
   const { markers } = useAppSelector((state) => state.map);
+  console.log("마커", markers);
   const router = useRouter();
 
   const id = parseInt(router.query.id as string, 10);

@@ -2,10 +2,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 120px;
+    padding-bottom: 60px;
     background:#000;
 }
 .reviewItem {
-    max-width: 500px;
+    max-width: 400px;
     width: 92%;
     background: var(--color-surface);
     padding: 45px 30px;
@@ -15,4 +17,18 @@
     width: 100%;
     height: auto;
     border-radius: 16px;
+    margin-bottom: 24px;
+}
+.reviewerInfo {
+    margin-bottom: 24px;
+}
+.reviewerInfo h6 {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.reviewerContent span{
+    font-size: var(--text-sm);
+    color: var(--color-gray4);
+    margin-top: 12px;
+    display: inline-block;
 }
