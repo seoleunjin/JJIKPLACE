@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import HomeStyles from "@/styles/home.module.css";
 import { RankingItem, RankingType } from "@/types/homeType";
 import { liveRankingAPI } from "@/api/homeApi";
