@@ -1,18 +1,21 @@
 import axios from "axios";
 
+// Netlify 프록시 경로를 baseURL로 지정
+const baseURL = "/api";
+
 const instanceBase = axios.create({
-  baseURL: process.env.api,
+  baseURL,
 });
 
 const instance = axios.create({
-  baseURL: process.env.api,
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 const authInstance = axios.create({
-  baseURL: process.env.api,
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -27,7 +30,7 @@ authInstance.interceptors.request.use((config) => {
 });
 
 const userInstance = axios.create({
-  baseURL: process.env.api,
+  baseURL,
 });
 
 userInstance.interceptors.request.use((config) => {
