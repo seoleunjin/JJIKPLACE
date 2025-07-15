@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 function LiveRanking() {
   const [ranking, setRanking] = useState<RankingItem[]>([]);
-  const liveRanking = async () => {
+  const liveRanking = useCallback(async () => {
     const params: RankingType = {
       days: 30,
       m: 1,
@@ -21,10 +21,11 @@ function LiveRanking() {
     } finally {
       console.log(ranking, "랭킹 결과값");
     }
-  };
+  }, []);
+
   useEffect(() => {
     liveRanking();
-  }, []);
+  }, [liveRanking]);
 
   // 해당 가게로 이동
   const router = useRouter();

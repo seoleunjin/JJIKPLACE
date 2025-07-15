@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { XMLParser } from "fast-xml-parser";
+
+interface RegionResult {
+  locatadd_nm: string;
+  region_cd: string;
+}
 
 function SearchT() {
   const serviceKey =
     "vROaCiD4BajppH2wH9Ac7Ecnw%2B2KnhL%2BL16O6wz3AozSg4AKNLfIyjzIw1tLHoaiLUu0%2Fy3pnEzG83sHXOpz%2BA%3D%3D";
 
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<RegionResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const searchAddress = async () => {
+  const searchAddress = useCallback(async () => {
     if (!query.trim()) return;
 
     setLoading(true);
@@ -27,7 +32,6 @@ function SearchT() {
       const parser = new XMLParser();
       const json = parser.parse(xmlText);
 
-      // 결과 파싱: row가 배열 또는 단일 객체일 수 있음
       const rows = json?.StanReginCd?.row;
       const list = Array.isArray(rows) ? rows : rows ? [rows] : [];
 
@@ -38,12 +42,11 @@ function SearchT() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [query]); // 의존성 배열에 query 추가
 
-  // 최초 마운트 시 기본 query로 검색
   useEffect(() => {
-    searchAddress();
-  }, []);
+    searchAddress(); // 이제 안전하게 의존성 배열에 넣을 수 있음
+  }, [searchAddress]);
 
   return (
     <div style={{ maxWidth: 600, margin: "auto", paddingTop: "200px" }}>

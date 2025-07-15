@@ -104,7 +104,7 @@ const Preview = () => {
         ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);
       }
     });
-  }, [router.isReady, router.query]);
+  }, [router.isReady, frameId, frameImage, poseImages]);
 
   const [filter, setFilter] = useState("");
 

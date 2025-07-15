@@ -11,7 +11,7 @@ const WriteReview = () => {
       alert("로그인이 필요합니다.");
       router.push("/auth/login");
     }
-  }, []);
+  }, [router]);
 
   return (
     <article style={{ paddingTop: "60px" }}>

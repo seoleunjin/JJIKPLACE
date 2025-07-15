@@ -12,7 +12,41 @@ function SearchLocation() {
   const [filteredMarkers, setFilteredMarkers] = useState<MarkerType[]>([]);
   const router = useRouter();
 
-  // 홈 메인에서 검색으로 접근
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+  const handleSearch = useCallback(
+    async (searchValue?: string) => {
+      const keyword = (searchValue ?? value).trim().toLowerCase();
+      if (!keyword) {
+        alert("검색어를 입력해주세요");
+        return;
+      }
+
+      const bounds = {
+        swLat: 33.0,
+        swLng: 124.0,
+        neLat: 39.5,
+        neLng: 132.0,
+      };
+
+      try {
+        const response = await getMapSearch(bounds);
+        const markers = response.data.markers;
+
+        const filtered = markers.filter((marker: MarkerType) => {
+          const name = marker.name?.toLowerCase() || "";
+          const addr = marker.road_addr?.toLowerCase() || "";
+          return name.includes(keyword) || addr.includes(keyword);
+        });
+        setFilteredMarkers(filtered);
+      } catch (error) {
+        console.error("검색 중 오류 발생:", error);
+      }
+    },
+    [value],
+  );
+
   useEffect(() => {
     const keyword = sessionStorage.getItem("searchKeyword");
     if (keyword) {
@@ -20,39 +54,7 @@ function SearchLocation() {
       sessionStorage.removeItem("searchKeyword");
       handleSearch(keyword);
     }
-  }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
-  const handleSearch = async (searchValue?: string) => {
-    const keyword = (searchValue ?? value).trim().toLowerCase();
-    if (!keyword) {
-      alert("검색어를 입력해주세요");
-      return;
-    }
-
-    const bounds = {
-      swLat: 33.0,
-      swLng: 124.0,
-      neLat: 39.5,
-      neLng: 132.0,
-    };
-
-    try {
-      const response = await getMapSearch(bounds);
-      const markers = response.data.markers;
-
-      const filtered = markers.filter((marker: MarkerType) => {
-        const name = marker.name?.toLowerCase() || "";
-        const addr = marker.road_addr?.toLowerCase() || "";
-        return name.includes(keyword) || addr.includes(keyword);
-      });
-      setFilteredMarkers(filtered);
-    } catch (error) {
-      console.error("검색 중 오류 발생:", error);
-    }
-  };
+  }, [handleSearch]);
 
   const handleSelect = (marker: MarkerType) => {
     router.push({

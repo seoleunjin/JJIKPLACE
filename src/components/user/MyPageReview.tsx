@@ -30,7 +30,7 @@ function MyPageReview() {
       }
     };
     getMyReviews();
-  }, []);
+  }, [router]);
 
   return (
     <div>
