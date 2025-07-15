@@ -2,7 +2,7 @@ import { getMapSearch } from "@/api/map";
 import { pageMeta } from "@/constants/pageMeta";
 import { MarkerType } from "@/types/map";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import commonStyles from "@/styles/common.module.css";
 import styles from "@/styles/searchLocation.module.css";
