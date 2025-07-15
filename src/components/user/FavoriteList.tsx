@@ -3,7 +3,7 @@ import layoutStyles from "@/styles/layout.module.css";
 import myPageReview from "@/styles/myPageReview.module.css";
 import styles from "@/styles/favoriteList.module.css";
 import MyPageStyles from "@/styles/myPage.module.css";
-import { FavoriteItemType } from "@/types/user";
+import { FavoriteListResponse } from "@/types/user";
 import {
   QueryFunctionContext,
   useInfiniteQuery,
@@ -17,12 +17,6 @@ import { useInView } from "react-intersection-observer";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import { Heart } from "@/assets/icons";
-
-interface FavoriteListResponse {
-  offset: number;
-  total: number;
-  items: FavoriteItemType[];
-}
 
 const useGetTopRateItems = () => {
   const router = useRouter();

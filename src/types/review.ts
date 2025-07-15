@@ -5,6 +5,7 @@ interface ReviewType {
   image_url: string | null;
   created_at: string;
   thumbnail_url: string | null;
+  user_nickname: string;
 }
 
 interface ReviewList {

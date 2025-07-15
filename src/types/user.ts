@@ -51,6 +51,12 @@ interface FavoriteItemType {
   thumbnail_url: string | null;
 }
 
+interface FavoriteListResponse {
+  offset: number;
+  total: number;
+  items: FavoriteItemType[];
+}
+
 export type {
   profileType,
   MyPageProps,
@@ -58,4 +64,5 @@ export type {
   MyReviewDetail,
   MyReviewitem,
   FavoriteItemType,
+  FavoriteListResponse,
 };

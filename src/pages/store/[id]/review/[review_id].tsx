@@ -1,8 +1,11 @@
+import styles from "@/styles/reviewDetail.module.css";
 import { ReviewDetaile } from "@/api/review";
 import { pageMeta } from "@/constants/pageMeta";
 import { ReviewDetaileType } from "@/types/review";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import ReviewStar from "@/components/common/ReviewStar";
 
 function ReviewDetailePage() {
   const router = useRouter();
@@ -29,20 +32,27 @@ function ReviewDetailePage() {
   }, [storeId, reviewId]);
 
   return (
-    <div style={{ paddingTop: "200px" }}>
-      <div>
-        {review ? (
-          <div>
-            <p>{review.content}</p>
-            <p>{review.name}</p>
-            <p>{review.user_nickname}</p>
-            <p>{review.rating}</p>
-            <p>{review.created_at}</p>
+    <div className={styles.reviewBox}>
+      {review ? (
+        <div className={styles.reviewItem}>
+          <div className={styles.reviewerInfo}>
+            <h6>{review.user_nickname}</h6>
+            <ReviewStar rating={review.rating} />
           </div>
-        ) : (
-          <div>로딩중</div>
-        )}
-      </div>
+          <Image
+            src={review.image_url || "/images/common/NoImage.png"}
+            alt="리뷰 썸네일 이미지"
+            width={150}
+            height={150}
+          />
+          <div className={styles.reviewerContent}>
+            <p>{review.content}</p>
+            <span>{review.created_at}</span>
+          </div>
+        </div>
+      ) : (
+        <div>로딩중</div>
+      )}
     </div>
   );
 }

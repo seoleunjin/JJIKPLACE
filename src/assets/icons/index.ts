@@ -10,6 +10,8 @@ import Heart from "./Heart.svg";
 import StarActive27 from "./StarActive27.svg";
 import camera from "./camera.svg";
 import CurrentPosition from "./CurrentPosition.svg";
+import ReviewList from "./ReviewList.svg";
+import ReviewPhoto from "./ReviewPhoto.svg";
 
 export {
   MenuIcon,
@@ -24,4 +26,6 @@ export {
   StarActive27,
   camera,
   CurrentPosition,
+  ReviewList,
+  ReviewPhoto,
 };

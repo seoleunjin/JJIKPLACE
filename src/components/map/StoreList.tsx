@@ -43,6 +43,8 @@ function StoreList() {
     }
   };
 
+  if (!markers || markers.length === 0) return null;
+
   return (
     <div className={styles.storeList}>
       <div className={styles.barWrap}>

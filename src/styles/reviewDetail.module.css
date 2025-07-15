@@ -1,0 +1,18 @@
+.reviewBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:#000;
+}
+.reviewItem {
+    max-width: 500px;
+    width: 92%;
+    background: var(--color-surface);
+    padding: 45px 30px;
+    border-radius: 16px;
+}
+.reviewItem img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+}

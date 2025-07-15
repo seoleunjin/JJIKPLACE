@@ -1,4 +1,6 @@
+// components/StorePage.tsx
 import layoutStyles from "@/styles/layout.module.css";
+import styles from "@/styles/storeDetail.module.css";
 import { StudioReviewList } from "@/api/review";
 import { ImageGalleryApi, StoreDetailApi } from "@/api/store";
 import { pageMeta } from "@/constants/pageMeta";
@@ -7,83 +9,205 @@ import { ImageItem, StoreType } from "@/types/store";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { ReviewList, ReviewPhoto, StoreListStar } from "@/assets/icons";
+import ReviewStar from "@/components/common/ReviewStar";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
+import Link from "next/link";
+
+// ✅ 컴포넌트 밖으로 분리된 커스텀 훅
+const useStoreList = (storeId: number, enabled: boolean) => {
+  return useInfiniteQuery({
+    queryKey: ["storeListItems", storeId],
+    queryFn: async ({ pageParam = 0 }) => {
+      const response = await StudioReviewList(storeId, pageParam);
+      return response.data;
+    },
+    getNextPageParam: (last) => {
+      const nextPage = last.offset + 1;
+      if (nextPage * last.limit < last.total) {
+        return nextPage;
+      }
+      return undefined;
+    },
+    initialPageParam: 0,
+    enabled,
+  });
+};
+
+const useStorePhoto = (storeId: number, enabled: boolean) => {
+  return useInfiniteQuery({
+    queryKey: ["storePhoto", storeId],
+    queryFn: async ({ pageParam = 1 }) => {
+      const res = await ImageGalleryApi(storeId, pageParam);
+      return res.data;
+    },
+    getNextPageParam: (last) => {
+      const nextPage = last.page + 1;
+      if (nextPage <= last.total) {
+        return nextPage;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
+    enabled,
+  });
+};
 
 function StorePage() {
   const router = useRouter();
-  const { id } = router.query;
-  const storeId = Number(id);
+  const isReady = router.isReady;
+  const storeId = isReady ? Number(router.query.id) : NaN;
   const [store, setStore] = useState<StoreType | undefined>(undefined);
-  const [reviews, setReviews] = useState<ReviewType[] | undefined>(undefined);
-  const [images, setImages] = useState<ImageItem[]>([]);
+
+  // 상세 정보 불러오기
   useEffect(() => {
     if (isNaN(storeId)) return;
+
     const getStoreDetail = async () => {
       try {
-        const review = await StudioReviewList(storeId);
-        const Images = await ImageGalleryApi(storeId);
         const { data } = await StoreDetailApi(storeId);
         setStore(data);
-        console.log("리뷰 사진 갤러리", Images);
-        setImages(Images.data.images);
-        setReviews(review.data.items);
-      } catch {}
+      } catch (error) {
+        console.error("상세 정보 로딩 오류:", error);
+      }
     };
+
     getStoreDetail();
   }, [storeId]);
 
-  const handleOnClick = (reviewId: number) => {
-    router.push(`/store/${storeId}/review/${reviewId}`);
+  // 탭
+  const [currentTab, setCurrentTab] = useState(0);
+  const menuArr = [
+    { name: "list", component: <ReviewList /> },
+    { name: "photo", component: <ReviewPhoto /> },
+  ];
+  const handleSelectMenu = (index: number) => {
+    setCurrentTab(index);
   };
 
+  // 리뷰 리스트
+  const {
+    data: reviewData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useStoreList(storeId, isReady && !isNaN(storeId));
+  const { ref, inView } = useInView();
+  console.log("리뷰", reviewData);
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  // 리뷰 이미지
+  const { data: photoData } = useStorePhoto(
+    storeId,
+    isReady && !isNaN(storeId),
+  );
+
   return (
-    <div style={{ paddingTop: "200px" }}>
-      <div className={layoutStyles.width}>
-        {store ? (
-          <div>
-            {store.categories.map((cat, i) => (
-              <span key={i}>{cat}</span>
-            ))}
-            <h6>{store.name}</h6>
-            <p>{store.avg_rating}</p>
-            <p>{store.review_count}개 리뷰</p>
-          </div>
-        ) : (
-          <div>로딩중</div>
-        )}
-        <div>
-          {reviews?.map((review) => (
-            <div key={review.review_id}>
-              <p>{review.content}</p>
-              <p>{review.rating}점</p>
-              <p>{review.created_at}</p>
-              <Image
-                src={review.image_url || "/images/common/NoImage.png"}
-                alt="리뷰 썸네일 이미지"
-                width={80}
-                height={80}
-              />
-              <button onClick={() => handleOnClick(review.review_id)}>
-                리뷰 상세
-              </button>
+    <div className={layoutStyles.py_space}>
+      <div className={styles.storeInfo}>
+        <div className={layoutStyles.width}>
+          {store ? (
+            <div>
+              {store.categories.map((category, i) => (
+                <span className={styles.categories} key={i}>
+                  {category}
+                </span>
+              ))}
+              <h6>{store.name}</h6>
+              <div className={styles.ratingInfo}>
+                <div className={styles.rating}>
+                  <StoreListStar />
+                  {Number(store.avg_rating).toFixed(1)}
+                </div>
+                <p className={styles.reviewCount}>
+                  {store.review_count}개 리뷰
+                </p>
+              </div>
             </div>
-          ))}
-        </div>
-        <div>
-          {images.length > 0 ? (
-            images.map((img, index) => (
-              <Image
-                key={index}
-                src={img.review_image}
-                alt={"리뷰"}
-                width={80}
-                height={80}
-              />
-            ))
           ) : (
-            <p>이미지가 없습니다.</p>
+            <div>로딩중</div>
           )}
         </div>
       </div>
+
+      <div className={styles.tabBox}>
+        <div className={layoutStyles.width}>
+          <div className={styles.tabWrap}>
+            {menuArr.map((menu, index) => (
+              <li
+                key={index}
+                onClick={() => handleSelectMenu(index)}
+                className={`${styles.menu} ${
+                  index === currentTab ? styles.menuAc : ""
+                }`}
+              >
+                {menu.component}
+              </li>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {currentTab === 0 && (
+        <div className={styles.listBox}>
+          <div className={layoutStyles.width}>
+            <ul>
+              {reviewData?.pages.map((page) =>
+                page.items.map((item: ReviewType) => (
+                  <li key={item.review_id}>
+                    <div className={styles.imageBox}>
+                      <Image
+                        src={item.image_url || "/images/common/NoImage.png"}
+                        alt="리뷰 썸네일 이미지"
+                        width={150}
+                        height={150}
+                      />
+                    </div>
+                    <Link
+                      href={`/store/${storeId}/review/${item.review_id}`}
+                      className={styles.contentBox}
+                    >
+                      <h6>{item.user_nickname}</h6>
+                      <p>{item.content}</p>
+                      <div className={styles.reviewMeta}>
+                        <ReviewStar rating={item.rating} />
+                        <span>{item.created_at}</span>
+                      </div>
+                    </Link>
+                  </li>
+                )),
+              )}
+            </ul>
+            <div ref={ref} />
+          </div>
+        </div>
+      )}
+
+      {currentTab === 1 && (
+        <div className={layoutStyles.width}>
+          <ul className={styles.imageGallery}>
+            {photoData?.pages.map((page) =>
+              page.images.map((image: ImageItem) => (
+                <li key={image.review_id}>
+                  <Link href={`/store/${storeId}/review/${image.review_id}`}>
+                    <Image
+                      src={image.review_image}
+                      alt="리뷰"
+                      width={80}
+                      height={80}
+                    />
+                  </Link>
+                </li>
+              )),
+            )}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
