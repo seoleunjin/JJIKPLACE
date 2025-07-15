@@ -58,7 +58,7 @@ const passwordChangeAPI = (body: {
 // 찜 목록
 const FavoriteListAPI = (offset: number, size: number) => {
   return authInstance.get(
-    `/profile/my-favorites/?offset=${offset}&size=${size}`,
+    `/profile/my-favorites?offset=${offset}&size=${size}`,
   );
 };
 
