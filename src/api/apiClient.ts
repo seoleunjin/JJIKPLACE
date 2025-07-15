@@ -1,18 +1,18 @@
 import axios from "axios";
-
+const BASE_URL = "/api";
 const instanceBase = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
+  baseURL: BASE_URL,
 });
 
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
+  baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 const authInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
+  baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -27,7 +27,7 @@ authInstance.interceptors.request.use((config) => {
 });
 
 const userInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_MAIN_SERVER,
+  baseURL: BASE_URL,
 });
 
 userInstance.interceptors.request.use((config) => {

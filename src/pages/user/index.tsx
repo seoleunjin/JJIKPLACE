@@ -18,7 +18,6 @@ function UserPage() {
         const res = await fetchProfile();
         const user = res.data.user;
         setProfile(user);
-        setIsLoading(false);
       } catch (err) {
         const axiosError = err as AxiosError;
         setIsLoading(false);
@@ -28,7 +27,7 @@ function UserPage() {
       }
     };
     fetchUserProfile();
-  }, [router]);
+  }, []);
   return (
     <div className={layoutStyles.py_space}>
       <MyPage profile={profile} isLoading={isLoading}></MyPage>
