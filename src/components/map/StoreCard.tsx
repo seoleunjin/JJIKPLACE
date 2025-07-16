@@ -10,10 +10,9 @@ import { StoreNearbyItems } from "@/types/store";
 import { useInView } from "react-intersection-observer";
 import { StoreListStar } from "@/assets/icons";
 import Link from "next/link";
-import FavoriteButton from "../common/FavoriteButton";
 
 export default function StoreCard() {
-  const { selectedPosition, markers } = useAppSelector((state) => state.map);
+  const { selectedPosition } = useAppSelector((state) => state.map);
 
   const lat = selectedPosition?.lat;
   const lng = selectedPosition?.lng;
