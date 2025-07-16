@@ -159,6 +159,12 @@
     box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.16);
     overflow: hidden;
 }
+.photostudio_kakao_map > * {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .photostudio_photo_list {
     height: 238px;
     padding: 13px 0;

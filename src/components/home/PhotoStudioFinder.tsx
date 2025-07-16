@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import HomeStyles from "@/styles/home.module.css";
+import styles from "@/styles/kakaoMap.module.css";
 import KakaoMap from "../map/KakaoMap";
 import PhotoStudioList from "./PhotoStudioList";
 import { useRouter } from "next/router";
 import Search from "@/assets/icons/search.svg";
 import Link from "next/link";
+import { CurrentPosition } from "@/assets/icons";
 
 function PhotoStudioFinder() {
   const router = useRouter();
@@ -55,6 +57,12 @@ function PhotoStudioFinder() {
       <div className={HomeStyles.photostudio_map_wrapper}>
         <div className={HomeStyles.photostudio_kakao_map}>
           <KakaoMap />
+
+          <div className={styles.elementBox}>
+            <button className={styles.curLocBtn}>
+              <CurrentPosition />
+            </button>
+          </div>
         </div>
         <div className={HomeStyles.photostudio_photo_list}>
           <PhotoStudioList />
