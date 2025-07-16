@@ -4,19 +4,27 @@ import styles from "@/styles/storeList.module.css";
 import Link from "next/link";
 import { StoreListStar } from "@/assets/icons";
 import FavoriteButton from "../common/FavoriteButton";
+import { useState } from "react";
 
 function StoreList() {
   const { markers } = useAppSelector((state) => state.map);
+  const [showAll, setShowAll] = useState(false);
 
   if (!markers || markers.length === 0) return null;
+
+  const handleToggle = () => {
+    setShowAll((prev) => !prev);
+  };
+
+  const displayedMarker = showAll ? markers.slice(0, 6) : markers.slice(0, 2);
 
   return (
     <div className={styles.storeList}>
       <div className={styles.barWrap}>
-        <button></button>
+        <button onClick={handleToggle}></button>
       </div>
       <ul className={styles.listBox}>
-        {markers.slice(0, 6).map((marker) => (
+        {displayedMarker.map((marker) => (
           <li key={marker.id}>
             <div className={styles.imageBox}>
               <Image

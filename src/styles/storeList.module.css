@@ -8,11 +8,13 @@
     justify-content: center;
 }
 .barWrap button{
+    transition: var(--transition-default);
     display: block;
     width: 72px;
     height: 12px;
     border-radius: 10px;
     background: var(--color-gray2);
+    cursor: pointer;
 }
 .listBox {
     padding: 24px 0;

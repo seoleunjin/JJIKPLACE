@@ -36,6 +36,7 @@ function SearchT() {
       const list = Array.isArray(rows) ? rows : rows ? [rows] : [];
 
       setResults(list);
+      console.log("검색", res);
     } catch (e) {
       setError("검색 중 오류가 발생했습니다.");
       console.error(e);
