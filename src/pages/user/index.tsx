@@ -21,6 +21,7 @@ function UserPage() {
       } catch (err) {
         const axiosError = err as AxiosError;
         setIsLoading(false);
+        // 이부분을 토큰이 없을시로 바꾸는게 좋지 않을까?라는 생각
         if (axiosError.response?.status === 401) {
           router.replace("/auth/login");
         }

@@ -29,7 +29,7 @@ function PoseIndex() {
       </div>
       <Link href={"/pose/frame"} className={posecss.frame_btn}>
         <div>
-          <HashTag></HashTag>
+          <HashTag className={posecss.hashTag}></HashTag>
         </div>
         <p>프레임 넣기</p>
       </Link>

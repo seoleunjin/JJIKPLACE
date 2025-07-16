@@ -29,11 +29,10 @@ function LiveRanking() {
 
   // 해당 가게로 이동
   const router = useRouter();
-  const storeMark = (id: number) => {
+  const storeMark = (id: number, lat: number, lng: number) => {
     router.push({
       pathname: "/map",
-      query: { id: id },
-      // lat, lng 값이 필요
+      query: { id, lat, lng },
     });
   };
 
@@ -51,7 +50,7 @@ function LiveRanking() {
         <ul className={HomeStyles.high_ranking}>
           {ranking.slice(0, 3).map((item, index) => (
             <li
-              onClick={() => storeMark(item.ps_id)}
+              onClick={() => storeMark(item.ps_id, item.lat, item.lng)}
               key={item.ps_id}
               className={
                 index === 0
@@ -86,7 +85,10 @@ function LiveRanking() {
       </div>
       <ul className={HomeStyles.row_ranking}>
         {ranking.slice(3).map((item, index) => (
-          <li key={item.ps_id} onClick={() => storeMark(item.ps_id)}>
+          <li
+            key={item.ps_id}
+            onClick={() => storeMark(item.ps_id, item.lat, item.lng)}
+          >
             <div>
               <span className={HomeStyles.lg_fonts}>{index + 4}</span>
               <span>{item.name}</span>

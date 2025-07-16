@@ -76,7 +76,7 @@ function FramePage() {
       </div>
       <div className={posecss.frame_btn} onClick={photoPreview}>
         <div>
-          <HashTag></HashTag>
+          <HashTag className={posecss.hashTag}></HashTag>
         </div>
         <p>미리 보기</p>
       </div>

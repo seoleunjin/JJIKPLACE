@@ -38,7 +38,7 @@ const WriteReviewForm = () => {
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const status = err.response?.status;
-        if (status === 401) {
+        if (status === 401 || status === 403) {
           alert("세션이 만료 되었습니다. 다시 로그인 해주세요.");
           localStorage.removeItem("accessToken");
           router.push("/auth/login");
