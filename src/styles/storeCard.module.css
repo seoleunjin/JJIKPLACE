@@ -1,0 +1,67 @@
+
+.storeCard {
+    background: var(--color-surface);
+    border-radius: 16px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.16);
+}
+.contentBox {
+    padding: 24px 15px;
+    border-bottom: 1px solid var(--color-gray2);
+}
+.storeHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+.storeHeader h6 {
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.storeHeader p {
+    font-size: var(--text-sm);
+    color: var(--color-brand);
+    white-space: nowrap;
+}
+.distanceTag p {
+    font-size: var(--text-sm);
+    color: var(--color-gray4);
+}
+.reviewStats {
+    display: flex;
+    align-items: center;
+    gap: 0 6px;
+    margin-top: 12px;
+}
+
+.reviewStats .rating {
+    display: flex;
+    align-items: center;
+    gap: 0 4px;
+    background: var(--color-warning);
+    padding: 4px 6px;
+    border-radius: 100px;
+    font-size: var(--text-sm);
+    font-weight: 800;
+}
+
+.reviewStats .storeLink {
+    font-size: var(--text-sm);
+    color: var(--color-gray4);
+}
+.reviewImage {
+    margin-top: 12px;
+}
+.storeActionButtons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+}
+.routeLabels {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
