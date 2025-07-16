@@ -25,6 +25,7 @@ const Preview = () => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     type FrameLayout = {

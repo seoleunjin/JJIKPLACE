@@ -63,7 +63,11 @@
     justify-content: center;
     cursor: pointer;
 }
-
+.hashTag{
+    width: 3.3rem;
+    height: auto;
+    display: block;
+}
 
 /* preview */
 .frame_wrapper{
@@ -75,7 +79,7 @@
     height: auto;
 }
 .preview_filter{
-
+    padding-bottom: 50px;
 }
 .filter_title{
     font-family: var(--font-family-SUITE-Bold);
@@ -99,3 +103,22 @@
 .warm_filter{filter: brightness(110%) saturate(120%) sepia(20%);}
 .bw_filter{filter: grayscale(100%);}
 .dreamy_filter {filter: hue-rotate(30deg) saturate(150%) brightness(115%);}
+
+
+@media (max-width: 660px) {
+    .pose_list{
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    /* fixed button */
+    .frame_btn{
+      bottom: 70px;
+    }
+    .frame_btn div{
+        width: 50px;
+        height: 50px;
+    }
+    .hashTag{
+        width: 2.8rem;
+    }
+}

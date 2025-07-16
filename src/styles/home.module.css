@@ -102,6 +102,9 @@
     line-height: 160%;
     margin-bottom: 24px;
 }
+.banner_text01 br:nth-child(1) {
+    display: inline;
+}
 .banner_text01>span {
     color: var(--color-brand);
 }
@@ -112,6 +115,20 @@
     line-height: 140%;
     letter-spacing: -2%;
 }
+
+@media (max-width: 660px) {
+    .banner_text01 br:nth-child(1) {
+        display: none;
+    }
+    .home_banner_wrapper {
+        height: 385px;
+        padding-bottom: 135px;
+        margin-top: 50px !important;
+        background-size: 90% !important;
+        background-position: bottom center !important;
+    }
+}
+
 
 /* PhotoStudioFinder style */
 .photostudio_text_box {
@@ -189,6 +206,7 @@
     justify-content: center;
     margin: 0 auto;
 }
+
 @media (max-width: 660px) {
     .photostudio_map_wrapper {
         flex-direction: column;

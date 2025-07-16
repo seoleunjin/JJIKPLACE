@@ -9,6 +9,8 @@ interface RankingItem {
   ps_id: number;
   name: string;
   avg_rating: number;
+  lat: number;
+  lng: number;
   review_cnt: number;
   weighted_rating: number;
   image_url: string;

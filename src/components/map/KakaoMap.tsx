@@ -13,6 +13,7 @@ import {
 import { useMapDataFetch } from "@/hooks/useMapDataFetch";
 import { useRouter } from "next/router";
 import { CurrentPosition } from "@/assets/icons";
+import Loading from "../common/Loading";
 
 function KakaoMap() {
   const [isActive, setIsActive] = useState(false);
@@ -302,9 +303,7 @@ function KakaoMap() {
           )}
         </Map>
       ) : (
-        <div>
-          <p>로딩중...</p>
-        </div>
+        <Loading />
       )}
     </div>
   );

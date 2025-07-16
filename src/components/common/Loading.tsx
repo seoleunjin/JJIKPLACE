@@ -2,11 +2,13 @@
 import React from "react";
 
 function Loading() {
+  const HEADER_HEIGHT = 213;
+
   return (
     <div
       style={{
         width: "100%",
-        height: "500px",
+        height: `calc(100vh - ${HEADER_HEIGHT}px)`,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

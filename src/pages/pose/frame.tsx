@@ -62,7 +62,7 @@ function PosePage() {
       </div>
       <div className={posecss.frame_btn} onClick={photoPreview}>
         <div>
-          <HashTag></HashTag>
+          <HashTag className={posecss.hashTag}></HashTag>
         </div>
         <p>포즈 선택</p>
       </div>

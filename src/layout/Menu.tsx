@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/openMenu.module.css";
 import layoutStyles from "@/styles/layout.module.css";
 import Image from "next/image";
@@ -18,9 +18,24 @@ const Menu = ({ onClose }: MenuProps) => {
     { id: "menu04", title: "마이페이지", path: "/user" },
   ];
 
+  // menu animation
+  const [isAnimatedOpen, setIsAnimatedOpen] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsAnimatedOpen(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+  const handleClose = () => {
+    setIsAnimatedOpen(false);
+    setTimeout(() => {
+      onClose();
+    }, 400);
+  };
+
   return (
     <section className={`${styles.menu} ${layoutStyles.layout_full_wrapper}`}>
-      <div className={`${styles.menuWrap}`}>
+      <div
+        className={`${styles.menuWrap} ${isAnimatedOpen ? styles.menu_wrapper_open : ""}`}
+      >
         <div className={styles.menuHeader}>
           <div>
             <Link href="/" onClick={onClose}>
@@ -32,7 +47,7 @@ const Menu = ({ onClose }: MenuProps) => {
               />
             </Link>
           </div>
-          <button onClick={onClose} className={styles.menuClose}>
+          <button onClick={handleClose} className={styles.menuClose}>
             <MenuClose />
           </button>
         </div>
