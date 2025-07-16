@@ -9,5 +9,16 @@ interface ImageItem {
   review_id: number;
   review_image: string;
 }
-
-export type { StoreType, ImageItem };
+interface StoreNearbyItems {
+  categories: string[];
+  distance_km: number;
+  lat: number;
+  lng: number;
+  name: string;
+  ps_id: number;
+  review_avg_score: number;
+  review_cnt: number;
+  road_addr: string;
+  thumbnail_url: string | null;
+}
+export type { StoreType, ImageItem, StoreNearbyItems };

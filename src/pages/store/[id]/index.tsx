@@ -15,7 +15,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 
-// ✅ 컴포넌트 밖으로 분리된 커스텀 훅
+// 리뷰 리스트
 const useStoreList = (storeId: number, enabled: boolean) => {
   return useInfiniteQuery({
     queryKey: ["storeListItems", storeId],
@@ -24,8 +24,8 @@ const useStoreList = (storeId: number, enabled: boolean) => {
       return response.data;
     },
     getNextPageParam: (last) => {
-      const nextPage = last.offset + 1;
-      if (nextPage * last.limit < last.total) {
+      const nextPage = last.offset + 4;
+      if (nextPage < last.total) {
         return nextPage;
       }
       return undefined;
@@ -35,6 +35,7 @@ const useStoreList = (storeId: number, enabled: boolean) => {
   });
 };
 
+// 리뷰 갤러리
 const useStorePhoto = (storeId: number, enabled: boolean) => {
   return useInfiniteQuery({
     queryKey: ["storePhoto", storeId],
@@ -94,19 +95,20 @@ function StorePage() {
     isFetchingNextPage,
   } = useStoreList(storeId, isReady && !isNaN(storeId));
   const { ref, inView } = useInView();
-  console.log("리뷰", reviewData);
+
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
+      console.log("리뷰", reviewData);
+      console.log("포토", photoData);
     }
-  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
+  }, [inView]);
 
   // 리뷰 이미지
   const { data: photoData } = useStorePhoto(
     storeId,
     isReady && !isNaN(storeId),
   );
-
   return (
     <div className={layoutStyles.py_space}>
       <div className={styles.storeInfo}>

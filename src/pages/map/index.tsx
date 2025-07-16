@@ -44,7 +44,7 @@ export default function MapPage() {
         <div className={styles.listWrap}>
           {!selectedPosition && <StoreList />}
         </div>
-        <div>
+        <div className={styles.cardWrap}>
           <StoreCard />
         </div>
       </div>

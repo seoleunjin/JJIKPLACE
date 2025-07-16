@@ -2,64 +2,68 @@
 
 import { useAppSelector } from "@/hooks/storeMap";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getNearbyStudios } from "@/api/map";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { StoreNearbyItems } from "@/types/store";
+import { useInView } from "react-intersection-observer";
 
 export default function StoreCard() {
   const selectedPosition = useAppSelector(
     (state) => state.map.selectedPosition,
   );
-  const { markers } = useAppSelector((state) => state.map);
-  console.log("마커", markers);
-  const router = useRouter();
 
-  const id = parseInt(router.query.id as string, 10);
-  const selectedStore = markers.find((marker) => marker.id === id);
+  const lat = selectedPosition?.lat;
+  const lng = selectedPosition?.lng;
+
+  const useGetNearbyItems = () => {
+    return useInfiniteQuery({
+      queryKey: ["nearbyStore", lat, lng],
+      queryFn: async ({ pageParam = 0 }) => {
+        const res = await getNearbyStudios({
+          offset: pageParam,
+          lat: lat!,
+          lng: lng!,
+        });
+        return res.data;
+      },
+      getNextPageParam: (last) => {
+        const nextPage = last.offset + 3;
+        if (nextPage < last.total) {
+          return nextPage;
+        }
+      },
+      initialPageParam: 0,
+    });
+  };
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useGetNearbyItems();
+  console.log(data);
+  const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (!selectedPosition) return;
-
-    const fetchNearbyStores = async () => {
-      try {
-        const response = await getNearbyStudios({
-          lat: selectedPosition.lat,
-          lng: selectedPosition.lng,
-        });
-        console.log("✅ 주변 스튜디오 목록:", response.data);
-      } catch (error) {
-        console.error("❌ 주변 스튜디오 API 호출 실패:", error);
-      }
-    };
-
-    fetchNearbyStores();
-  }, [selectedPosition]);
-
-  if (!selectedStore) return null;
-
-  const handleClick = () => {
-    router.push(`/store/${id}`);
-  };
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView]);
 
   return (
-    <div className="store-card" onClick={handleClick}>
-      <h3>{selectedStore.name}</h3>
-      <p>{selectedStore.road_addr}</p>
-      <p>리뷰 수: {selectedStore.review_cnt}</p>
-      <p>평점: {selectedStore.review_avg_score}</p>
-
-      {/* ✅ 주변 스튜디오 목록 출력 */}
-      {markers.length > 0 && (
-        <div className="nearby-stores">
-          <h4>📍 주변 스튜디오</h4>
-          <ul>
-            {markers.map((marker) => (
-              <li key={marker.id}>
-                {marker.name} - {marker.road_addr}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+    <div className="store-card">
+      <Swiper spaceBetween={10} slidesPerView={3.5}>
+        {data?.pages.map((page, pageIndex) =>
+          page.items.map((item: StoreNearbyItems) => (
+            <SwiperSlide key={`${pageIndex}-${item.ps_id}`}>
+              <p>{item.name}</p>
+            </SwiperSlide>
+          )),
+        )}
+        {hasNextPage && (
+          <SwiperSlide key="load-more">
+            <h1 ref={ref}>불러오는중</h1>
+          </SwiperSlide>
+        )}
+      </Swiper>
     </div>
   );
 }
