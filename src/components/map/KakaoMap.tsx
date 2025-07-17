@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import { CurrentPosition } from "@/assets/icons";
 import Loading from "../common/Loading";
 
-function KakaoMap() {
+function KakaoMap({ showCurrentLocationButton = true }) {
   const [isActive, setIsActive] = useState(false);
   const router = useRouter();
   const scriptLoad = useKakaoLoader();
@@ -218,14 +218,16 @@ function KakaoMap() {
   return (
     <div className={styles.kakaoMap}>
       {/* 내 위치 이동 버튼 */}
-      <div className={styles.elementBox}>
-        <button
-          className={isActive ? styles.curLocBtnActive : styles.curLocBtn}
-          onClick={handleGoToCurrentLocation}
-        >
-          <CurrentPosition />
-        </button>
-      </div>
+      {showCurrentLocationButton && (
+        <div className={styles.elementBox}>
+          <button
+            className={isActive ? styles.curLocBtnActive : styles.curLocBtn}
+            onClick={handleGoToCurrentLocation}
+          >
+            <CurrentPosition />
+          </button>
+        </div>
+      )}
 
       {scriptLoad ? (
         <Map

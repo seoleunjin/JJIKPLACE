@@ -21,7 +21,7 @@ function Header({ onMenuClick, title }: HeaderProps) {
           {isHome ? (
             <Link href="/">
               <Image
-                src="/images/common/Hlogo.png"
+                src="/images/common/Hlogo.svg"
                 width="82"
                 height="31"
                 alt="로고"

@@ -5,7 +5,8 @@ import posecss from "@/styles/pose.module.css";
 import { pageMeta } from "@/constants/pageMeta";
 import { poseImages } from "@/api/poseData";
 import HashTag from "@/assets/icons/hashtag.svg";
-import Image from "next/image";
+// import Image from "next/image";
+import ImageWithSkeleton from "@/components/common/ImageWithSkeleton";
 
 // import poseCss from "@/styles/pose.module.css";
 
@@ -53,7 +54,7 @@ function FramePage() {
             className={selectPose?.includes(img.id) ? posecss.selectImg : ""}
             onClick={() => select(img.id)}
           >
-            <Image
+            {/* <Image
               src={img.src}
               alt={`포즈 ${img.id}`}
               width={0}
@@ -63,6 +64,11 @@ function FramePage() {
                 width: "100%",
                 height: "auto",
               }}
+            /> */}
+            <ImageWithSkeleton
+              // key={img.id}
+              src={img.src}
+              alt={`포즈 ${img.id}`}
             />
             {selectPose?.includes(img.id) ? (
               <p className={posecss.selectNumber}>

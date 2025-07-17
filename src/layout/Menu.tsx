@@ -40,7 +40,7 @@ const Menu = ({ onClose }: MenuProps) => {
           <div>
             <Link href="/" onClick={onClose}>
               <Image
-                src="/images/common/MenuLogo.png"
+                src="/images/common/MenuLogo.svg"
                 width="82"
                 height="31"
                 alt="로고"

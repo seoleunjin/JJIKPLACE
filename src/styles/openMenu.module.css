@@ -46,3 +46,10 @@
 .menu_wrapper_open {
   transform: translateX(0%);
 }
+
+
+@media (max-width: 660px) {
+    .menuWrap {
+        max-width: 284px;
+    }
+}

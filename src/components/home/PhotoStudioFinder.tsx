@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import HomeStyles from "@/styles/home.module.css";
-import styles from "@/styles/kakaoMap.module.css";
 import KakaoMap from "../map/KakaoMap";
 import PhotoStudioList from "./PhotoStudioList";
 import { useRouter } from "next/router";
 import Search from "@/assets/icons/search.svg";
 import Link from "next/link";
-import { CurrentPosition } from "@/assets/icons";
+import { getNearbyStudios } from "@/api/map";
+// import styles from "@/styles/kakaoMap.module.css";
+// import { CurrentPosition } from "@/assets/icons";
 
 function PhotoStudioFinder() {
   const router = useRouter();
   const [search, setSearch] = useState("");
 
+  // 검색
   const searching = () => {
     // alert(`${search} 검색`);
     const trimmedSearch = search.trim();
@@ -24,6 +26,28 @@ function PhotoStudioFinder() {
       router.push({
         pathname: "/map/searchLocation",
       });
+    }
+  };
+
+  // 주변 가게 찾기
+  const { lat, lng } = router.query;
+  useEffect(() => {
+    const parsedLat = parseFloat((lat as string) ?? "35.869017");
+    const parsedLng = parseFloat((lng as string) ?? "128.595366");
+
+    if (!isNaN(parsedLat) && !isNaN(parsedLng)) {
+      finedNearStore(parsedLat, parsedLng);
+    }
+  }, [lat, lng]);
+
+  const [nearStore, setNearStore] = useState([]);
+  const finedNearStore = async (lat: number, lng: number) => {
+    try {
+      const res = await getNearbyStudios({ lat, lng });
+      // console.log(res.data.items);
+      setNearStore(res.data.items);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -56,16 +80,16 @@ function PhotoStudioFinder() {
       </div>
       <div className={HomeStyles.photostudio_map_wrapper}>
         <div className={HomeStyles.photostudio_kakao_map}>
-          <KakaoMap />
+          <KakaoMap showCurrentLocationButton={false} />
 
-          <div className={styles.elementBox}>
+          {/* <div className={styles.elementBox}>
             <button className={styles.curLocBtn}>
               <CurrentPosition />
             </button>
-          </div>
+          </div> */}
         </div>
         <div className={HomeStyles.photostudio_photo_list}>
-          <PhotoStudioList />
+          <PhotoStudioList nearStore={nearStore} />
         </div>
       </div>
       <Link href={"/map"} className={HomeStyles.photostudio_more_btn}>

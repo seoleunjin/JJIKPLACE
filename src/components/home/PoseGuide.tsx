@@ -19,7 +19,7 @@ function PoseGuide() {
       </div>
       <div className={HomeStyles.thumbnail_box}>
         <Image
-          src="/images/home/home_pose_thumbnail.png"
+          src="/images/home/home_pose_thumbnail.svg"
           alt="길찾기 썸네일"
           width={340}
           height={194}

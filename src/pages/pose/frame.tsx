@@ -5,7 +5,8 @@ import layoutStyles from "@/styles/layout.module.css";
 import posecss from "@/styles/pose.module.css";
 import { frameImages } from "@/api/poseData";
 import HashTag from "@/assets/icons/hashtag.svg";
-import Image from "next/image";
+// import Image from "next/image";
+import ImageWithSkeleton from "@/components/common/ImageWithSkeleton";
 
 function PosePage() {
   const router = useRouter();
@@ -41,7 +42,7 @@ function PosePage() {
             className={selectPose?.includes(img.id) ? posecss.selectImg : ""}
             onClick={() => select(img.id)}
           >
-            <Image
+            {/* <Image
               src={img.src}
               alt={`포즈 ${img.id}`}
               width={0}
@@ -51,6 +52,11 @@ function PosePage() {
                 width: "100%",
                 height: "auto",
               }}
+            /> */}
+            <ImageWithSkeleton
+              // key={img.id}
+              src={img.src}
+              alt={`포즈 ${img.id}`}
             />
             {selectPose?.includes(img.id) ? (
               <p className={posecss.selectNumber}>✓</p>

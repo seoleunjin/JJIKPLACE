@@ -14,7 +14,7 @@ function LiveRanking() {
     };
     try {
       const res: RankingItem[] = await liveRankingAPI(params);
-      console.log(res, "랭킹");
+      // console.log(res, "랭킹");
       setRanking(res);
     } catch (err) {
       console.error(err);

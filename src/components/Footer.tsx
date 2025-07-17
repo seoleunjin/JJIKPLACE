@@ -7,7 +7,7 @@ function Footer() {
     <div className={`${styles.footer} ${layoutStyles.layout_wrapper}`}>
       <div className={`${styles.footerWrap} ${layoutStyles.width}`}>
         <Image
-          src="/images/common/flogo.png"
+          src="/images/common/flogo.svg"
           width="82"
           height="31"
           alt="로고"
