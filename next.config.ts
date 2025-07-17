@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
-
     return config;
   },
   images: {
@@ -22,6 +21,14 @@ const nextConfig: NextConfig = {
         },
       },
     },
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/req/:path*",
+        destination: "https://api.vworld.kr/req/:path*",
+      },
+    ];
   },
 };
 

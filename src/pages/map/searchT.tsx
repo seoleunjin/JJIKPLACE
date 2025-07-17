@@ -1,80 +1,49 @@
-import { useEffect, useState, useCallback } from "react";
-import { XMLParser } from "fast-xml-parser";
+"use client";
 
-interface RegionResult {
-  locatadd_nm: string;
-  region_cd: string;
-}
+import { ChangeEvent, useState } from "react";
 
-function SearchT() {
-  const serviceKey =
-    "vROaCiD4BajppH2wH9Ac7Ecnw%2B2KnhL%2BL16O6wz3AozSg4AKNLfIyjzIw1tLHoaiLUu0%2Fy3pnEzG83sHXOpz%2BA%3D%3D";
-
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<RegionResult[]>([]);
-  const [loading, setLoading] = useState(false);
+export default function AddressSearch() {
+  const [coord, setCoord] = useState<{ x: string; y: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [value, setValue] = useState("");
 
-  const searchAddress = useCallback(async () => {
-    if (!query.trim()) return;
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const target = e.target.value;
+    setValue(target);
+  };
 
-    setLoading(true);
-    setError(null);
-
-    const url = `https://apis.data.go.kr/1741000/StanReginCd/getStanReginCdList?serviceKey=${serviceKey}&locatadd_nm=${encodeURIComponent(
-      query,
-    )}&_type=xml&numOfRows=100`;
-
+  const handleOnClick = async () => {
     try {
-      const res = await fetch(url);
-      const xmlText = await res.text();
+      const res = await fetch(
+        `/api/geocode?address=${encodeURIComponent(value)}`,
+      );
+      const data = await res.json();
+      console.log("응답 데이터:", data);
 
-      const parser = new XMLParser();
-      const json = parser.parse(xmlText);
-
-      const rows = json?.StanReginCd?.row;
-      const list = Array.isArray(rows) ? rows : rows ? [rows] : [];
-
-      setResults(list);
-      console.log("검색", res);
-    } catch (e) {
-      setError("검색 중 오류가 발생했습니다.");
-      console.error(e);
-    } finally {
-      setLoading(false);
+      setCoord(data.response.result.point);
+    } catch (err) {
+      setError("요청 실패");
+      console.error(err);
     }
-  }, [query]); // 의존성 배열에 query 추가
-
-  useEffect(() => {
-    searchAddress(); // 이제 안전하게 의존성 배열에 넣을 수 있음
-  }, [searchAddress]);
+  };
 
   return (
-    <div style={{ maxWidth: 600, margin: "auto", paddingTop: "200px" }}>
-      <h2>주소 검색</h2>
+    <div style={{ paddingTop: "200px" }}>
       <input
+        value={value}
         type="text"
-        placeholder="검색할 주소명을 입력하세요"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        style={{ width: "80%", padding: 8, marginRight: 8 }}
+        onChange={handleOnChange}
+        placeholder="여기"
       />
-      <button onClick={searchAddress} disabled={loading}>
-        {loading ? "검색 중..." : "검색"}
-      </button>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <ul>
-        {results.length === 0 && !loading && <li>검색 결과가 없습니다.</li>}
-        {results.map((item, idx) => (
-          <li key={idx}>
-            <strong>{item.locatadd_nm}</strong> — 코드: {item.region_cd}
-          </li>
-        ))}
-      </ul>
+      <button onClick={handleOnClick}>클릭</button>
+      <h1>주소 → 좌표 변환 결과</h1>
+      {coord ? (
+        <p>
+          위도: {coord.y}, 경도: {coord.x}
+        </p>
+      ) : (
+        <p>{error || "불러오는 중..."}</p>
+      )}
     </div>
   );
 }
-
-export default SearchT;
