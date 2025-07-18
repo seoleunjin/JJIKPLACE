@@ -38,6 +38,7 @@
 }
 .listBox {
     padding-top: 30px;
+    overflow-y: scroll;
 }
 .listBox ul {
     display: flex;

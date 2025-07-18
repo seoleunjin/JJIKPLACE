@@ -20,5 +20,6 @@ interface StoreNearbyItems {
   review_cnt: number;
   road_addr: string;
   thumbnail_url: string | null;
+  is_favorite: boolean;
 }
 export type { StoreType, ImageItem, StoreNearbyItems };

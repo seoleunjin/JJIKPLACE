@@ -54,22 +54,7 @@
     overflow: hidden;        
     text-overflow: ellipsis; 
 }
-.header .heartBtn {
-    color: var(--color-gray3);
-    height: 25px;
-    width: 25px;
-    padding-top: 5px;
-    background: var(--color-gray1);
-    border-radius: 50px;
-}
-.header .heartBtnAc {
-    color: var(--color-error);
-    height: 25px;
-    width: 25px;
-    padding-top: 5px;
-    background: var(--color-gray1);
-    border-radius: 50px;
-}
+
 .reviewStats {
     display: flex;
     align-items: center;

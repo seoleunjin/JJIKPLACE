@@ -17,14 +17,15 @@ import Link from "next/link";
 
 // 리뷰 리스트
 const useStoreList = (storeId: number, enabled: boolean) => {
+  const limit = 6;
   return useInfiniteQuery({
     queryKey: ["storeListItems", storeId],
     queryFn: async ({ pageParam = 0 }) => {
-      const response = await StudioReviewList(storeId, pageParam);
+      const response = await StudioReviewList(storeId, pageParam, limit);
       return response.data;
     },
     getNextPageParam: (last) => {
-      const nextPage = last.offset + 4;
+      const nextPage = last.offset + 6;
       if (nextPage < last.total) {
         return nextPage;
       }
@@ -99,16 +100,24 @@ function StorePage() {
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
-      console.log("리뷰", reviewData);
-      console.log("포토", photoData);
+      console.log("리스트", reviewData);
     }
   }, [inView]);
 
   // 리뷰 이미지
-  const { data: photoData } = useStorePhoto(
-    storeId,
-    isReady && !isNaN(storeId),
-  );
+  const {
+    data: photoData,
+    fetchNextPage: fetchNextPhoto,
+    hasNextPage: hasNextPhoto,
+    isFetchingNextPage: isFetchingPhoto,
+  } = useStorePhoto(storeId, isReady && !isNaN(storeId));
+
+  useEffect(() => {
+    if (inView && hasNextPhoto && !isFetchingPhoto) {
+      fetchNextPhoto();
+    }
+  }, [inView]);
+
   return (
     <div className={layoutStyles.py_space}>
       <div className={styles.storeInfo}>
@@ -185,7 +194,7 @@ function StorePage() {
                 )),
               )}
             </ul>
-            <div ref={ref} />
+            <div ref={ref}></div>
           </div>
         </div>
       )}
@@ -207,6 +216,7 @@ function StorePage() {
                 </li>
               )),
             )}
+            <li ref={ref}></li>
           </ul>
         </div>
       )}

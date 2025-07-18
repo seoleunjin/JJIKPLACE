@@ -52,7 +52,35 @@
     color: var(--color-gray4);
 }
 .reviewImage {
-    margin-top: 12px;
+    margin-top: 20px;
+}
+.thumbnailWrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+}
+.thumbnailWrapper li {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* 정사각형 */
+    overflow: hidden;
+    border-radius: 8px;
+}
+.thumbnailWrapper li img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+.noReviewImage {
+    font-size: var(--text-sm);
+    color: var(--color-gray4);
 }
 .storeActionButtons {
     display: flex;

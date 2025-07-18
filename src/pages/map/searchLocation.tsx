@@ -1,51 +1,44 @@
-import { getMapSearch } from "@/api/map";
+"use client";
 import { pageMeta } from "@/constants/pageMeta";
-import { MarkerType } from "@/types/map";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import commonStyles from "@/styles/common.module.css";
 import styles from "@/styles/searchLocation.module.css";
+import { useAppDispatch } from "@/hooks/storeMap";
+import { setSearchPosition } from "@/features/map/mapSlice";
 
 function SearchLocation() {
-  const [value, setValue] = useState("");
-  const [filteredMarkers, setFilteredMarkers] = useState<MarkerType[]>([]);
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const [value, setValue] = useState("");
+  const [results, setResults] = useState<
+    kakao.maps.services.PlacesSearchResultItem[]
+  >([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    const clientValue = e.target.value;
+    setValue(clientValue);
   };
-  const handleSearch = useCallback(
-    async (searchValue?: string) => {
-      const keyword = (searchValue ?? value).trim().toLowerCase();
-      if (!keyword) {
-        alert("검색어를 입력해주세요");
-        return;
-      }
 
-      const bounds = {
-        swLat: 33.0,
-        swLng: 124.0,
-        neLat: 39.5,
-        neLng: 132.0,
-      };
+  const handleSearch = (searchValue?: string) => {
+    const rawKeyword = typeof searchValue === "string" ? searchValue : value;
+    const keyword = rawKeyword.trim().toLowerCase();
 
-      try {
-        const response = await getMapSearch(bounds);
-        const markers = response.data.markers;
-
-        const filtered = markers.filter((marker: MarkerType) => {
-          const name = marker.name?.toLowerCase() || "";
-          const addr = marker.road_addr?.toLowerCase() || "";
-          return name.includes(keyword) || addr.includes(keyword);
-        });
-        setFilteredMarkers(filtered);
-      } catch (error) {
-        console.error("검색 중 오류 발생:", error);
-      }
-    },
-    [value],
-  );
+    if (!keyword) {
+      alert("검색어를 입력해주세요");
+      return;
+    }
+    const ps = new kakao.maps.services.Places();
+    ps.keywordSearch(
+      value,
+      (data: kakao.maps.services.PlacesSearchResultItem[], status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          setResults(data);
+        }
+      },
+    );
+  };
 
   useEffect(() => {
     const keyword = sessionStorage.getItem("searchKeyword");
@@ -54,16 +47,22 @@ function SearchLocation() {
       sessionStorage.removeItem("searchKeyword");
       handleSearch(keyword);
     }
-  }, [handleSearch]);
+  }, []);
 
-  const handleSelect = (marker: MarkerType) => {
+  const handleSelect = (result: kakao.maps.services.PlacesSearchResultItem) => {
+    const lat = parseFloat(result.y);
+    const lng = parseFloat(result.x);
+
+    dispatch(
+      setSearchPosition({
+        lat,
+        lng,
+      }),
+    );
+
     router.push({
       pathname: "/map",
-      query: {
-        id: marker.id,
-        lat: marker.lat.toString(),
-        lng: marker.lng.toString(),
-      },
+      query: { lat: lat.toString(), lng: lng.toString() },
     });
   };
 
@@ -89,26 +88,26 @@ function SearchLocation() {
         <div className={layoutStyles.width}>
           <span>검색결과</span>
         </div>
-        {filteredMarkers.length > 0 && (
-          <ul>
-            {filteredMarkers.map((marker) => (
-              <li key={marker.id}>
-                <div className={styles.itemBox}>
-                  <div>
-                    <h6>{marker.name}</h6>
-                    <p>{marker.road_addr}</p>
-                  </div>
-                  <button
-                    className={commonStyles.btnBase}
-                    onClick={() => handleSelect(marker)}
-                  >
-                    선택
-                  </button>
+        <ul>
+          {results.map((result) => (
+            <li key={result.id}>
+              <div className={styles.itemBox}>
+                <div>
+                  <h6>{result.place_name}</h6>
+                  <p>
+                    {result.address_name} | {result.road_address_name}
+                  </p>
                 </div>
-              </li>
-            ))}
-          </ul>
-        )}
+                <button
+                  className={commonStyles.btnBase}
+                  onClick={() => handleSelect(result)}
+                >
+                  선택
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
