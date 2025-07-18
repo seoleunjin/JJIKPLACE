@@ -99,16 +99,23 @@ function StorePage() {
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
-      console.log("리뷰", reviewData);
-      console.log("포토", photoData);
     }
   }, [inView]);
 
   // 리뷰 이미지
-  const { data: photoData } = useStorePhoto(
-    storeId,
-    isReady && !isNaN(storeId),
-  );
+  const {
+    data: photoData,
+    fetchNextPage: fetchNextPhoto,
+    hasNextPage: hasNextPhoto,
+    isFetchingNextPage: isFetchingPhoto,
+  } = useStorePhoto(storeId, isReady && !isNaN(storeId));
+
+  useEffect(() => {
+    if (inView && hasNextPhoto && !isFetchingPhoto) {
+      fetchNextPhoto();
+    }
+  }, [inView]);
+
   return (
     <div className={layoutStyles.py_space}>
       <div className={styles.storeInfo}>
@@ -207,6 +214,7 @@ function StorePage() {
                 </li>
               )),
             )}
+            <li ref={ref}></li>
           </ul>
         </div>
       )}
