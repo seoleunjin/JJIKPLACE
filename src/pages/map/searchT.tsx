@@ -33,7 +33,7 @@ export default function AddressSearch() {
         value={value}
         type="text"
         onChange={handleOnChange}
-        placeholder="여기"
+        placeholder="도로명 또는 상점명을 검색해주세요"
       />
       <button onClick={handleOnClick}>클릭</button>
       <h1>주소 → 좌표 변환 결과</h1>

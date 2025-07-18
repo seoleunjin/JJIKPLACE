@@ -24,36 +24,52 @@ function StoreList() {
         <button onClick={handleToggle}></button>
       </div>
       <ul className={styles.listBox}>
-        {displayedMarker.map((marker) => (
-          <li key={marker.id}>
-            <div className={styles.imageBox}>
-              <Image
-                src={marker.thumbnail_url || "/images/common/NoImage.png"}
-                alt="리뷰 썸네일 이미지"
-                width={127}
-                height={143}
-              />
-            </div>
-            <div className={styles.contextBox}>
-              <div className={styles.header}>
-                <h6>{marker.name}</h6>
-                <FavoriteButton marker={marker} />
+        {displayedMarker.map((marker) => {
+          const {
+            id,
+            is_favorite,
+            categories,
+            review_cnt,
+            review_avg_score,
+            name,
+            thumbnail_url,
+          } = marker;
+          return (
+            <li key={id}>
+              <div className={styles.imageBox}>
+                <Image
+                  src={thumbnail_url || "/images/common/NoImage.png"}
+                  alt="리뷰 썸네일 이미지"
+                  width={127}
+                  height={143}
+                />
               </div>
-              <div className={styles.reviewStats}>
-                <span className={styles.rating}>
-                  <StoreListStar />
-                  {Number(marker.review_avg_score).toFixed(1)}
-                </span>
-                <Link className={styles.storeLink} href={`/store/${marker.id}`}>
-                  {marker.review_cnt}개 리뷰
-                </Link>
+              <div className={styles.contextBox}>
+                <div className={styles.header}>
+                  <h6>{name}</h6>
+                  <FavoriteButton
+                    favorite={{
+                      id: id,
+                      is_favorite: is_favorite,
+                    }}
+                  />
+                </div>
+                <div className={styles.reviewStats}>
+                  <span className={styles.rating}>
+                    <StoreListStar />
+                    {Number(review_avg_score).toFixed(1)}
+                  </span>
+                  <Link className={styles.storeLink} href={`/store/${id}`}>
+                    {review_cnt}개 리뷰
+                  </Link>
+                </div>
+                <div className={styles.categoryTags}>
+                  <span>{categories}</span>
+                </div>
               </div>
-              <div className={styles.categoryTags}>
-                <span>{marker.categories}</span>
-              </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

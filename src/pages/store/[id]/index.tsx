@@ -17,14 +17,15 @@ import Link from "next/link";
 
 // 리뷰 리스트
 const useStoreList = (storeId: number, enabled: boolean) => {
+  const limit = 6;
   return useInfiniteQuery({
     queryKey: ["storeListItems", storeId],
     queryFn: async ({ pageParam = 0 }) => {
-      const response = await StudioReviewList(storeId, pageParam);
+      const response = await StudioReviewList(storeId, pageParam, limit);
       return response.data;
     },
     getNextPageParam: (last) => {
-      const nextPage = last.offset + 4;
+      const nextPage = last.offset + 6;
       if (nextPage < last.total) {
         return nextPage;
       }
@@ -99,6 +100,7 @@ function StorePage() {
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
+      console.log("리스트", reviewData);
     }
   }, [inView]);
 
@@ -192,7 +194,7 @@ function StorePage() {
                 )),
               )}
             </ul>
-            <div ref={ref} />
+            <div ref={ref}></div>
           </div>
         </div>
       )}

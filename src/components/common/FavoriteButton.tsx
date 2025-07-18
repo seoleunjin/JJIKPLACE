@@ -1,18 +1,22 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/storeMap";
-import styles from "@/styles/storeList.module.css";
+import styles from "@/styles/common.module.css";
 import { Heart } from "@/assets/icons";
 import { toggleFavorite } from "@/api/map";
-import { MarkerType } from "@/types/map";
 import { setMarkers } from "@/features/map/mapSlice";
 import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 
-type FavoriteButtonProps = {
-  marker: MarkerType;
-};
+interface MinimalFavorite {
+  id: number;
+  is_favorite: boolean;
+}
 
-function FavoriteButton({ marker }: FavoriteButtonProps) {
+interface FavoriteButtonProps {
+  favorite: MinimalFavorite;
+}
+
+function FavoriteButton({ favorite }: FavoriteButtonProps) {
   const route = useRouter();
   const { markers } = useAppSelector((state) => state.map);
   const dispatch = useAppDispatch();
@@ -25,14 +29,14 @@ function FavoriteButton({ marker }: FavoriteButtonProps) {
     }
   }, []);
 
-  const handleFavoriteClick = async (marker: MarkerType) => {
-    const currentFavorite = marker.is_favorite;
+  const handleFavoriteClick = async (favorite: MinimalFavorite) => {
+    const currentFavorite = favorite.is_favorite;
     const newFavorite = !currentFavorite;
     try {
-      await toggleFavorite(marker.id, newFavorite);
+      await toggleFavorite(favorite.id, newFavorite);
 
       const updatedMarkers = markers.map((m) =>
-        m.id === marker.id ? { ...m, is_favorite: newFavorite } : m,
+        m.id === favorite.id ? { ...m, is_favorite: newFavorite } : m,
       );
       dispatch(setMarkers(updatedMarkers));
     } catch (e) {
@@ -49,8 +53,8 @@ function FavoriteButton({ marker }: FavoriteButtonProps) {
     <div>
       {accessToken && (
         <button
-          className={marker.is_favorite ? styles.heartBtnAc : styles.heartBtn}
-          onClick={() => handleFavoriteClick(marker)}
+          className={favorite.is_favorite ? styles.heartBtnAc : styles.heartBtn}
+          onClick={() => handleFavoriteClick(favorite)}
         >
           <Heart />
         </button>

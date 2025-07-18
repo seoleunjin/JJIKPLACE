@@ -38,7 +38,7 @@ const getNearbyStudios = async ({
   lng: number;
   offset?: number;
 }) => {
-  return instance.get("/studios/nearby", {
+  return userInstance.get("/studios/nearby", {
     params: {
       lat,
       lng,

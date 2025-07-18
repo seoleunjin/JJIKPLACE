@@ -12,6 +12,7 @@ import { StoreListStar } from "@/assets/icons";
 import Link from "next/link";
 import { ImageGalleryApiss } from "@/api/store";
 import Image from "next/image";
+import FavoriteButton from "../common/FavoriteButton";
 
 export default function StoreCard() {
   const [imagesMap, setImagesMap] = useState<Record<string, string[]>>({});
@@ -56,10 +57,10 @@ export default function StoreCard() {
         const allItems = data.pages.flatMap((page) => page.items);
 
         const results = await Promise.allSettled(
-          allItems.map(async (item) => {
-            const res = await ImageGalleryApiss(item.ps_id);
+          allItems.map(async ({ ps_id }) => {
+            const res = await ImageGalleryApiss(ps_id);
             return {
-              ps_id: item.ps_id,
+              ps_id: ps_id,
               images: res.data.images.map(
                 (img: { review_image: string }) => img.review_image,
               ),
@@ -92,7 +93,15 @@ export default function StoreCard() {
       <Swiper spaceBetween={10} centeredSlides={true} slidesPerView={1.5}>
         {data?.pages.map((page, pageIndex) =>
           page.items.map((item: StoreNearbyItems) => {
-            const ps_id = item.ps_id;
+            const {
+              name,
+              categories,
+              distance_km,
+              review_avg_score,
+              ps_id,
+              review_cnt,
+              is_favorite,
+            } = item;
             const reviewImages = imagesMap[ps_id] || [];
 
             return (
@@ -100,22 +109,22 @@ export default function StoreCard() {
                 <div className={styles.storeCard}>
                   <div className={styles.contentBox}>
                     <div className={styles.storeHeader}>
-                      <h6>{item.name}</h6>
-                      <p>{item.categories}</p>
+                      <h6>{name}</h6>
+                      <p>{categories}</p>
                     </div>
                     <div className={styles.distanceTag}>
-                      <p>{Math.round(Number(item.distance_km) * 1000)}m</p>
+                      <p>{Math.round(Number(distance_km) * 1000)}m</p>
                     </div>
                     <div className={styles.reviewStats}>
                       <span className={styles.rating}>
                         <StoreListStar />
-                        {Number(item.review_avg_score).toFixed(1)}
+                        {Number(review_avg_score).toFixed(1)}
                       </span>
                       <Link
                         className={styles.storeLink}
-                        href={`/store/${item.ps_id}`}
+                        href={`/store/${ps_id}`}
                       >
-                        {item.review_cnt}개 리뷰
+                        {review_cnt}개 리뷰
                       </Link>
                     </div>
 
@@ -126,7 +135,7 @@ export default function StoreCard() {
                             <li key={index} className={styles.imageItem}>
                               <div className={styles.imageWrapper}>
                                 <Image
-                                  src={img}
+                                  src={img || "/images/common/NoImage.png"}
                                   alt={`리뷰 이미지 ${index + 1}`}
                                   fill
                                   className={styles.thumbnail}
@@ -136,13 +145,21 @@ export default function StoreCard() {
                           ))}
                         </ul>
                       ) : (
-                        "리뷰 사진 없음"
+                        <p className={styles.noReviewImage}>
+                          아직 매장 사진이 없어요. 리뷰를 남겨주시면 큰 도움이
+                          됩니다!
+                        </p>
                       )}
                     </div>
                   </div>
 
                   <div className={styles.storeActionButtons}>
-                    찜이 필요해~~
+                    <FavoriteButton
+                      favorite={{
+                        id: ps_id,
+                        is_favorite: is_favorite,
+                      }}
+                    />
                     <div className={styles.routeLabels}>
                       <p>출발</p>
                       <p>도착</p>
