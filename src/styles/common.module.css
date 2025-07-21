@@ -39,6 +39,29 @@
     color: var(--color-brand);
     border: 1px solid var(--color-brand);
 }
+.btnBrand {
+    font-size: var(--text-sm);
+    color: var(--color-brand);
+    line-height: 1;
+    padding: 6px 12px;
+    padding-top: 8px;
+    border-radius: 100px;
+    border: 1px solid var(--color-brand);
+    transition: var(--transition-default);
+    cursor: pointer;
+}
+.btnBrandFill {
+    font-size: var(--text-sm);
+    color: var(--color-surface);
+    line-height: 1;
+    padding: 6px 12px;
+    padding-top: 8px;
+    border-radius: 100px;
+    border: 1px solid var(--color-brand);
+    background: var(--color-brand);
+    transition: var(--transition-default);
+    cursor: pointer;
+}
 
 /* 리뷰 별 */
 .starWrap {

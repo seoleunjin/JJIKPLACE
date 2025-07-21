@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "@/styles/storeCard.module.css";
+import commonStyles from "@/styles/common.module.css";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeMap";
 import { useEffect, useState } from "react";
 import { getNearbyStudios } from "@/api/map";
@@ -195,12 +196,14 @@ export default function StoreCard() {
                       <button
                         type="button"
                         onClick={() => handleStartPoint(lat, lng, name)}
+                        className={commonStyles.btnBrand}
                       >
                         출발
                       </button>
                       <button
                         type="button"
                         onClick={() => handleEndPoint(lat, lng, name)}
+                        className={commonStyles.btnBrandFill}
                       >
                         도착
                       </button>
