@@ -7,6 +7,7 @@ import commonStyles from "@/styles/common.module.css";
 import styles from "@/styles/searchLocation.module.css";
 import { useAppDispatch } from "@/hooks/storeMap";
 import { setSearchPosition } from "@/features/map/mapSlice";
+import { MapSearch } from "@/assets/icons";
 
 function SearchLocation() {
   const router = useRouter();
@@ -80,7 +81,9 @@ function SearchLocation() {
                 if (e.key === "Enter") handleSearch();
               }}
             />
-            <button onClick={() => handleSearch()}>검색</button>
+            <button onClick={() => handleSearch()}>
+              <MapSearch />
+            </button>
           </div>
         </div>
       </div>

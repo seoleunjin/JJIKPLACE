@@ -1,5 +1,10 @@
 import { MapBounds } from "./api";
 
+interface NaviPosition {
+  lat: number;
+  lng: number;
+  name: string;
+}
 interface Position {
   lat: number;
   lng: number;
@@ -50,6 +55,7 @@ interface FetchClustersParams {
 }
 
 export type {
+  NaviPosition,
   Position,
   MarkerLevel,
   MapState,

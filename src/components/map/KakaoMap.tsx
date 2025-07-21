@@ -23,6 +23,7 @@ function KakaoMap({ showCurrentLocationButton = true }) {
   const [mapCreated, setMapCreated] = useState(false);
 
   const dispatch = useAppDispatch();
+
   const {
     level,
     markers,
@@ -46,6 +47,8 @@ function KakaoMap({ showCurrentLocationButton = true }) {
           lng: parseFloat(lng as string),
         }),
       );
+    } else {
+      dispatch(setSelectedPosition(null));
     }
   }, [router.query, dispatch]);
 
@@ -71,9 +74,9 @@ function KakaoMap({ showCurrentLocationButton = true }) {
         searchPosition.lng,
       );
       mapRef.current.setCenter(center);
-      mapRef.current.setLevel(6);
-      dispatch(setLevel(6));
-      fetchMapData(mapRef.current, 6, category);
+      mapRef.current.setLevel(2);
+      dispatch(setLevel(2));
+      fetchMapData(mapRef.current, 2, category);
     }
   }, [searchPosition, category, dispatch, fetchMapData]);
 
@@ -112,6 +115,7 @@ function KakaoMap({ showCurrentLocationButton = true }) {
     }
   };
 
+  // 클러스터 확대
   const onClusterclick = (cluster: { lat: number; lng: number }) => {
     const map = mapRef.current;
     if (!map) return;
@@ -121,6 +125,7 @@ function KakaoMap({ showCurrentLocationButton = true }) {
     });
   };
 
+  // 마커 클릭 상점 카드
   const handleMarkerClick = ({
     id,
     lat,
@@ -152,6 +157,19 @@ function KakaoMap({ showCurrentLocationButton = true }) {
       { shallow: true },
     );
   };
+
+  // 길찾기 위치이동
+  useEffect(() => {
+    if (mapCreated && startPoint && mapRef.current) {
+      const moveLatLng = new kakao.maps.LatLng(startPoint.lat, startPoint.lng);
+      mapRef.current.setCenter(moveLatLng);
+      mapRef.current.setLevel(2);
+      dispatch(setLevel(2));
+      fetchMapData(mapRef.current, 2, category);
+    }
+  }, [mapCreated, startPoint, dispatch, fetchMapData, category]);
+
+  // 길찾기
   useEffect(() => {
     async function getCarDirection() {
       if (!startPoint || !endPoint) return;
@@ -200,9 +218,9 @@ function KakaoMap({ showCurrentLocationButton = true }) {
         if (mapRef.current) {
           const polyline = new kakao.maps.Polyline({
             path: linePath,
-            strokeWeight: 5,
-            strokeColor: "#000000",
-            strokeOpacity: 0.7,
+            strokeWeight: 4,
+            strokeColor: "#19C6EC",
+            strokeOpacity: 0.8,
             strokeStyle: "solid",
           });
           polyline.setMap(mapRef.current);

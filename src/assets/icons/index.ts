@@ -12,6 +12,7 @@ import camera from "./camera.svg";
 import CurrentPosition from "./CurrentPosition.svg";
 import ReviewList from "./ReviewList.svg";
 import ReviewPhoto from "./ReviewPhoto.svg";
+import MapSearch from "./MapSearch.svg";
 
 export {
   MenuIcon,
@@ -28,4 +29,5 @@ export {
   CurrentPosition,
   ReviewList,
   ReviewPhoto,
+  MapSearch,
 };

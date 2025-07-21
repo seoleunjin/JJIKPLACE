@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ClusterType, MarkerType, MapState, Position } from "@/types/map";
+import {
+  ClusterType,
+  MarkerType,
+  MapState,
+  Position,
+  NaviPosition,
+} from "@/types/map";
 
 const initialState: MapState = {
   level: 2,
@@ -38,10 +44,10 @@ const mapSlice = createSlice({
     setSearchPosition(state, action: PayloadAction<Position | null>) {
       state.searchPosition = action.payload;
     },
-    setStartPoint(state, action: PayloadAction<Position | null>) {
+    setStartPoint(state, action: PayloadAction<NaviPosition | null>) {
       state.startPoint = action.payload;
     },
-    setEndPoint(state, action: PayloadAction<Position | null>) {
+    setEndPoint(state, action: PayloadAction<NaviPosition | null>) {
       state.endPoint = action.payload;
     },
     resetMapState(state) {

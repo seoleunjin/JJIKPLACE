@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "@/styles/storeCard.module.css";
-import { useAppSelector } from "@/hooks/storeMap";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeMap";
 import { useEffect, useState } from "react";
 import { getNearbyStudios } from "@/api/map";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -13,10 +13,14 @@ import Link from "next/link";
 import { ImageGalleryApiss } from "@/api/store";
 import Image from "next/image";
 import FavoriteButton from "../common/FavoriteButton";
+import { setEndPoint, setStartPoint } from "@/features/map/mapSlice";
+import { useRouter } from "next/router";
 
 export default function StoreCard() {
+  const router = useRouter();
   const [imagesMap, setImagesMap] = useState<Record<string, string[]>>({});
   const { selectedPosition } = useAppSelector((state) => state.map);
+  const dispatch = useAppDispatch();
 
   const lat = selectedPosition?.lat;
   const lng = selectedPosition?.lng;
@@ -43,6 +47,7 @@ export default function StoreCard() {
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useGetNearbyItems();
   const { ref, inView } = useInView();
+  console.log(data);
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -88,6 +93,30 @@ export default function StoreCard() {
     fetchImages();
   }, [data]);
 
+  const handleStartPoint = (lat: number, lng: number, name: string) => {
+    dispatch(setStartPoint({ lat, lng, name }));
+    router.push({
+      pathname: "/map/navigation",
+      query: {
+        startLat: lat.toString(),
+        startLng: lng.toString(),
+        startName: name,
+      },
+    });
+  };
+
+  const handleEndPoint = (lat: number, lng: number, name: string) => {
+    dispatch(setEndPoint({ lat, lng, name }));
+    router.push({
+      pathname: "/map/navigation",
+      query: {
+        endLat: lat.toString(),
+        endLng: lng.toString(),
+        endName: name,
+      },
+    });
+  };
+
   return (
     <div className={styles.storeCardPage}>
       <Swiper spaceBetween={10} centeredSlides={true} slidesPerView={1.5}>
@@ -101,6 +130,8 @@ export default function StoreCard() {
               ps_id,
               review_cnt,
               is_favorite,
+              lat,
+              lng,
             } = item;
             const reviewImages = imagesMap[ps_id] || [];
 
@@ -161,8 +192,18 @@ export default function StoreCard() {
                       }}
                     />
                     <div className={styles.routeLabels}>
-                      <p>출발</p>
-                      <p>도착</p>
+                      <button
+                        type="button"
+                        onClick={() => handleStartPoint(lat, lng, name)}
+                      >
+                        출발
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleEndPoint(lat, lng, name)}
+                      >
+                        도착
+                      </button>
                     </div>
                   </div>
                 </div>

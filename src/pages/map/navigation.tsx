@@ -1,91 +1,18 @@
 "use client";
 import { pageMeta } from "@/constants/pageMeta";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import commonStyles from "@/styles/common.module.css";
 import styles from "@/styles/searchLocation.module.css";
-import { useAppDispatch } from "@/hooks/storeMap";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeMap";
 import { setStartPoint, setEndPoint } from "@/features/map/mapSlice";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import { MapSearch } from "@/assets/icons";
 
 function Navigation() {
-  // const router = useRouter();
-  // const dispatch = useAppDispatch();
-
-  // // 출발지 / 도착지 입력값과 결과 상태 분리
-  // const [startValue, setStartValue] = useState("");
-  // const [endValue, setEndValue] = useState("");
-
-  // const [filteredMarkers, setFilteredMarkers] = useState<MarkerType[]>([]);
-  // const [searchTarget, setSearchTarget] = useState<"start" | "end" | null>(
-  //   null,
-  // );
-  // const { startPoint, endPoint } = useAppSelector((state) => state.map);
-
-  // // 입력값 변경 핸들러
-  // const handleStartChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setStartValue(e.target.value);
-  // };
-  // const handleEndChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setEndValue(e.target.value);
-  // };
-
-  // // 검색 함수
-  // const handleSearch = async (target: "start" | "end") => {
-  //   const keyword = (target === "start" ? startValue : endValue)
-  //     .trim()
-  //     .toLowerCase();
-  //   if (!keyword) {
-  //     alert("검색어를 입력해주세요");
-  //     return;
-  //   }
-
-  //   const bounds = {
-  //     swLat: 33.0,
-  //     swLng: 124.0,
-  //     neLat: 39.5,
-  //     neLng: 132.0,
-  //   };
-
-  //   try {
-  //     const response = await getMapSearch(bounds);
-  //     const markers = response.data.markers;
-
-  //     const filtered = markers.filter((marker: MarkerType) => {
-  //       const name = marker.name?.toLowerCase() || "";
-  //       const addr = marker.road_addr?.toLowerCase() || "";
-  //       return name.includes(keyword) || addr.includes(keyword);
-  //     });
-  //     setFilteredMarkers(filtered);
-  //     setSearchTarget(target);
-  //   } catch (error) {
-  //     console.error("검색 중 오류 발생:", error);
-  //   }
-  // };
-
-  // // 선택 핸들러
-  // const handleSelect = (marker: MarkerType) => {
-  //   const position = { lat: marker.lat, lng: marker.lng };
-
-  //   if (searchTarget === "start") {
-  //     dispatch(setStartPoint(position));
-  //     setStartValue(marker.name || "");
-  //   } else if (searchTarget === "end") {
-  //     dispatch(setEndPoint(position));
-  //     setEndValue(marker.name || "");
-
-  //     setTimeout(() => {
-  //       router.push("/map");
-  //     }, 0.1);
-  //   }
-  //   // 검색 결과 초기화(선택 후 목록 숨기기)
-  //   setFilteredMarkers([]);
-  //   setSearchTarget(null);
-  // };
-
   const router = useRouter();
   const dispatch = useAppDispatch();
-  // const [value, setValue] = useState("");
   const [startValue, setStartValue] = useState("");
   const [endValue, setEndValue] = useState("");
   const [results, setResults] = useState<
@@ -94,6 +21,12 @@ function Navigation() {
   const [searchTarget, setSearchTarget] = useState<"start" | "end" | null>(
     null,
   );
+  const { startPoint, endPoint } = useAppSelector((state) => state.map);
+
+  useEffect(() => {
+    dispatch(setStartPoint(null));
+    dispatch(setEndPoint(null));
+  }, [dispatch]);
 
   const handleStartChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const clientValue = e.target.value;
@@ -132,7 +65,8 @@ function Navigation() {
   const handleSelect = (result: kakao.maps.services.PlacesSearchResultItem) => {
     const lat = parseFloat(result.y);
     const lng = parseFloat(result.x);
-    const position = { lat, lng };
+    const name = result.place_name || "";
+    const position = { lat, lng, name };
 
     if (searchTarget === "start") {
       dispatch(setStartPoint(position));
@@ -142,42 +76,95 @@ function Navigation() {
       setEndValue(result.place_name || "");
     }
 
-    router.push({
-      pathname: "/map",
-      query: { lat: lat.toString(), lng: lng.toString() },
-    });
-
     setResults([]);
     setSearchTarget(null);
+    setTimeout(() => {
+      const updatedStart = searchTarget === "start" ? position : startPoint;
+      const updatedEnd = searchTarget === "end" ? position : endPoint;
+
+      if (updatedStart && updatedEnd) {
+        router.push({
+          pathname: "/map",
+          query: {
+            startLat: updatedStart.lat.toString(),
+            startLng: updatedStart.lng.toString(),
+            endLat: updatedEnd.lat.toString(),
+            endLng: updatedEnd.lng.toString(),
+          },
+        });
+      }
+    }, 0);
   };
+
+  useEffect(() => {
+    const { startLat, startLng, startName } = router.query;
+    if (startLat && startLng && startName) {
+      const lat = parseFloat(startLat as string);
+      const lng = parseFloat(startLng as string);
+      const name = startName as string;
+
+      const position = { lat, lng, name };
+      dispatch(setStartPoint(position));
+      setStartValue(name);
+    }
+  }, [router.query, dispatch]);
+
+  useEffect(() => {
+    const { endLat, endLng, endName } = router.query;
+    if (endLat && endLng && endName) {
+      const lat = parseFloat(endLat as string);
+      const lng = parseFloat(endLng as string);
+      const name = endName as string;
+
+      const position = { lat, lng, name };
+      dispatch(setEndPoint(position));
+      setEndValue(name);
+    }
+  }, [router.query, dispatch]);
 
   return (
     <div className={styles.searchPage}>
       <div className={styles.searchBox}>
         <div className={layoutStyles.width}>
-          <div className={styles.inputGroup}>
-            <input
-              type="text"
-              placeholder="출발지를 입력해주세요."
-              value={startValue}
-              onChange={handleStartChange}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSearch("start");
-              }}
-            />
-            <button onClick={() => handleSearch("start")}>검색</button>
-          </div>
-          <div className={styles.inputGroup}>
-            <input
-              type="text"
-              placeholder="도착지를 입력해주세요."
-              value={endValue}
-              onChange={handleEndChange}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSearch("end");
-              }}
-            />
-            <button onClick={() => handleSearch("end")}>검색</button>
+          <div className={styles.routeWrapper}>
+            <div className={styles.routeImage}>
+              <Image
+                src={"/images/map/NavigationSearch.png"}
+                alt={"길찾기 아이템 이미지"}
+                width={16}
+                height={60}
+              />
+            </div>
+            <div className={styles.routeInputs}>
+              <div className={`${styles.inputGroup} ${styles.startInputGroup}`}>
+                <input
+                  type="text"
+                  placeholder="출발지를 입력해주세요."
+                  value={startValue}
+                  onChange={handleStartChange}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSearch("start");
+                  }}
+                />
+                <button onClick={() => handleSearch("start")}>
+                  <MapSearch />
+                </button>
+              </div>
+              <div className={`${styles.inputGroup} ${styles.endInputGroup}`}>
+                <input
+                  type="text"
+                  placeholder="도착지를 입력해주세요."
+                  value={endValue}
+                  onChange={handleEndChange}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSearch("end");
+                  }}
+                />
+                <button onClick={() => handleSearch("end")}>
+                  <MapSearch />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

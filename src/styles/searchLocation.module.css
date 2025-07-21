@@ -6,6 +6,35 @@
     margin-bottom: 24px;
     border-bottom: 10px solid var(--color-secondary4);
 }
+.routeWrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 5px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.16);
+    padding: 18px 16px;
+}
+.routeInputs {
+    width: calc(100% - 20px);
+}
+.inputGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.inputGroup input {
+    width: 100%;
+}
+.inputGroup input::placeholder {
+    color: var(--color-gray3);
+}
+.startInputGroup {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-gray2);
+}
+.endInputGroup {
+    padding-top: 12px;
+}
 .searchWrap {
     display: flex;
     justify-content: space-between;

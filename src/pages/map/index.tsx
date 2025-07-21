@@ -8,11 +8,20 @@ import Link from "next/link";
 import Image from "next/image";
 import StoreCard from "@/components/map/StoreCard";
 import { useAppSelector } from "@/hooks/storeMap";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function MapPage() {
+  const router = useRouter();
   const selectedPosition = useAppSelector(
     (state) => state.map.selectedPosition,
   );
+
+  useEffect(() => {
+    if (Object.keys(router.query).length > 0) {
+      router.replace(router.pathname, undefined, { shallow: true });
+    }
+  }, []);
 
   return (
     <div className={styles.mapPage}>
