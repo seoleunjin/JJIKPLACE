@@ -11,6 +11,7 @@ import { z } from "zod";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import DecodingInfo from "@/utils/DecodingInfo";
+import { AxiosError } from "axios";
 
 function LoginForm() {
   const router = useRouter();
@@ -85,8 +86,14 @@ function LoginForm() {
         localStorage.setItem("accessToken", token);
         router.replace("/user");
       }
-    } catch (error) {
-      console.error("실패", error);
+    } catch (error: unknown) {
+      const err = error as AxiosError;
+
+      if (err.response?.status === 401) {
+        alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+      } else {
+        console.error("실패", err);
+      }
     }
   };
 
@@ -169,7 +176,7 @@ function LoginForm() {
         </form>
         {/* 소셜로그인 */}
         <div className={styles.SnsBox}>
-          <button onClick={kakaoLogin}>
+          <button className={styles.kakaoLogin} onClick={kakaoLogin}>
             <Image
               src="/images/login/kakaoLogo.png"
               width={0}

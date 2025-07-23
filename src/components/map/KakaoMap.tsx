@@ -9,6 +9,8 @@ import {
   setLevel,
   setSelectedPosition,
   setCurrentPosition,
+  setStartPoint,
+  setEndPoint,
 } from "@/features/map/mapSlice";
 import { useMapDataFetch } from "@/hooks/useMapDataFetch";
 import { useRouter } from "next/router";
@@ -36,6 +38,12 @@ function KakaoMap({ showCurrentLocationButton = true }) {
     endPoint,
   } = useAppSelector((state) => state.map);
   const { fetchMapData } = useMapDataFetch();
+
+  // 길찾기 초기화
+  useEffect(() => {
+    dispatch(setStartPoint(null));
+    dispatch(setEndPoint(null));
+  }, [dispatch]);
 
   // query에서 좌표 세팅 (선택된 위치)
   useEffect(() => {

@@ -99,7 +99,9 @@
     background-color: var(--color-brand);
     border: 1px solid var(--color-brand);
 }
-.SnsBox {margin-top: 24px;}
+.SnsBox {
+    margin-top: 24px;
+}
 
 .LinkBox a {
     font-size: var(--text-sm);
@@ -140,6 +142,11 @@
     width: 100% !important; 
     height: auto;
     object-fit: contain;
+}
+.SnsBox .kakaoLogin {
+    line-height: 50px;
+    background: #FEE601;
+    border-radius: 5px;
 }
 /* 구글 정책에 따른 css */
 .gsi_material_button {
@@ -248,5 +255,8 @@
 @media (max-width: 600px) {
 .FormWrap {
     box-shadow: none;
+}
+.FormWrap {
+    padding: 30px 25px;
 }
 }
