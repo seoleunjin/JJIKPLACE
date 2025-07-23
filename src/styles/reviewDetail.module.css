@@ -33,3 +33,9 @@
     margin-top: 12px;
     display: inline-block;
 }
+
+@media all and (max-width: 600px) {
+    .reviewItem {
+        padding: 25px 20px;
+    }
+}

@@ -22,7 +22,7 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px 1.5% ;
+    gap: 24px;
 }
 .storeList li{
     width: 100%;
@@ -87,4 +87,7 @@
 }
 
 @media all and (max-width: 600px) {
+.listBox {
+    grid-template-columns: repeat(1, 1fr);
+}
 }

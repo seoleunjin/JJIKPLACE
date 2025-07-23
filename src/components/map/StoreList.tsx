@@ -5,8 +5,10 @@ import Link from "next/link";
 import { StoreListStar } from "@/assets/icons";
 import FavoriteButton from "../common/FavoriteButton";
 import { useState } from "react";
+import useDeviceSize from "@/hooks/useDeviceSize";
 
 function StoreList() {
+  const { isMobile } = useDeviceSize();
   const { markers } = useAppSelector((state) => state.map);
   const [showAll, setShowAll] = useState(false);
 
@@ -16,7 +18,9 @@ function StoreList() {
     setShowAll((prev) => !prev);
   };
 
-  const displayedMarker = showAll ? markers.slice(0, 6) : markers.slice(0, 2);
+  // 사진 갯수 반응형
+  const maxCount = showAll ? (isMobile ? 3 : 6) : isMobile ? 1 : 2;
+  const displayedMarker = markers.slice(0, maxCount);
 
   return (
     <div className={styles.storeList}>

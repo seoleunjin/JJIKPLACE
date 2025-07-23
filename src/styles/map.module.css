@@ -48,3 +48,7 @@
     bottom: 30px;
     z-index: 888;
 }
+
+@media all and (max-width: 600px) {
+
+}

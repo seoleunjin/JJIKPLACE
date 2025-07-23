@@ -21,7 +21,7 @@ const WriteReview = () => {
   if (checkingAuth) return null;
 
   return (
-    <article style={{ paddingTop: "60px" }}>
+    <article>
       <SearchStore />
     </article>
   );

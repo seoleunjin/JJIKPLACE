@@ -14,10 +14,12 @@ import { ImageGalleryApiss } from "@/api/store";
 import Image from "next/image";
 import FavoriteButton from "../common/FavoriteButton";
 import NaviButton from "../common/NaviButton";
+import useDeviceSize from "@/hooks/useDeviceSize";
 
 export default function StoreCard() {
   const [imagesMap, setImagesMap] = useState<Record<string, string[]>>({});
   const { selectedPosition } = useAppSelector((state) => state.map);
+  const { isMobile } = useDeviceSize();
 
   const lat = selectedPosition?.lat;
   const lng = selectedPosition?.lng;
@@ -92,7 +94,19 @@ export default function StoreCard() {
 
   return (
     <div className={styles.storeCardPage}>
-      <Swiper spaceBetween={10} centeredSlides={true} slidesPerView={1.5}>
+      <Swiper
+        spaceBetween={10}
+        centeredSlides={true}
+        slidesPerView={1.5}
+        breakpoints={{
+          768: {
+            slidesPerView: 1.5,
+          },
+          0: {
+            slidesPerView: 1.2,
+          },
+        }}
+      >
         {data?.pages.map((page, pageIndex) =>
           page.items.map((item: StoreNearbyItems) => {
             const {
@@ -107,6 +121,9 @@ export default function StoreCard() {
               lng,
             } = item;
             const reviewImages = imagesMap[ps_id] || [];
+            const mediaImages = isMobile
+              ? reviewImages.slice(0, 4)
+              : reviewImages.slice(0, 5);
 
             return (
               <SwiperSlide key={`${pageIndex}-${ps_id}`}>
@@ -135,7 +152,7 @@ export default function StoreCard() {
                     <div className={styles.reviewImage}>
                       {reviewImages.length > 0 ? (
                         <ul className={styles.thumbnailWrapper}>
-                          {reviewImages.slice(0, 5).map((img, index) => (
+                          {mediaImages.map((img, index) => (
                             <li key={index} className={styles.imageItem}>
                               <div className={styles.imageWrapper}>
                                 <Image

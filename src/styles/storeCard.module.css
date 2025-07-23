@@ -89,4 +89,8 @@
     padding: 12px 15px;
 }
 
-@media all and (max-width: 600px) {}
+@media all and (max-width: 600px) {
+.thumbnailWrapper {
+    grid-template-columns: repeat(4, 1fr);
+}
+}

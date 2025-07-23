@@ -71,7 +71,15 @@ function FavoriteList() {
       <div className={MyPageStyles.title}>
         <h2>찜 목록</h2>
       </div>
-      <Swiper spaceBetween={10} slidesPerView={3.5}>
+      <Swiper
+        spaceBetween={10}
+        slidesPerView={1.5}
+        breakpoints={{
+          768: {
+            slidesPerView: 3.5,
+          },
+        }}
+      >
         {data?.pages.map((page, pageIndex) =>
           page.items.map((item) => (
             <SwiperSlide key={`${pageIndex}-${item.ps_id}`}>

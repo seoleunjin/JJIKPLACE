@@ -6,6 +6,7 @@ import { useState } from "react";
 import layoutStyles from "@/styles/layout.module.css";
 import commonStyles from "@/styles/common.module.css";
 import styles from "@/styles/searchLocation.module.css";
+import { MapSearch } from "@/assets/icons";
 
 function SearchStore() {
   const [value, setValue] = useState("");
@@ -68,7 +69,9 @@ function SearchStore() {
                 if (e.key === "Enter") handleSearch();
               }}
             />
-            <button onClick={handleSearch}>검색</button>
+            <button onClick={handleSearch}>
+              <MapSearch />
+            </button>
           </div>
         </div>
       </div>

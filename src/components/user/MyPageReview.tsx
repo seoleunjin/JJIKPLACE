@@ -63,7 +63,15 @@ function MyPageReview() {
             </div>
           </div>
           <div className={styles.reviewSwiper}>
-            <Swiper spaceBetween={10} slidesPerView={3.5}>
+            <Swiper
+              spaceBetween={10}
+              slidesPerView={1.5}
+              breakpoints={{
+                768: {
+                  slidesPerView: 3.5,
+                },
+              }}
+            >
               {reviews.map((review, index) => (
                 <SwiperSlide key={index}>
                   <div className={styles.imageWrap}>

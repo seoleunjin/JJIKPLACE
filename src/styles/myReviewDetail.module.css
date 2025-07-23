@@ -62,4 +62,23 @@
     justify-content: center;
     margin-top: 32px;
 }
-.pagination button {}
+
+@media all and (max-width: 600px) {
+    .reviewGallery li{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .imageWrap {
+        order: 2;
+        margin-top: 20px;
+    }
+    .reviewContent {
+        padding-top: 0;
+        width: 100%;
+        order: 1;
+    }
+    .reviewContent p {
+        margin-bottom: 12px;
+    }
+
+}

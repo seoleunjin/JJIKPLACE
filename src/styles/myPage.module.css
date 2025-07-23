@@ -139,3 +139,6 @@
     width: 92%;
     margin:  0 auto 20px auto;
 }
+
+@media all and (max-width: 600px) {
+}

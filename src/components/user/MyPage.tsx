@@ -33,7 +33,6 @@ function MyPage({ profile, isLoading }: MyPageProps) {
   const handleEditProfile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const image_file = e.target.files?.[0];
     if (!image_file) return;
-    // console.log("전송할 파일", image_file);
 
     try {
       const { data } = await patchProfileImage(image_file);
