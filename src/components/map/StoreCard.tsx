@@ -1,8 +1,7 @@
 "use client";
 
 import styles from "@/styles/storeCard.module.css";
-import commonStyles from "@/styles/common.module.css";
-import { useAppDispatch, useAppSelector } from "@/hooks/storeMap";
+import { useAppSelector } from "@/hooks/storeMap";
 import { useEffect, useState } from "react";
 import { getNearbyStudios } from "@/api/map";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -14,14 +13,11 @@ import Link from "next/link";
 import { ImageGalleryApiss } from "@/api/store";
 import Image from "next/image";
 import FavoriteButton from "../common/FavoriteButton";
-import { setEndPoint, setStartPoint } from "@/features/map/mapSlice";
-import { useRouter } from "next/router";
+import NaviButton from "../common/NaviButton";
 
 export default function StoreCard() {
-  const router = useRouter();
   const [imagesMap, setImagesMap] = useState<Record<string, string[]>>({});
   const { selectedPosition } = useAppSelector((state) => state.map);
-  const dispatch = useAppDispatch();
 
   const lat = selectedPosition?.lat;
   const lng = selectedPosition?.lng;
@@ -93,30 +89,6 @@ export default function StoreCard() {
 
     fetchImages();
   }, [data]);
-
-  const handleStartPoint = (lat: number, lng: number, name: string) => {
-    dispatch(setStartPoint({ lat, lng, name }));
-    router.push({
-      pathname: "/map/navigation",
-      query: {
-        startLat: lat.toString(),
-        startLng: lng.toString(),
-        startName: name,
-      },
-    });
-  };
-
-  const handleEndPoint = (lat: number, lng: number, name: string) => {
-    dispatch(setEndPoint({ lat, lng, name }));
-    router.push({
-      pathname: "/map/navigation",
-      query: {
-        endLat: lat.toString(),
-        endLng: lng.toString(),
-        endName: name,
-      },
-    });
-  };
 
   return (
     <div className={styles.storeCardPage}>
@@ -193,20 +165,7 @@ export default function StoreCard() {
                       }}
                     />
                     <div className={styles.routeLabels}>
-                      <button
-                        type="button"
-                        onClick={() => handleStartPoint(lat, lng, name)}
-                        className={commonStyles.btnBrand}
-                      >
-                        출발
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => handleEndPoint(lat, lng, name)}
-                        className={commonStyles.btnBrandFill}
-                      >
-                        도착
-                      </button>
+                      <NaviButton lat={lat} lng={lng} name={name} />
                     </div>
                   </div>
                 </div>

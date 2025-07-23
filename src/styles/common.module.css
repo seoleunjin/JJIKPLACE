@@ -39,6 +39,11 @@
     color: var(--color-brand);
     border: 1px solid var(--color-brand);
 }
+.naviButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
 .btnBrand {
     font-size: var(--text-sm);
     color: var(--color-brand);

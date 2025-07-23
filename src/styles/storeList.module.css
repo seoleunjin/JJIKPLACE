@@ -20,13 +20,12 @@
     padding: 24px 0;
     width: 92%;
     margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px 1.5% ;
 }
 .storeList li{
-    width: 48.5%;
+    width: 100%;
     display: flex;
     align-items: center;
 }
@@ -85,4 +84,7 @@
     display: inline-block;
     font-size: var(--text-sm);
     color: var(--color-brand);
+}
+
+@media all and (max-width: 600px) {
 }

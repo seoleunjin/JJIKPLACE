@@ -88,8 +88,5 @@
     align-items: center;
     padding: 12px 15px;
 }
-.routeLabels {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+
+@media all and (max-width: 600px) {}

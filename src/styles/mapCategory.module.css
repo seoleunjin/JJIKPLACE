@@ -1,8 +1,21 @@
 .btnWrap {
     display: flex;
     gap: 6px;
+    overflow-y: scroll;
+
+    /* ✅ 스크롤바 숨기기 - 공통 */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    
+    -webkit-overflow-scrolling: touch;
+    
+    
+}
+.btnWrap::-webkit-scrollbar {
+    display: none;
 }
 .categoryBtn {
+   white-space: nowrap; 
     display: block;
     padding: 10px 12px;
     padding-top: 11px;
@@ -15,4 +28,7 @@
 .categoryBtnActive {
     color: var(--color-surface);
     background: var(--color-brand);
+}
+
+@media all and (max-width: 600px) {
 }
