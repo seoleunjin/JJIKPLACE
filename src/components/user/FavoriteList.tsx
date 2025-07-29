@@ -73,7 +73,7 @@ function FavoriteList() {
       </div>
       <Swiper
         spaceBetween={10}
-        slidesPerView={1.5}
+        slidesPerView={2.2}
         breakpoints={{
           768: {
             slidesPerView: 3.5,
@@ -86,8 +86,7 @@ function FavoriteList() {
               <div className={myPageReview.imageWrap}>
                 <Image
                   src={item.thumbnail_url || "/images/common/NoImage.png"}
-                  width={200}
-                  height={200}
+                  fill
                   alt="찜한 상점"
                 />
                 <button

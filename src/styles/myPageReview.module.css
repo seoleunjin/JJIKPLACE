@@ -42,13 +42,7 @@
     overflow: hidden;
 }
 .imageWrap img {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    width: 100%;
-    width: 100%;
+    object-fit: fill;
 }
 .reviewContent h6 {
     font-weight: 700;
@@ -82,4 +76,11 @@
     font-size: var(--text-sm);
     text-align: right;
     color: var(--color-gray3);
+}
+
+@media all and (max-width: 600px) {
+.imageWrap {
+    height: 150px;
+}
+
 }

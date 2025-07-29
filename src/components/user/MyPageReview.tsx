@@ -65,7 +65,7 @@ function MyPageReview() {
           <div className={styles.reviewSwiper}>
             <Swiper
               spaceBetween={10}
-              slidesPerView={1.5}
+              slidesPerView={2.2}
               breakpoints={{
                 768: {
                   slidesPerView: 3.5,
