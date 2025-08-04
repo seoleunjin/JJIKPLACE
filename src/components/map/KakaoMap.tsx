@@ -9,8 +9,6 @@ import {
   setLevel,
   setSelectedPosition,
   setCurrentPosition,
-  setStartPoint,
-  setEndPoint,
 } from "@/features/map/mapSlice";
 import { useMapDataFetch } from "@/hooks/useMapDataFetch";
 import { useRouter } from "next/router";
