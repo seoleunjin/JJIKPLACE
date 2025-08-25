@@ -1,40 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# JJIKPLACE : 셀프사진관 찾기
 
-## Getting Started
+---
 
-First, run the development server:
+![찍플 로고](https://github.com/seoleunjin/JJIKPLACE/blob/main/%EC%B0%8D%ED%94%8C%20%EB%A1%9C%EA%B3%A0.png)
+## 지금  JJIKPLACE는? ~~<https://jjikplace.netlify.app>~~
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 프로젝트 진행기간
+2025/05 - 2025/07(8주)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+---
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## JJIKPLACE?
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+오늘의 특별한 순간을 사진으로 평생 간직해보세요.
+나만의 컨셉에 맞는 사진관을 찾고 계신가요? 찍플은 이용자들의 솔직한 후기 데이터를 기반으로 매장의 분위기와 촬영 스타일을 분석해, 당신의 취향에 꼭 맞는 셀프사진관을 쉽고 빠르게 추천하는 큐레이션 서비스를 제공합니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 주요기능을 소개합니다.
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+### 1. 위치기반 셀프사진관 탐색
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+현위치  또는 관심있는 지역을 검색하면 그 주변 셀프사진관의 상세정보를 확인하실 수 있어요.
+평점, 리뷰, 사진을 통해 내 취향에 맞는 셀프사진관을 찾아보세요.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. 길찾기 경로 안내
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+원하는 출발지와 도착지를 자유롭게 설정하고
+마음에 드는 셀프사진관까지 빠르게 길안내 받아보세요!
+
+
+### 3. 세분화된 카테고리로 컨셉에 맞는 셀프사진관 찾기 
+
+셀프사진관 카테고리를 전체, 인기, 컨셉, 하이틴, 캐릭터, 감성, 복고 총 7가지로 세분화했어요.
+관심 카테고리를 선택하면 내게 딱맞는 셀프사진관을 볼 수 있어요.
+
+
+### 4. 리뷰, 찜, 회원 정보를 간편하게 관리하세요
+
+내가 남긴 리뷰와 찜한 매장을 한눈에 확인하고,
+회원정보를 손쉽게 변경할 수 있습니다.
+
+
+### 5. 한 번의 클릭으로 간편하게 찍플 시작하기
+아이디 저장, 카카오 · 구글 로그인은 물론, 회원가입까지
+원하는 방식으로 간편하게 시작하세요.
+
+
+### 6. 유효성 검사로 지키는 안전한 회원가입
+
+이메일, 비밀번호 등 모든 정보는
+보안 규칙에 맞게 입력해야 가입이 완료됩니다.
+
+---
+
+## 기술 스택 및 Version
+
+---
+
+## 프로젝트 구조도
+
+---
+
+## 팀원 구성 및 소개
+
+---
+
+## 프로젝트 산출물
+
+---
+
+## 프로젝트 시연화면
