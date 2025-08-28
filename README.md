@@ -170,13 +170,13 @@ jjikplace
 
 ## 프로젝트 산출물
 
-[디자인 작업물](https://www.figma.com/design/SJxu0BolWPac66um1bIWwo/%EC%B0%8D%ED%94%8C?node-id=880-1071&t=yG7fFjJABGId2EM7-1)
+[디자인 작업물](https://www.figma.com/design/SJxu0BolWPac66um1bIWwo/%EC%B0%8D%ED%94%8C?node-id=0-1&t=prQkJivcJk2R2bO9-1)
 
 [SWAGGER](http://jjikplace-backend.kro.kr/docs)
 
 [ERD](https://www.erdcloud.com/d/6zyJ2Fv22H3Cvxs9f)
 
-[회의록](https://www.notion.so/210c7c6edc1d805f8bf8c84d1f6ec5c2?source=copy_link)
+[회의록](https://www.notion.so/JJIKPLACE-1f9c7c6edc1d800b8190f848ff12155b?source=copy_link)
 
 ---
 
