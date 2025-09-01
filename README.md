@@ -18,6 +18,7 @@
 나만의 컨셉에 맞는 사진관을 찾고 계신가요?
 
 찍플은 이용자들의 솔직한 후기 데이터를 기반으로 매장의 분위기와 촬영 스타일을 분석해,
+
 당신의 취향에 꼭 맞는 셀프사진관을 쉽고 빠르게 추천하는 큐레이션 서비스를 제공합니다.
 
 ---
@@ -73,7 +74,11 @@
 
 ### Backend 
 
-development tool : Python (FastAPI + SQLAlchemy) Redis (캐싱)
+development tool :
+
+Python (FastAPI + SQLAlchemy)
+
+Redis (캐싱)
 
 MySQL 8.0
 
@@ -82,7 +87,11 @@ swagger
 
 ### Frontend 
 
-development tool : Visual Studio Code npm : 11.0.0 node.js : 22.13.1
+development tool :
+
+Visual Studio Code npm : 11.0.0
+
+node.js : 22.13.1
 
 Next.js 15.3.3 React 19.0.0
 
